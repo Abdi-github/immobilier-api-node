@@ -1,0 +1,51 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build output
+dist/
+build/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Logs
+logs/
+*.log
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+coverage/
+.nyc_output/
+
+# Docker volumes (local)
+.docker-data/
+
+# Temporary files
+tmp/
+temp/
+
+# Upload directory
+uploads/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Debug
+.npm
+.eslintcache
