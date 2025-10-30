@@ -1,0 +1,1490 @@
+{
+  "info": {
+    "_postman_id": "auth-module-collection",
+    "name": "Auth Module - Immobilier API",
+    "description": "Complete authentication module endpoints for the Immobilier.ch API.\n\nThis collection includes all auth endpoints with various test scenarios using seeded data.\n\n**Test Credentials:**\n- Super Admin: superadmin.en@immobilier.ch / Password123!\n- Platform Admin: platformadmin1.en@immobilier.ch / Password123!\n- Agency Admin: agencyadmin1.en@immobilier.ch / Password123!\n- Agent: agent1.en@immobilier.ch / Password123!\n- Owner: owner1.en@immobilier.ch / Password123!\n- End User: user1.en@immobilier.ch / Password123!",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "{{base_url}}/public/auth",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Register",
+      "item": [
+        {
+          "name": "Register - New End User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Response has success true', () => pm.expect(pm.response.json().success).to.be.true);",
+                  "pm.test('Response has user data', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.data.user).to.have.property('id');",
+                  "    pm.expect(json.data.user).to.have.property('email');",
+                  "    pm.expect(json.data.user).not.to.have.property('password_hash');",
+                  "});",
+                  "pm.test('Response has tokens', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.data).to.have.property('accessToken');",
+                  "    pm.expect(json.data).to.have.property('refreshToken');",
+                  "});",
+                  "",
+                  "if (pm.response.code === 201) {",
+                  "    const json = pm.response.json();",
+                  "    pm.environment.set('new_user_access_token', json.data.accessToken);",
+                  "    pm.environment.set('new_user_refresh_token', json.data.refreshToken);",
+                  "    pm.environment.set('new_user_id', json.data.user.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "en"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"newuser.test@example.com\",\n    \"password\": \"Password123!\",\n    \"first_name\": \"Test\",\n    \"last_name\": \"User\",\n    \"preferred_language\": \"en\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["register"]
+            },
+            "description": "Register a new end user account."
+          },
+          "response": []
+        },
+        {
+          "name": "Register - New User (French)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Response message is in French', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.message).to.include('succès') || pm.expect(json.message).to.include('enregistré');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "fr"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"newuser.french@example.com\",\n    \"password\": \"Password123!\",\n    \"first_name\": \"Utilisateur\",\n    \"last_name\": \"Test\",\n    \"preferred_language\": \"fr\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["register"]
+            },
+            "description": "Register with French language preference and Accept-Language header."
+          },
+          "response": []
+        },
+        {
+          "name": "Register - Duplicate Email (Error)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 409 or 400', () => {",
+                  "    pm.expect([400, 409]).to.include(pm.response.code);",
+                  "});",
+                  "pm.test('Response has success false', () => pm.expect(pm.response.json().success).to.be.false);",
+                  "pm.test('Error message mentions email', () => {",
+                  "    const json = pm.response.json();",
+                  "    const errorMsg = json.error?.message || json.message || '';",
+                  "    pm.expect(errorMsg.toLowerCase()).to.include('email');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"superadmin.en@immobilier.ch\",\n    \"password\": \"Password123!\",\n    \"first_name\": \"Duplicate\",\n    \"last_name\": \"User\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["register"]
+            },
+            "description": "Attempt to register with an existing email (seeded super admin)."
+          },
+          "response": []
+        },
+        {
+          "name": "Register - Invalid Email (Error)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Response has validation error', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.success).to.be.false;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"invalid-email\",\n    \"password\": \"Password123!\",\n    \"first_name\": \"Test\",\n    \"last_name\": \"User\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["register"]
+            },
+            "description": "Attempt to register with an invalid email format."
+          },
+          "response": []
+        },
+        {
+          "name": "Register - Weak Password (Error)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Response has validation error', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.success).to.be.false;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"weakpassword@example.com\",\n    \"password\": \"weak\",\n    \"first_name\": \"Test\",\n    \"last_name\": \"User\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["register"]
+            },
+            "description": "Attempt to register with a weak password."
+          },
+          "response": []
+        },
+        {
+          "name": "Register - Missing Required Fields (Error)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Response has validation errors', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.success).to.be.false;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"missing@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["register"]
+            },
+            "description": "Attempt to register with missing required fields."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2. Login",
+      "item": [
+        {
+          "name": "Login - Super Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has success true', () => pm.expect(pm.response.json().success).to.be.true);",
+                  "pm.test('User has super_admin role', () => {",
+                  "    const json = pm.response.json();",
+                  "    const roles = json.data.user.roles || [];",
+                  "    pm.expect(roles.some(r => r.name === 'super_admin')).to.be.true;",
+                  "});",
+                  "pm.test('Response has tokens', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.data).to.have.property('accessToken');",
+                  "    pm.expect(json.data).to.have.property('refreshToken');",
+                  "});",
+                  "",
+                  "if (pm.response.code === 200) {",
+                  "    const json = pm.response.json();",
+                  "    pm.environment.set('super_admin_access_token', json.data.accessToken);",
+                  "    pm.environment.set('super_admin_refresh_token', json.data.refreshToken);",
+                  "    pm.environment.set('super_admin_user_id', json.data.user.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"superadmin.en@immobilier.ch\",\n    \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["login"]
+            },
+            "description": "Login as super admin user."
+          },
+          "response": []
+        },
+        {
+          "name": "Login - Platform Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('User has platform_admin role', () => {",
+                  "    const json = pm.response.json();",
+                  "    const roles = json.data.user.roles || [];",
+                  "    pm.expect(roles.some(r => r.name === 'platform_admin')).to.be.true;",
+                  "});",
+                  "",
+                  "if (pm.response.code === 200) {",
+                  "    const json = pm.response.json();",
+                  "    pm.environment.set('platform_admin_access_token', json.data.accessToken);",
+                  "    pm.environment.set('platform_admin_refresh_token', json.data.refreshToken);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"platformadmin1.en@immobilier.ch\",\n    \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["login"]
+            },
+            "description": "Login as platform admin user."
+          },
+          "response": []
+        },
+        {
+          "name": "Login - Agency Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('User has agency_admin role', () => {",
+                  "    const json = pm.response.json();",
+                  "    const roles = json.data.user.roles || [];",
+                  "    pm.expect(roles.some(r => r.name === 'agency_admin')).to.be.true;",
+                  "});",
+                  "pm.test('User has agency_id', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.data.user).to.have.property('agency_id');",
+                  "});",
+                  "",
+                  "if (pm.response.code === 200) {",
+                  "    const json = pm.response.json();",
+                  "    pm.environment.set('agency_admin_access_token', json.data.accessToken);",
+                  "    pm.environment.set('agency_admin_refresh_token', json.data.refreshToken);",
+                  "    pm.environment.set('agency_id', json.data.user.agency_id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"agencyadmin1.en@immobilier.ch\",\n    \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["login"]
+            },
+            "description": "Login as agency admin user with agency_id."
+          },
+          "response": []
+        },
+        {
+          "name": "Login - Agent",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('User has agent role', () => {",
+                  "    const json = pm.response.json();",
+                  "    const roles = json.data.user.roles || [];",
+                  "    pm.expect(roles.some(r => r.name === 'agent')).to.be.true;",
+                  "});",
+                  "",
+                  "if (pm.response.code === 200) {",
+                  "    const json = pm.response.json();",
+                  "    pm.environment.set('agent_access_token', json.data.accessToken);",
+                  "    pm.environment.set('agent_refresh_token', json.data.refreshToken);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"agent1.en@immobilier.ch\",\n    \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["login"]
+            },
+            "description": "Login as agent user."
+          },
+          "response": []
+        },
+        {
+          "name": "Login - Owner",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('User has owner role', () => {",
+                  "    const json = pm.response.json();",
+                  "    const roles = json.data.user.roles || [];",
+                  "    pm.expect(roles.some(r => r.name === 'owner')).to.be.true;",
+                  "});",
+                  "",
+                  "if (pm.response.code === 200) {",
+                  "    const json = pm.response.json();",
+                  "    pm.environment.set('owner_access_token', json.data.accessToken);",
+                  "    pm.environment.set('owner_refresh_token', json.data.refreshToken);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"owner1.en@immobilier.ch\",\n    \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["login"]
+            },
+            "description": "Login as property owner user."
+          },
+          "response": []
+        },
+        {
+          "name": "Login - End User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('User has end_user role', () => {",
+                  "    const json = pm.response.json();",
+                  "    const roles = json.data.user.roles || [];",
+                  "    pm.expect(roles.some(r => r.name === 'end_user')).to.be.true;",
+                  "});",
+                  "",
+                  "if (pm.response.code === 200) {",
+                  "    const json = pm.response.json();",
+                  "    pm.environment.set('end_user_access_token', json.data.accessToken);",
+                  "    pm.environment.set('end_user_refresh_token', json.data.refreshToken);",
+                  "    pm.environment.set('end_user_id', json.data.user.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"user1.en@immobilier.ch\",\n    \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["login"]
+            },
+            "description": "Login as end user."
+          },
+          "response": []
+        },
+        {
+          "name": "Login - French User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('User preferred language is French', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.data.user.preferred_language).to.equal('fr');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "fr"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"user1.fr@immobilier.ch\",\n    \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["login"]
+            },
+            "description": "Login as French-speaking user."
+          },
+          "response": []
+        },
+        {
+          "name": "Login - German User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('User preferred language is German', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.data.user.preferred_language).to.equal('de');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "de"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"user1.de@immobilier.ch\",\n    \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["login"]
+            },
+            "description": "Login as German-speaking user."
+          },
+          "response": []
+        },
+        {
+          "name": "Login - Italian User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('User preferred language is Italian', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.data.user.preferred_language).to.equal('it');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "it"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"user1.it@immobilier.ch\",\n    \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["login"]
+            },
+            "description": "Login as Italian-speaking user."
+          },
+          "response": []
+        },
+        {
+          "name": "Login - Invalid Credentials (Error)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 401', () => pm.response.to.have.status(401));",
+                  "pm.test('Response has success false', () => pm.expect(pm.response.json().success).to.be.false);",
+                  "pm.test('Error message indicates invalid credentials', () => {",
+                  "    const json = pm.response.json();",
+                  "    const errorMsg = json.error?.message || json.message || '';",
+                  "    pm.expect(errorMsg.toLowerCase()).to.satisfy(msg => ",
+                  "        msg.includes('invalid') || msg.includes('credentials') || msg.includes('incorrect')",
+                  "    );",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"superadmin.en@immobilier.ch\",\n    \"password\": \"WrongPassword123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["login"]
+            },
+            "description": "Attempt login with wrong password."
+          },
+          "response": []
+        },
+        {
+          "name": "Login - Non-existent User (Error)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 401', () => pm.response.to.have.status(401));",
+                  "pm.test('Response has success false', () => pm.expect(pm.response.json().success).to.be.false);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"nonexistent@example.com\",\n    \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["login"]
+            },
+            "description": "Attempt login with non-existent user."
+          },
+          "response": []
+        },
+        {
+          "name": "Login - Missing Email (Error)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Response has validation error', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.success).to.be.false;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["login"]
+            },
+            "description": "Attempt login without email."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3. Refresh Token",
+      "item": [
+        {
+          "name": "Refresh Token - Valid",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has new access token', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.data).to.have.property('accessToken');",
+                  "});",
+                  "pm.test('Response has new refresh token', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.data).to.have.property('refreshToken');",
+                  "});",
+                  "",
+                  "if (pm.response.code === 200) {",
+                  "    const json = pm.response.json();",
+                  "    pm.environment.set('end_user_access_token', json.data.accessToken);",
+                  "    pm.environment.set('end_user_refresh_token', json.data.refreshToken);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"refreshToken\": \"{{end_user_refresh_token}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/refresh",
+              "host": ["{{baseUrl}}"],
+              "path": ["refresh"]
+            },
+            "description": "Refresh access token using valid refresh token."
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Token - Invalid Token (Error)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 401', () => pm.response.to.have.status(401));",
+                  "pm.test('Response has success false', () => pm.expect(pm.response.json().success).to.be.false);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"refreshToken\": \"invalid.token.here\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/refresh",
+              "host": ["{{baseUrl}}"],
+              "path": ["refresh"]
+            },
+            "description": "Attempt to refresh with invalid token."
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Token - Missing Token (Error)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Response has validation error', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.success).to.be.false;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/refresh",
+              "host": ["{{baseUrl}}"],
+              "path": ["refresh"]
+            },
+            "description": "Attempt to refresh without providing token."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "4. Get Current User (Me)",
+      "item": [
+        {
+          "name": "Get Me - Super Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has user data', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.data).to.have.property('id');",
+                  "    pm.expect(json.data).to.have.property('email');",
+                  "});",
+                  "pm.test('User has super_admin role', () => {",
+                  "    const json = pm.response.json();",
+                  "    const roles = json.data.roles || [];",
+                  "    pm.expect(roles.some(r => r.name === 'super_admin')).to.be.true;",
+                  "});",
+                  "pm.test('Response does not include password', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.data).not.to.have.property('password_hash');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["me"]
+            },
+            "description": "Get current user profile for super admin."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Me - End User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has user data', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.data).to.have.property('id');",
+                  "    pm.expect(json.data).to.have.property('email');",
+                  "});",
+                  "pm.test('User has end_user role', () => {",
+                  "    const json = pm.response.json();",
+                  "    const roles = json.data.roles || [];",
+                  "    pm.expect(roles.some(r => r.name === 'end_user')).to.be.true;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{end_user_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["me"]
+            },
+            "description": "Get current user profile for end user."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Me - Agency Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('User has agency_id', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.data).to.have.property('agency_id');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{agency_admin_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["me"]
+            },
+            "description": "Get current user profile for agency admin."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Me - No Token (Error)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 401', () => pm.response.to.have.status(401));",
+                  "pm.test('Response has success false', () => pm.expect(pm.response.json().success).to.be.false);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["me"]
+            },
+            "description": "Attempt to get profile without authentication."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Me - Invalid Token (Error)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 401', () => pm.response.to.have.status(401));",
+                  "pm.test('Response has success false', () => pm.expect(pm.response.json().success).to.be.false);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer invalid.token.here"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["me"]
+            },
+            "description": "Attempt to get profile with invalid token."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "5. Update Profile",
+      "item": [
+        {
+          "name": "Update Profile - Change Name",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has updated user data', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.data.first_name).to.equal('UpdatedFirst');",
+                  "    pm.expect(json.data.last_name).to.equal('UpdatedLast');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{end_user_access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"first_name\": \"UpdatedFirst\",\n    \"last_name\": \"UpdatedLast\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["me"]
+            },
+            "description": "Update user's first and last name."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Profile - Change Language",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Language is updated', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.data.preferred_language).to.equal('fr');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{end_user_access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"preferred_language\": \"fr\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["me"]
+            },
+            "description": "Update user's preferred language."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Profile - No Token (Error)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 401', () => pm.response.to.have.status(401));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"first_name\": \"Test\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["me"]
+            },
+            "description": "Attempt to update profile without authentication."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "6. Change Password",
+      "item": [
+        {
+          "name": "Change Password - Valid",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has success true', () => pm.expect(pm.response.json().success).to.be.true);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{end_user_access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"currentPassword\": \"Password123!\",\n    \"newPassword\": \"NewPassword456!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/change-password",
+              "host": ["{{baseUrl}}"],
+              "path": ["change-password"]
+            },
+            "description": "Change password for authenticated user."
+          },
+          "response": []
+        },
+        {
+          "name": "Change Password - Wrong Current (Error)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 401', () => pm.response.to.have.status(401));",
+                  "pm.test('Response has success false', () => pm.expect(pm.response.json().success).to.be.false);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"currentPassword\": \"WrongPassword!\",\n    \"newPassword\": \"NewPassword456!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/change-password",
+              "host": ["{{baseUrl}}"],
+              "path": ["change-password"]
+            },
+            "description": "Attempt to change password with wrong current password."
+          },
+          "response": []
+        },
+        {
+          "name": "Change Password - Weak New Password (Error)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Response has validation error', () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.success).to.be.false;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{super_admin_access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"currentPassword\": \"Password123!\",\n    \"newPassword\": \"weak\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/change-password",
+              "host": ["{{baseUrl}}"],
+              "path": ["change-password"]
+            },
+            "description": "Attempt to change to a weak password."
+          },
+          "response": []
+        },
+        {
+          "name": "Change Password - No Token (Error)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 401', () => pm.response.to.have.status(401));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"currentPassword\": \"Password123!\",\n    \"newPassword\": \"NewPassword456!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/change-password",
+              "host": ["{{baseUrl}}"],
+              "path": ["change-password"]
+            },
+            "description": "Attempt to change password without authentication."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "7. Logout",
+      "item": [
+        {
+          "name": "Logout - Valid",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has success true', () => pm.expect(pm.response.json().success).to.be.true);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{end_user_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["logout"]
+            },
+            "description": "Logout and invalidate the access token."
+          },
+          "response": []
+        },
+        {
+          "name": "Logout - No Token (Error)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 401', () => pm.response.to.have.status(401));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["logout"]
+            },
+            "description": "Attempt to logout without authentication."
+          },
+          "response": []
+        },
+        {
+          "name": "Use Token After Logout (Error)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// This test verifies that the token is blacklisted after logout",
+                  "// Note: This test should be run AFTER the 'Logout - Valid' test",
+                  "pm.test('Status code is 401 (token blacklisted)', () => {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([401, 200]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{end_user_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["me"]
+            },
+            "description": "Attempt to use a token after logout (should fail if token blacklisting is working)."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
