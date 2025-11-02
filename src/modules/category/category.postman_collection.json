@@ -1,0 +1,417 @@
+{
+  "info": {
+    "_postman_id": "category-module-collection",
+    "name": "Immobilier API - Category Module",
+    "description": "API endpoints for managing property categories in the Immobilier platform.\n\nCategories define what type of property is being listed (apartment, house, office, etc.).\n\n## Features\n- Multi-language support (EN, FR, DE, IT)\n- Section-based organization (residential, commercial, etc.)\n- Slug-based lookups\n- Admin CRUD operations",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Public Endpoints",
+      "description": "Public endpoints for retrieving category information",
+      "item": [
+        {
+          "name": "Get All Categories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}",
+                "description": "Language preference (en, fr, de, it)"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/public/categories?page={{page}}&limit={{limit}}&section={{section}}&search={{search}}&is_active={{is_active}}&sort={{sort}}&lang={{lang}}",
+              "host": ["{{base_url}}"],
+              "path": ["public", "categories"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "{{page}}",
+                  "description": "Page number (default: 1)"
+                },
+                {
+                  "key": "limit",
+                  "value": "{{limit}}",
+                  "description": "Items per page (default: 50, max: 100)"
+                },
+                {
+                  "key": "section",
+                  "value": "{{section}}",
+                  "description": "Filter by section: residential, commercial, land, parking, special"
+                },
+                {
+                  "key": "search",
+                  "value": "{{search}}",
+                  "description": "Search in name (all languages) and slug"
+                },
+                {
+                  "key": "is_active",
+                  "value": "{{is_active}}",
+                  "description": "Filter by active status (default: true)"
+                },
+                {
+                  "key": "sort",
+                  "value": "{{sort}}",
+                  "description": "Sort field: sort_order, -sort_order, slug, -slug, section, -section"
+                },
+                {
+                  "key": "lang",
+                  "value": "{{lang}}",
+                  "description": "Language for localized response (en, fr, de, it)"
+                }
+              ]
+            },
+            "description": "Get all categories with optional filtering, pagination, and search.\n\nBy default, only active categories are returned."
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{base_url}}/public/categories",
+                  "host": ["{{base_url}}"],
+                  "path": ["public", "categories"]
+                }
+              },
+              "body": "{\n  \"success\": true,\n  \"message\": \"Categories retrieved successfully\",\n  \"data\": [\n    {\n      \"id\": \"507f1f77bcf86cd799439011\",\n      \"section\": \"residential\",\n      \"slug\": \"apartment\",\n      \"name\": {\n        \"en\": \"Apartment\",\n        \"fr\": \"Appartement\",\n        \"de\": \"Wohnung\",\n        \"it\": \"Appartamento\"\n      },\n      \"sort_order\": 1,\n      \"is_active\": true,\n      \"created_at\": \"2024-01-15T10:00:00.000Z\",\n      \"updated_at\": \"2024-01-15T10:00:00.000Z\"\n    }\n  ],\n  \"meta\": {\n    \"total\": 10,\n    \"page\": 1,\n    \"limit\": 50,\n    \"totalPages\": 1,\n    \"hasNextPage\": false,\n    \"hasPrevPage\": false\n  }\n}"
+            },
+            {
+              "name": "Localized Response (French)",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{base_url}}/public/categories?lang=fr",
+                  "host": ["{{base_url}}"],
+                  "path": ["public", "categories"],
+                  "query": [{"key": "lang", "value": "fr"}]
+                }
+              },
+              "body": "{\n  \"success\": true,\n  \"message\": \"Categories retrieved successfully\",\n  \"data\": [\n    {\n      \"id\": \"507f1f77bcf86cd799439011\",\n      \"section\": \"residential\",\n      \"slug\": \"apartment\",\n      \"name\": \"Appartement\",\n      \"sort_order\": 1,\n      \"is_active\": true\n    }\n  ],\n  \"meta\": { ... }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Category by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}",
+                "description": "Language preference"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/public/categories/{{category_id}}?lang={{lang}}",
+              "host": ["{{base_url}}"],
+              "path": ["public", "categories", "{{category_id}}"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{lang}}",
+                  "description": "Language for localized response"
+                }
+              ]
+            },
+            "description": "Get a single category by its MongoDB ObjectId."
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"success\": true,\n  \"message\": \"Category retrieved successfully\",\n  \"data\": {\n    \"id\": \"507f1f77bcf86cd799439011\",\n    \"section\": \"residential\",\n    \"slug\": \"apartment\",\n    \"name\": {\n      \"en\": \"Apartment\",\n      \"fr\": \"Appartement\",\n      \"de\": \"Wohnung\",\n      \"it\": \"Appartamento\"\n    },\n    \"description\": {\n      \"en\": \"Apartments and flats\",\n      \"fr\": \"Appartements et logements\"\n    },\n    \"icon\": \"apartment\",\n    \"sort_order\": 1,\n    \"is_active\": true,\n    \"created_at\": \"2024-01-15T10:00:00.000Z\",\n    \"updated_at\": \"2024-01-15T10:00:00.000Z\"\n  }\n}"
+            },
+            {
+              "name": "Not Found",
+              "status": "Not Found",
+              "code": 404,
+              "body": "{\n  \"success\": false,\n  \"message\": \"Category not found\",\n  \"error\": {\n    \"code\": 4001,\n    \"type\": \"NOT_FOUND\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Category by Slug",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/public/categories/slug/{{category_slug}}?lang={{lang}}",
+              "host": ["{{base_url}}"],
+              "path": ["public", "categories", "slug", "{{category_slug}}"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{lang}}"
+                }
+              ]
+            },
+            "description": "Get a category by its slug. Slug lookup is case-insensitive.\n\nExample slugs: apartment, house, office, warehouse"
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"success\": true,\n  \"message\": \"Category retrieved successfully\",\n  \"data\": {\n    \"id\": \"507f1f77bcf86cd799439011\",\n    \"section\": \"residential\",\n    \"slug\": \"apartment\",\n    \"name\": {\n      \"en\": \"Apartment\",\n      \"fr\": \"Appartement\",\n      \"de\": \"Wohnung\",\n      \"it\": \"Appartamento\"\n    },\n    \"sort_order\": 1,\n    \"is_active\": true\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Categories by Section",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/public/categories/section/{{section}}?lang={{lang}}",
+              "host": ["{{base_url}}"],
+              "path": ["public", "categories", "section", "{{section}}"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{lang}}"
+                }
+              ]
+            },
+            "description": "Get all active categories in a specific section.\n\nValid sections:\n- residential\n- commercial\n- land\n- parking\n- special"
+          },
+          "response": [
+            {
+              "name": "Residential Categories",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"success\": true,\n  \"message\": \"Categories in section 'residential' retrieved successfully\",\n  \"data\": [\n    { \"slug\": \"apartment\", \"name\": { \"en\": \"Apartment\" }, \"sort_order\": 1 },\n    { \"slug\": \"house\", \"name\": { \"en\": \"House\" }, \"sort_order\": 2 },\n    { \"slug\": \"studio\", \"name\": { \"en\": \"Studio\" }, \"sort_order\": 3 }\n  ]\n}"
+            },
+            {
+              "name": "Invalid Section",
+              "status": "Bad Request",
+              "code": 400,
+              "body": "{\n  \"success\": false,\n  \"message\": \"Validation failed\",\n  \"errors\": [\n    {\n      \"field\": \"section\",\n      \"message\": \"Section must be one of: residential, commercial, land, parking, special\"\n    }\n  ]\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Admin Endpoints",
+      "description": "Admin endpoints for managing categories (requires authentication and categories:create/delete permission)",
+      "item": [
+        {
+          "name": "Create Category",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}",
+                "description": "Admin JWT token"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"section\": \"residential\",\n  \"slug\": \"penthouse\",\n  \"name\": {\n    \"en\": \"Penthouse\",\n    \"fr\": \"Penthouse\",\n    \"de\": \"Penthouse\",\n    \"it\": \"Attico\"\n  },\n  \"description\": {\n    \"en\": \"Luxury top-floor apartments\",\n    \"fr\": \"Appartements de luxe au dernier étage\",\n    \"de\": \"Luxus-Penthousewohnungen\",\n    \"it\": \"Appartamenti di lusso all'ultimo piano\"\n  },\n  \"icon\": \"penthouse\",\n  \"sort_order\": 5,\n  \"is_active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/categories",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "categories"]
+            },
+            "description": "Create a new category.\n\n**Required permission:** `categories:create`\n\n**Required fields:**\n- section: residential, commercial, land, parking, special\n- slug: unique, lowercase, letters/numbers/hyphens only\n- name: object with en, fr, de, it keys (all required)"
+          },
+          "response": [
+            {
+              "name": "Created",
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"success\": true,\n  \"message\": \"Category created successfully\",\n  \"data\": {\n    \"id\": \"507f1f77bcf86cd799439015\",\n    \"section\": \"residential\",\n    \"slug\": \"penthouse\",\n    \"name\": {\n      \"en\": \"Penthouse\",\n      \"fr\": \"Penthouse\",\n      \"de\": \"Penthouse\",\n      \"it\": \"Attico\"\n    },\n    \"sort_order\": 5,\n    \"is_active\": true,\n    \"created_at\": \"2024-01-15T10:00:00.000Z\",\n    \"updated_at\": \"2024-01-15T10:00:00.000Z\"\n  }\n}"
+            },
+            {
+              "name": "Validation Error",
+              "status": "Bad Request",
+              "code": 400,
+              "body": "{\n  \"success\": false,\n  \"message\": \"Validation failed\",\n  \"errors\": [\n    { \"field\": \"slug\", \"message\": \"Slug must contain only lowercase letters, numbers, and hyphens\" },\n    { \"field\": \"name.en\", \"message\": \"English name is required\" }\n  ]\n}"
+            },
+            {
+              "name": "Duplicate Slug",
+              "status": "Conflict",
+              "code": 409,
+              "body": "{\n  \"success\": false,\n  \"message\": \"Category with slug 'penthouse' already exists\",\n  \"error\": {\n    \"code\": 4002,\n    \"type\": \"CONFLICT\"\n  }\n}"
+            },
+            {
+              "name": "Unauthorized",
+              "status": "Unauthorized",
+              "code": 401,
+              "body": "{\n  \"success\": false,\n  \"message\": \"Unauthenticated. Please login.\",\n  \"error\": {\n    \"code\": 1001,\n    \"type\": \"UNAUTHORIZED\"\n  }\n}"
+            },
+            {
+              "name": "Forbidden",
+              "status": "Forbidden",
+              "code": 403,
+              "body": "{\n  \"success\": false,\n  \"message\": \"You do not have permission to perform this action\",\n  \"error\": {\n    \"code\": 2001,\n    \"type\": \"FORBIDDEN\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Category",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": {\n    \"en\": \"Updated Apartment Name\",\n    \"fr\": \"Nom d'appartement mis à jour\",\n    \"de\": \"Aktualisierter Wohnungsname\",\n    \"it\": \"Nome appartamento aggiornato\"\n  },\n  \"sort_order\": 2,\n  \"is_active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/categories/{{category_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "categories", "{{category_id}}"]
+            },
+            "description": "Update an existing category. Only provided fields will be updated.\n\n**Required permission:** `categories:create`\n\n**Updatable fields:**\n- section\n- slug (must remain unique)\n- name (object with language keys)\n- description\n- icon\n- sort_order\n- is_active"
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"success\": true,\n  \"message\": \"Category updated successfully\",\n  \"data\": {\n    \"id\": \"507f1f77bcf86cd799439011\",\n    \"section\": \"residential\",\n    \"slug\": \"apartment\",\n    \"name\": {\n      \"en\": \"Updated Apartment Name\",\n      \"fr\": \"Nom d'appartement mis à jour\",\n      \"de\": \"Aktualisierter Wohnungsname\",\n      \"it\": \"Nome appartamento aggiornato\"\n    },\n    \"sort_order\": 2,\n    \"is_active\": true,\n    \"updated_at\": \"2024-01-15T11:00:00.000Z\"\n  }\n}"
+            },
+            {
+              "name": "Not Found",
+              "status": "Not Found",
+              "code": 404,
+              "body": "{\n  \"success\": false,\n  \"message\": \"Category not found\",\n  \"error\": {\n    \"code\": 4001,\n    \"type\": \"NOT_FOUND\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Category",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/categories/{{category_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "categories", "{{category_id}}"]
+            },
+            "description": "Delete a category.\n\n**Required permission:** `categories:delete`\n\n**Note:** Consider using soft delete (setting is_active=false) instead of hard delete to preserve data integrity."
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"success\": true,\n  \"message\": \"Category deleted successfully\"\n}"
+            },
+            {
+              "name": "Not Found",
+              "status": "Not Found",
+              "code": 404,
+              "body": "{\n  \"success\": false,\n  \"message\": \"Category not found\",\n  \"error\": {\n    \"code\": 4001,\n    \"type\": \"NOT_FOUND\"\n  }\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:4003/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "category_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "category_slug",
+      "value": "apartment",
+      "type": "string"
+    },
+    {
+      "key": "section",
+      "value": "residential",
+      "type": "string"
+    },
+    {
+      "key": "page",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "limit",
+      "value": "50",
+      "type": "string"
+    },
+    {
+      "key": "search",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "is_active",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "sort",
+      "value": "sort_order",
+      "type": "string"
+    },
+    {
+      "key": "lang",
+      "value": "en",
+      "type": "string"
+    },
+    {
+      "key": "auth_token",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}

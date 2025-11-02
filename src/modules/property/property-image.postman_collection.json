@@ -1,0 +1,895 @@
+{
+  "info": {
+    "_postman_id": "property-image-management",
+    "name": "Property Image Management",
+    "description": "Complete API collection for property image management.\n\n## Features\n- File uploads via multipart/form-data\n- URL-based image imports\n- External image references\n- Batch uploads (up to 20 images)\n- Automatic image optimization\n- Thumbnail generation\n- Image metadata management\n\n## Requirements\n- Cloudinary account and credentials configured\n- Valid authentication token\n- Existing property ID\n\n## Supported Formats\n- JPEG\n- PNG\n- WebP\n- GIF\n\n## Size Limits\n- Max file size: 10MB\n- Max batch size: 20 images\n- Max images per property: 50",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "{{base_url}}",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "📋 Read Operations",
+      "item": [
+        {
+          "name": "Get All Property Images",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has success true', () => pm.expect(pm.response.json().success).to.be.true);",
+                  "pm.test('Response has images array', () => {",
+                  "    const data = pm.response.json().data;",
+                  "    pm.expect(data).to.be.an('array');",
+                  "});",
+                  "",
+                  "// Save first image ID if exists",
+                  "const data = pm.response.json().data;",
+                  "if (data && data.length > 0) {",
+                  "    pm.environment.set('image_id', data[0].id);",
+                  "    if (data[0].public_id) {",
+                  "        pm.environment.set('image_public_id', data[0].public_id);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{platform_admin_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/properties/{{property_id}}/images",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "properties", "{{property_id}}", "images"]
+            },
+            "description": "Retrieve all images for a specific property, sorted by sort_order."
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/admin/properties/{{property_id}}/images"
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"success\": true,\n  \"message\": \"Images retrieved successfully\",\n  \"data\": [\n    {\n      \"id\": \"507f1f77bcf86cd799439012\",\n      \"property_id\": \"507f1f77bcf86cd799439011\",\n      \"url\": \"https://res.cloudinary.com/.../image1.webp\",\n      \"secure_url\": \"https://res.cloudinary.com/.../image1.webp\",\n      \"thumbnail_url\": \"https://res.cloudinary.com/.../c_fill,h_300,w_400/image1.webp\",\n      \"public_id\": \"immobilier/properties/.../image1\",\n      \"width\": 1920,\n      \"height\": 1080,\n      \"format\": \"webp\",\n      \"bytes\": 245789,\n      \"alt_text\": \"Living room\",\n      \"caption\": \"Spacious living area\",\n      \"sort_order\": 0,\n      \"is_primary\": true,\n      \"source\": \"cloudinary\",\n      \"created_at\": \"2024-01-15T10:30:00.000Z\"\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Image Count",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has count', () => {",
+                  "    const data = pm.response.json().data;",
+                  "    pm.expect(data).to.have.property('count');",
+                  "    pm.expect(data.count).to.be.a('number');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{platform_admin_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/properties/{{property_id}}/images/count",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "properties", "{{property_id}}", "images", "count"]
+            },
+            "description": "Get the total count of images for a property."
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"success\": true,\n  \"message\": \"Image count retrieved successfully\",\n  \"data\": {\n    \"count\": 5\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Signed Upload URL",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has upload URL data', () => {",
+                  "    const data = pm.response.json().data;",
+                  "    pm.expect(data).to.have.property('uploadUrl');",
+                  "    pm.expect(data).to.have.property('signature');",
+                  "    pm.expect(data).to.have.property('timestamp');",
+                  "    pm.expect(data).to.have.property('apiKey');",
+                  "    pm.expect(data).to.have.property('cloudName');",
+                  "});",
+                  "",
+                  "if (pm.response.code === 200) {",
+                  "    const data = pm.response.json().data;",
+                  "    pm.environment.set('cloudinary_upload_url', data.uploadUrl);",
+                  "    pm.environment.set('cloudinary_signature', data.signature);",
+                  "    pm.environment.set('cloudinary_timestamp', data.timestamp);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{platform_admin_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/properties/{{property_id}}/images/upload-url",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "properties", "{{property_id}}", "images", "upload-url"]
+            },
+            "description": "Get a signed URL for direct client-side uploads to Cloudinary. This enables browser-based uploads without going through the server."
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"success\": true,\n  \"message\": \"Upload URL generated successfully\",\n  \"data\": {\n    \"uploadUrl\": \"https://api.cloudinary.com/v1_1/your-cloud/image/upload\",\n    \"signature\": \"abc123signature\",\n    \"timestamp\": 1704067200,\n    \"apiKey\": \"123456789012345\",\n    \"cloudName\": \"your-cloud\"\n  }\n}"
+            }
+          ]
+        }
+      ],
+      "description": "Read-only operations for retrieving image data."
+    },
+    {
+      "name": "📤 Upload Operations",
+      "item": [
+        {
+          "name": "Upload Single Image (File)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Response has success true', () => pm.expect(pm.response.json().success).to.be.true);",
+                  "pm.test('Image has required fields', () => {",
+                  "    const data = pm.response.json().data;",
+                  "    pm.expect(data).to.have.property('id');",
+                  "    pm.expect(data).to.have.property('url');",
+                  "    pm.expect(data).to.have.property('secure_url');",
+                  "    pm.expect(data).to.have.property('public_id');",
+                  "    pm.expect(data).to.have.property('width');",
+                  "    pm.expect(data).to.have.property('height');",
+                  "    pm.expect(data).to.have.property('format');",
+                  "    pm.expect(data.source).to.equal('cloudinary');",
+                  "});",
+                  "",
+                  "if (pm.response.code === 201) {",
+                  "    const data = pm.response.json().data;",
+                  "    pm.environment.set('image_id', data.id);",
+                  "    pm.environment.set('image_public_id', data.public_id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{platform_admin_access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "",
+                  "description": "Required. Image file (JPEG, PNG, WebP, GIF). Max 10MB."
+                },
+                {
+                  "key": "alt_text",
+                  "value": "Property living room",
+                  "type": "text",
+                  "description": "Optional. Alternative text for accessibility."
+                },
+                {
+                  "key": "caption",
+                  "value": "Spacious living area with natural lighting",
+                  "type": "text",
+                  "description": "Optional. Image caption/description."
+                },
+                {
+                  "key": "is_primary",
+                  "value": "true",
+                  "type": "text",
+                  "description": "Optional. Set as primary property image. Default: false"
+                },
+                {
+                  "key": "sort_order",
+                  "value": "0",
+                  "type": "text",
+                  "description": "Optional. Display order (0 = first)."
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/properties/{{property_id}}/images/upload",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "properties", "{{property_id}}", "images", "upload"]
+            },
+            "description": "Upload a single image file via multipart/form-data.\n\n## Processing\n1. Image is received and stored in memory\n2. Preprocessed with Sharp (resize, optimize)\n3. Uploaded to Cloudinary\n4. Thumbnail generated automatically\n5. Metadata saved to database\n\n## Limits\n- Max file size: 10MB\n- Supported formats: JPEG, PNG, WebP, GIF"
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"success\": true,\n  \"message\": \"Image uploaded successfully\",\n  \"data\": {\n    \"id\": \"507f1f77bcf86cd799439012\",\n    \"property_id\": \"507f1f77bcf86cd799439011\",\n    \"url\": \"http://res.cloudinary.com/.../image.webp\",\n    \"secure_url\": \"https://res.cloudinary.com/.../image.webp\",\n    \"thumbnail_url\": \"http://res.cloudinary.com/.../c_fill,h_300,w_400/image.webp\",\n    \"thumbnail_secure_url\": \"https://res.cloudinary.com/.../c_fill,h_300,w_400/image.webp\",\n    \"public_id\": \"immobilier/properties/507f1f77bcf86cd799439011/1703123456789-abc123\",\n    \"width\": 1920,\n    \"height\": 1080,\n    \"format\": \"webp\",\n    \"bytes\": 245789,\n    \"alt_text\": \"Property living room\",\n    \"caption\": \"Spacious living area with natural lighting\",\n    \"sort_order\": 0,\n    \"is_primary\": true,\n    \"source\": \"cloudinary\",\n    \"original_filename\": \"living-room.jpg\",\n    \"created_at\": \"2024-01-15T10:30:00.000Z\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Upload Multiple Images (Batch)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Response has successful and failed arrays', () => {",
+                  "    const data = pm.response.json().data;",
+                  "    pm.expect(data).to.have.property('successful');",
+                  "    pm.expect(data).to.have.property('failed');",
+                  "    pm.expect(data.successful).to.be.an('array');",
+                  "    pm.expect(data.failed).to.be.an('array');",
+                  "});",
+                  "",
+                  "// Save first successful image ID",
+                  "const data = pm.response.json().data;",
+                  "if (data.successful && data.successful.length > 0) {",
+                  "    pm.environment.set('image_id', data.successful[0].id);",
+                  "    if (data.successful[0].public_id) {",
+                  "        pm.environment.set('image_public_id', data.successful[0].public_id);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{platform_admin_access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "images",
+                  "type": "file",
+                  "src": "",
+                  "description": "Required. Multiple image files. Select multiple files in file dialog."
+                },
+                {
+                  "key": "alt_text",
+                  "value": "Property photos",
+                  "type": "text",
+                  "description": "Optional. Alt text applied to all images."
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/properties/{{property_id}}/images/upload-multiple",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "properties", "{{property_id}}", "images", "upload-multiple"]
+            },
+            "description": "Upload multiple images in a single request.\n\n## Processing\nEach image is processed sequentially and results are returned in a batch response.\n\n## Limits\n- Max 20 images per request\n- Max 10MB per file\n- Total request size depends on server config"
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"success\": true,\n  \"message\": \"Images uploaded successfully\",\n  \"data\": {\n    \"successful\": [\n      {\n        \"id\": \"507f1f77bcf86cd799439012\",\n        \"property_id\": \"507f1f77bcf86cd799439011\",\n        \"url\": \"https://res.cloudinary.com/.../living-room.webp\",\n        \"public_id\": \"immobilier/properties/.../living-room\",\n        \"width\": 1920,\n        \"height\": 1080,\n        \"format\": \"webp\",\n        \"bytes\": 245789,\n        \"source\": \"cloudinary\",\n        \"original_filename\": \"living-room.jpg\",\n        \"created_at\": \"2024-01-15T10:30:00.000Z\"\n      },\n      {\n        \"id\": \"507f1f77bcf86cd799439013\",\n        \"property_id\": \"507f1f77bcf86cd799439011\",\n        \"url\": \"https://res.cloudinary.com/.../bedroom.webp\",\n        \"public_id\": \"immobilier/properties/.../bedroom\",\n        \"width\": 1920,\n        \"height\": 1080,\n        \"format\": \"webp\",\n        \"bytes\": 198456,\n        \"source\": \"cloudinary\",\n        \"original_filename\": \"bedroom.jpg\",\n        \"created_at\": \"2024-01-15T10:30:01.000Z\"\n      }\n    ],\n    \"failed\": [\n      {\n        \"filename\": \"kitchen.jpg\",\n        \"error\": \"File size exceeds maximum allowed limit\"\n      }\n    ]\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Upload Image from URL",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Response has success true', () => pm.expect(pm.response.json().success).to.be.true);",
+                  "pm.test('Image source is url', () => {",
+                  "    const data = pm.response.json().data;",
+                  "    pm.expect(data).to.have.property('id');",
+                  "    pm.expect(data).to.have.property('url');",
+                  "    pm.expect(data).to.have.property('public_id');",
+                  "    pm.expect(data.source).to.equal('url');",
+                  "});",
+                  "",
+                  "if (pm.response.code === 201) {",
+                  "    const data = pm.response.json().data;",
+                  "    pm.environment.set('image_id', data.id);",
+                  "    pm.environment.set('image_public_id', data.public_id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{platform_admin_access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"url\": \"{{test_image_url}}\",\n    \"alt_text\": \"Beautiful property exterior\",\n    \"caption\": \"Front view of the property\",\n    \"is_primary\": false\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/properties/{{property_id}}/images/upload-url",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "properties", "{{property_id}}", "images", "upload-url"]
+            },
+            "description": "Import an image from an external URL.\n\n## Processing\n1. Cloudinary fetches the image from the URL\n2. Image is processed and optimized\n3. Stored in Cloudinary with transformations\n4. Metadata saved to database\n\n## Use Cases\n- Importing images from other services\n- Migrating from another platform\n- Adding stock photos"
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"success\": true,\n  \"message\": \"Image uploaded from URL successfully\",\n  \"data\": {\n    \"id\": \"507f1f77bcf86cd799439014\",\n    \"property_id\": \"507f1f77bcf86cd799439011\",\n    \"url\": \"https://res.cloudinary.com/.../property-image.webp\",\n    \"secure_url\": \"https://res.cloudinary.com/.../property-image.webp\",\n    \"thumbnail_url\": \"https://res.cloudinary.com/.../c_fill,h_300,w_400/property-image.webp\",\n    \"public_id\": \"immobilier/properties/.../property-image\",\n    \"width\": 1600,\n    \"height\": 900,\n    \"format\": \"webp\",\n    \"bytes\": 178234,\n    \"alt_text\": \"Beautiful property exterior\",\n    \"caption\": \"Front view of the property\",\n    \"source\": \"url\",\n    \"original_filename\": \"property-image.jpg\",\n    \"created_at\": \"2024-01-15T10:35:00.000Z\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Add External Image Reference",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Response has success true', () => pm.expect(pm.response.json().success).to.be.true);",
+                  "pm.test('Image source is external', () => {",
+                  "    const data = pm.response.json().data;",
+                  "    pm.expect(data).to.have.property('id');",
+                  "    pm.expect(data).to.have.property('url');",
+                  "    pm.expect(data.source).to.equal('external');",
+                  "    pm.expect(data).not.to.have.property('public_id');",
+                  "});",
+                  "",
+                  "if (pm.response.code === 201) {",
+                  "    pm.environment.set('image_id', pm.response.json().data.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{platform_admin_access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"url\": \"https://cdn.example.com/property-images/exterior.jpg\",\n    \"alt_text\": \"External image reference\",\n    \"caption\": \"Image hosted on external CDN\",\n    \"is_primary\": false\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/properties/{{property_id}}/images/external",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "properties", "{{property_id}}", "images", "external"]
+            },
+            "description": "Add a reference to an externally hosted image without uploading to Cloudinary.\n\n## Use Cases\n- Images already hosted on another CDN\n- Images that shouldn't be duplicated\n- External agency image feeds\n\n## Note\nExternal images are not processed or optimized. The URL is stored as-is."
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"success\": true,\n  \"message\": \"External image reference added successfully\",\n  \"data\": {\n    \"id\": \"507f1f77bcf86cd799439015\",\n    \"property_id\": \"507f1f77bcf86cd799439011\",\n    \"url\": \"https://cdn.example.com/property-images/exterior.jpg\",\n    \"alt_text\": \"External image reference\",\n    \"caption\": \"Image hosted on external CDN\",\n    \"sort_order\": 3,\n    \"is_primary\": false,\n    \"source\": \"external\",\n    \"created_at\": \"2024-01-15T10:40:00.000Z\"\n  }\n}"
+            }
+          ]
+        }
+      ],
+      "description": "Image upload operations including file uploads, URL imports, and external references."
+    },
+    {
+      "name": "✏️ Update Operations",
+      "item": [
+        {
+          "name": "Update Image Metadata",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has success true', () => pm.expect(pm.response.json().success).to.be.true);",
+                  "pm.test('Image metadata updated', () => {",
+                  "    const data = pm.response.json().data;",
+                  "    pm.expect(data.alt_text).to.equal('Updated alt text');",
+                  "    pm.expect(data.caption).to.equal('Updated caption for the image');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{platform_admin_access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"alt_text\": \"Updated alt text\",\n    \"caption\": \"Updated caption for the image\",\n    \"sort_order\": 0,\n    \"is_primary\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/properties/{{property_id}}/images/{{image_id}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "properties", "{{property_id}}", "images", "{{image_id}}"]
+            },
+            "description": "Update image metadata including alt text, caption, sort order, and primary status.\n\n## Updatable Fields\n- `alt_text`: Alternative text for accessibility\n- `caption`: Image caption/description\n- `sort_order`: Display order (0 = first)\n- `is_primary`: Primary image flag (only one per property)"
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"success\": true,\n  \"message\": \"Image updated successfully\",\n  \"data\": {\n    \"id\": \"507f1f77bcf86cd799439012\",\n    \"property_id\": \"507f1f77bcf86cd799439011\",\n    \"url\": \"https://res.cloudinary.com/.../image.webp\",\n    \"alt_text\": \"Updated alt text\",\n    \"caption\": \"Updated caption for the image\",\n    \"sort_order\": 0,\n    \"is_primary\": true,\n    \"updated_at\": \"2024-01-15T11:00:00.000Z\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Set Image as Primary",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has success true', () => pm.expect(pm.response.json().success).to.be.true);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{platform_admin_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/properties/{{property_id}}/images/{{image_id}}/primary",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "properties", "{{property_id}}", "images", "{{image_id}}", "primary"]
+            },
+            "description": "Set a specific image as the primary image for the property.\n\n## Behavior\n- The specified image will be set as primary\n- Any existing primary image will be demoted\n- Only one image can be primary per property"
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"success\": true,\n  \"message\": \"Primary image set successfully\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Reorder Images",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has success true', () => pm.expect(pm.response.json().success).to.be.true);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{platform_admin_access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"orders\": [\n        { \"id\": \"{{image_id}}\", \"sort_order\": 0 }\n    ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/properties/{{property_id}}/images/reorder",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "properties", "{{property_id}}", "images", "reorder"]
+            },
+            "description": "Reorder multiple images by providing an array of image IDs with their new sort orders.\n\n## Request Body\n```json\n{\n  \"orders\": [\n    { \"id\": \"image_id_1\", \"sort_order\": 0 },\n    { \"id\": \"image_id_2\", \"sort_order\": 1 },\n    { \"id\": \"image_id_3\", \"sort_order\": 2 }\n  ]\n}\n```\n\n## Note\nOnly include images that need reordering. Other images keep their current order."
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"success\": true,\n  \"message\": \"Images reordered successfully\"\n}"
+            }
+          ]
+        }
+      ],
+      "description": "Operations for updating image metadata and organization."
+    },
+    {
+      "name": "🗑️ Delete Operations",
+      "item": [
+        {
+          "name": "Delete Single Image",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has success true', () => pm.expect(pm.response.json().success).to.be.true);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{platform_admin_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/properties/{{property_id}}/images/{{image_id}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "properties", "{{property_id}}", "images", "{{image_id}}"]
+            },
+            "description": "Delete a single image from a property.\n\n## Cloudinary Cleanup\nIf the image was uploaded to Cloudinary (has a `public_id`), it will automatically be deleted from Cloudinary as well.\n\n## External Images\nFor external image references, only the database record is deleted."
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"success\": true,\n  \"message\": \"Image deleted successfully\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete All Property Images",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has success true', () => pm.expect(pm.response.json().success).to.be.true);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{platform_admin_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/properties/{{property_id}}/images",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "properties", "{{property_id}}", "images"]
+            },
+            "description": "Delete all images for a property.\n\n## Warning\nThis is a destructive operation. All images will be permanently deleted from both the database and Cloudinary.\n\n## Use Cases\n- Preparing property for complete re-upload\n- Removing property listing entirely\n- Bulk cleanup"
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"success\": true,\n  \"message\": \"All images deleted successfully\",\n  \"data\": {\n    \"deletedCount\": 5\n  }\n}"
+            }
+          ]
+        }
+      ],
+      "description": "Operations for deleting images with automatic Cloudinary cleanup."
+    },
+    {
+      "name": "❌ Error Cases",
+      "item": [
+        {
+          "name": "Upload - No File Provided",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Response has success false', () => pm.expect(pm.response.json().success).to.be.false);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{platform_admin_access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/properties/{{property_id}}/images/upload",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "properties", "{{property_id}}", "images", "upload"]
+            },
+            "description": "Test error handling when no file is provided."
+          },
+          "response": []
+        },
+        {
+          "name": "Upload - Invalid Property ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400 or 404', () => {",
+                  "    pm.expect([400, 404]).to.include(pm.response.code);",
+                  "});",
+                  "pm.test('Response has success false', () => pm.expect(pm.response.json().success).to.be.false);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{platform_admin_access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"url\": \"{{test_image_url}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/properties/invalid-id/images/upload-url",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "properties", "invalid-id", "images", "upload-url"]
+            },
+            "description": "Test error handling for invalid property ID."
+          },
+          "response": []
+        },
+        {
+          "name": "Upload URL - Missing URL",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Response has success false', () => pm.expect(pm.response.json().success).to.be.false);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{platform_admin_access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"alt_text\": \"Missing URL\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/properties/{{property_id}}/images/upload-url",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "properties", "{{property_id}}", "images", "upload-url"]
+            },
+            "description": "Test error handling when URL is missing from request."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete - Non-existent Image",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Response has success false', () => pm.expect(pm.response.json().success).to.be.false);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{platform_admin_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/properties/{{property_id}}/images/507f1f77bcf86cd799439999",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "properties", "{{property_id}}", "images", "507f1f77bcf86cd799439999"]
+            },
+            "description": "Test error handling when trying to delete a non-existent image."
+          },
+          "response": []
+        },
+        {
+          "name": "Unauthorized Access",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 401', () => pm.response.to.have.status(401));",
+                  "pm.test('Response has success false', () => pm.expect(pm.response.json().success).to.be.false);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/admin/properties/{{property_id}}/images",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "properties", "{{property_id}}", "images"]
+            },
+            "description": "Test that requests without authentication are rejected."
+          },
+          "response": []
+        }
+      ],
+      "description": "Test cases for error handling and validation."
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Ensure property_id is set",
+          "if (!pm.environment.get('property_id')) {",
+          "    console.warn('property_id is not set. Please set it in the environment.');",
+          "}"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Global test for response time",
+          "pm.test('Response time is less than 5000ms', function () {",
+          "    pm.expect(pm.response.responseTime).to.be.below(5000);",
+          "});"
+        ]
+      }
+    }
+  ]
+}
