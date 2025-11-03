@@ -1,0 +1,1395 @@
+{
+  "info": {
+    "_postman_id": "search-module-collection",
+    "name": "Search Module",
+    "description": "Comprehensive search functionality for the Immobilier.ch API including property search, location search, suggestions, and faceted search.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Public",
+      "description": "Public search endpoints accessible without authentication",
+      "item": [
+        {
+          "name": "Unified Search",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/public/search?q=Geneva&lang={{lang}}&limit=5",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "Geneva",
+                  "description": "Search query"
+                },
+                {
+                  "key": "lang",
+                  "value": "{{lang}}",
+                  "description": "Language code (en, fr, de, it)"
+                },
+                {
+                  "key": "limit",
+                  "value": "5",
+                  "description": "Max results per category"
+                }
+              ]
+            },
+            "description": "Search properties and locations in a single request"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has success true', () => pm.expect(pm.response.json().success).to.be.true);",
+                  "pm.test('Response has properties', () => pm.expect(pm.response.json().data.properties).to.exist);",
+                  "pm.test('Response has locations', () => pm.expect(pm.response.json().data.locations).to.exist);",
+                  "pm.test('Response time < 500ms', () => pm.expect(pm.response.responseTime).to.be.below(500));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Property Search (Offset Pagination)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "{{lang}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/public/search/properties?lang={{lang}}&page=1&limit=20",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "properties"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{lang}}",
+                  "description": "Language code"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                },
+                {
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Results per page"
+                }
+              ]
+            },
+            "description": "Search properties with offset-based pagination"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has success true', () => pm.expect(pm.response.json().success).to.be.true);",
+                  "pm.test('Response has properties array', () => pm.expect(pm.response.json().data.properties).to.be.an('array'));",
+                  "pm.test('Response has pagination', () => pm.expect(pm.response.json().data.pagination).to.exist);",
+                  "",
+                  "// Save first property ID for later tests",
+                  "if (pm.response.json().data.properties.length > 0) {",
+                  "  pm.environment.set('property_id', pm.response.json().data.properties[0].id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Property Search - Filter by Canton",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/properties?lang={{lang}}&canton_id={{canton_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "properties"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{lang}}"
+                },
+                {
+                  "key": "canton_id",
+                  "value": "{{canton_id}}",
+                  "description": "Filter by single canton"
+                }
+              ]
+            },
+            "description": "Search properties filtered by canton"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has success true', () => pm.expect(pm.response.json().success).to.be.true);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Property Search - Filter by City",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/properties?lang={{lang}}&city_id={{city_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "properties"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{lang}}"
+                },
+                {
+                  "key": "city_id",
+                  "value": "{{city_id}}",
+                  "description": "Filter by single city"
+                }
+              ]
+            },
+            "description": "Search properties filtered by city"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has success true', () => pm.expect(pm.response.json().success).to.be.true);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Property Search - Filter by Transaction Type",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/properties?lang={{lang}}&transaction_type=rent",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "properties"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{lang}}"
+                },
+                {
+                  "key": "transaction_type",
+                  "value": "rent",
+                  "description": "rent or buy"
+                }
+              ]
+            },
+            "description": "Search properties by transaction type (rent/buy)"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('All results are rent', () => {",
+                  "  const properties = pm.response.json().data.properties;",
+                  "  properties.forEach(p => pm.expect(p.transaction_type).to.equal('rent'));",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Property Search - Filter by Price Range",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/properties?lang={{lang}}&price_min=1000&price_max=3000",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "properties"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{lang}}"
+                },
+                {
+                  "key": "price_min",
+                  "value": "1000",
+                  "description": "Minimum price"
+                },
+                {
+                  "key": "price_max",
+                  "value": "3000",
+                  "description": "Maximum price"
+                }
+              ]
+            },
+            "description": "Search properties within a price range"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('All prices within range', () => {",
+                  "  const properties = pm.response.json().data.properties;",
+                  "  properties.forEach(p => {",
+                  "    pm.expect(p.price).to.be.at.least(1000);",
+                  "    pm.expect(p.price).to.be.at.most(3000);",
+                  "  });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Property Search - Filter by Rooms",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/properties?lang={{lang}}&rooms_min=2&rooms_max=4",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "properties"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{lang}}"
+                },
+                {
+                  "key": "rooms_min",
+                  "value": "2",
+                  "description": "Minimum rooms"
+                },
+                {
+                  "key": "rooms_max",
+                  "value": "4",
+                  "description": "Maximum rooms"
+                }
+              ]
+            },
+            "description": "Search properties by number of rooms"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('All rooms within range', () => {",
+                  "  const properties = pm.response.json().data.properties;",
+                  "  properties.forEach(p => {",
+                  "    if (p.rooms) {",
+                  "      pm.expect(p.rooms).to.be.at.least(2);",
+                  "      pm.expect(p.rooms).to.be.at.most(4);",
+                  "    }",
+                  "  });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Property Search - Filter by Category",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/properties?lang={{lang}}&category_id={{category_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "properties"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{lang}}"
+                },
+                {
+                  "key": "category_id",
+                  "value": "{{category_id}}",
+                  "description": "Filter by category"
+                }
+              ]
+            },
+            "description": "Search properties by category"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has success true', () => pm.expect(pm.response.json().success).to.be.true);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Property Search - Text Search",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/properties?lang={{lang}}&q=modern apartment",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "properties"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{lang}}"
+                },
+                {
+                  "key": "q",
+                  "value": "modern apartment",
+                  "description": "Text search query"
+                }
+              ]
+            },
+            "description": "Full-text search for properties"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has success true', () => pm.expect(pm.response.json().success).to.be.true);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Property Search - Sort by Price Ascending",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/properties?lang={{lang}}&sort=price_asc",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "properties"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{lang}}"
+                },
+                {
+                  "key": "sort",
+                  "value": "price_asc",
+                  "description": "Sort by price ascending"
+                }
+              ]
+            },
+            "description": "Search properties sorted by price (lowest first)"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Results sorted by price ascending', () => {",
+                  "  const properties = pm.response.json().data.properties;",
+                  "  for (let i = 1; i < properties.length; i++) {",
+                  "    pm.expect(properties[i].price).to.be.at.least(properties[i-1].price);",
+                  "  }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Property Search - Sort by Date Descending",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/properties?lang={{lang}}&sort=date_desc",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "properties"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{lang}}"
+                },
+                {
+                  "key": "sort",
+                  "value": "date_desc",
+                  "description": "Sort by date descending (newest first)"
+                }
+              ]
+            },
+            "description": "Search properties sorted by publication date (newest first)"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has success true', () => pm.expect(pm.response.json().success).to.be.true);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Property Search - Combined Filters",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/properties?lang={{lang}}&transaction_type=rent&canton_id={{canton_id}}&price_max=3000&rooms_min=2&sort=price_asc",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "properties"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{lang}}"
+                },
+                {
+                  "key": "transaction_type",
+                  "value": "rent"
+                },
+                {
+                  "key": "canton_id",
+                  "value": "{{canton_id}}"
+                },
+                {
+                  "key": "price_max",
+                  "value": "3000"
+                },
+                {
+                  "key": "rooms_min",
+                  "value": "2"
+                },
+                {
+                  "key": "sort",
+                  "value": "price_asc"
+                }
+              ]
+            },
+            "description": "Search with multiple combined filters"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has filters_applied', () => pm.expect(pm.response.json().data.filters_applied).to.exist);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Property Search (Cursor Pagination)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/properties/cursor?lang={{lang}}&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "properties", "cursor"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{lang}}"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Results per page"
+                }
+              ]
+            },
+            "description": "Search properties with cursor-based pagination (for infinite scroll)"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has has_more', () => pm.expect(pm.response.json().data.pagination.has_more).to.be.a('boolean'));",
+                  "",
+                  "// Save cursor for next page",
+                  "if (pm.response.json().data.pagination.next_cursor) {",
+                  "  pm.environment.set('search_cursor', pm.response.json().data.pagination.next_cursor);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Property Search (Cursor - Next Page)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/properties/cursor?lang={{lang}}&limit=10&cursor={{search_cursor}}",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "properties", "cursor"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{lang}}"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "cursor",
+                  "value": "{{search_cursor}}",
+                  "description": "Cursor from previous response"
+                }
+              ]
+            },
+            "description": "Get next page using cursor pagination"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has success true', () => pm.expect(pm.response.json().success).to.be.true);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Location Search",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/locations?q=Geneva&lang={{lang}}&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "locations"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "Geneva",
+                  "description": "Search query (min 2 chars)"
+                },
+                {
+                  "key": "lang",
+                  "value": "{{lang}}"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Search for cities and cantons"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has locations array', () => pm.expect(pm.response.json().data.locations).to.be.an('array'));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Location Search - Cities Only",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/locations?q=Geneva&lang={{lang}}&type=city",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "locations"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "Geneva"
+                },
+                {
+                  "key": "lang",
+                  "value": "{{lang}}"
+                },
+                {
+                  "key": "type",
+                  "value": "city",
+                  "description": "Filter by type: city, canton, or all"
+                }
+              ]
+            },
+            "description": "Search for cities only"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('All results are cities', () => {",
+                  "  const locations = pm.response.json().data.locations;",
+                  "  locations.forEach(l => pm.expect(l.type).to.equal('city'));",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Search Suggestions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/suggestions?q=Gen&lang={{lang}}&limit=5",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "suggestions"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "Gen",
+                  "description": "Search query (min 2 chars)"
+                },
+                {
+                  "key": "lang",
+                  "value": "{{lang}}"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            },
+            "description": "Get autocomplete suggestions for search input"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has suggestions array', () => pm.expect(pm.response.json().data.suggestions).to.be.an('array'));",
+                  "pm.test('Suggestions limited to 5', () => pm.expect(pm.response.json().data.suggestions.length).to.be.at.most(5));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Search Facets",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/facets?lang={{lang}}",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "facets"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{lang}}"
+                }
+              ]
+            },
+            "description": "Get faceted search counts for filters"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has facets', () => pm.expect(pm.response.json().data.facets).to.exist);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Search Facets - With Filters",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/facets?lang={{lang}}&transaction_type=rent",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "facets"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{lang}}"
+                },
+                {
+                  "key": "transaction_type",
+                  "value": "rent",
+                  "description": "Filter facets by transaction type"
+                }
+              ]
+            },
+            "description": "Get faceted search counts with filters applied"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has facets', () => pm.expect(pm.response.json().data.facets).to.exist);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "i18n Tests",
+      "description": "Language-specific search tests",
+      "item": [
+        {
+          "name": "Search Properties - English",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/properties?lang=en&limit=5",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "properties"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "en"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('All translations are English', () => {",
+                  "  const properties = pm.response.json().data.properties;",
+                  "  properties.forEach(p => pm.expect(p.translation_language).to.equal('en'));",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Search Properties - French",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/properties?lang=fr&limit=5",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "properties"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "fr"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('All translations are French', () => {",
+                  "  const properties = pm.response.json().data.properties;",
+                  "  properties.forEach(p => pm.expect(p.translation_language).to.equal('fr'));",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Search Properties - German",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/properties?lang=de&limit=5",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "properties"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "de"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('All translations are German', () => {",
+                  "  const properties = pm.response.json().data.properties;",
+                  "  properties.forEach(p => pm.expect(p.translation_language).to.equal('de'));",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Search Properties - Italian",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/properties?lang=it&limit=5",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "properties"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "it"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('All translations are Italian', () => {",
+                  "  const properties = pm.response.json().data.properties;",
+                  "  properties.forEach(p => pm.expect(p.translation_language).to.equal('it'));",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Location Search - French",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/locations?q=Genève&lang=fr",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "locations"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "Genève"
+                },
+                {
+                  "key": "lang",
+                  "value": "fr"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has locations', () => pm.expect(pm.response.json().data.locations.length).to.be.greaterThan(0));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Validation Tests",
+      "description": "Input validation tests",
+      "item": [
+        {
+          "name": "Invalid Language Code",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/properties?lang=invalid",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "properties"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "invalid"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Response has success false', () => pm.expect(pm.response.json().success).to.be.false);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Invalid Page Number",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/properties?lang={{lang}}&page=-1",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "properties"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{lang}}"
+                },
+                {
+                  "key": "page",
+                  "value": "-1"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Response has success false', () => pm.expect(pm.response.json().success).to.be.false);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Invalid Limit (Too High)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/properties?lang={{lang}}&limit=1000",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "properties"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{lang}}"
+                },
+                {
+                  "key": "limit",
+                  "value": "1000"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Response has success false', () => pm.expect(pm.response.json().success).to.be.false);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Invalid ObjectId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/properties?lang={{lang}}&canton_id=invalid-id",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "properties"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{lang}}"
+                },
+                {
+                  "key": "canton_id",
+                  "value": "invalid-id"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Response has success false', () => pm.expect(pm.response.json().success).to.be.false);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Invalid Sort Option",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/properties?lang={{lang}}&sort=invalid_sort",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "properties"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "{{lang}}"
+                },
+                {
+                  "key": "sort",
+                  "value": "invalid_sort"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Response has success false', () => pm.expect(pm.response.json().success).to.be.false);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Suggestions - Query Too Short",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/public/search/suggestions?q=G&lang={{lang}}",
+              "host": ["{{base_url}}"],
+              "path": ["public", "search", "suggestions"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "G"
+                },
+                {
+                  "key": "lang",
+                  "value": "{{lang}}"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Response has success false', () => pm.expect(pm.response.json().success).to.be.false);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "description": "Admin search endpoints (requires authentication)",
+      "item": [
+        {
+          "name": "Invalidate Search Cache",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pattern\": \"search:*\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/search/cache/invalidate",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "search", "cache", "invalidate"]
+            },
+            "description": "Invalidate search cache (requires admin:manage permission)"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has success true', () => pm.expect(pm.response.json().success).to.be.true);",
+                  "pm.test('Message contains invalidated', () => pm.expect(pm.response.json().message).to.include('invalidated'));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Invalidate Cache - Specific Pattern",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pattern\": \"search:properties:*\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/search/cache/invalidate",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "search", "cache", "invalidate"]
+            },
+            "description": "Invalidate only property search cache"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Response has success true', () => pm.expect(pm.response.json().success).to.be.true);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Invalidate Cache - Unauthenticated",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/search/cache/invalidate",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "search", "cache", "invalidate"]
+            },
+            "description": "Should fail without authentication"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 401', () => pm.response.to.have.status(401));",
+                  "pm.test('Response has success false', () => pm.expect(pm.response.json().success).to.be.false);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Auto-refresh token if expired",
+          "const tokenExpiry = pm.environment.get('token_expiry');",
+          "if (tokenExpiry && Date.now() > parseInt(tokenExpiry)) {",
+          "  pm.sendRequest({",
+          "    url: pm.environment.get('base_url') + '/auth/refresh',",
+          "    method: 'POST',",
+          "    header: { 'Content-Type': 'application/json' },",
+          "    body: { mode: 'raw', raw: JSON.stringify({ refresh_token: pm.environment.get('refresh_token') }) }",
+          "  }, (err, res) => {",
+          "    if (!err && res.json().data) {",
+          "      pm.environment.set('auth_token', res.json().data.access_token);",
+          "      pm.environment.set('token_expiry', Date.now() + (res.json().data.expires_in * 1000));",
+          "    }",
+          "  });",
+          "}"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Log response time for all requests",
+          "console.log('Response time: ' + pm.response.responseTime + 'ms');"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:4003/api/v1"
+    },
+    {
+      "key": "lang",
+      "value": "en"
+    }
+  ]
+}
