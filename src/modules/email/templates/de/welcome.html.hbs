@@ -1,0 +1,29 @@
+<h2>Willkommen bei Immobilier.ch!</h2>
+
+<p>Hallo {{firstName}},</p>
+
+<p>Ihre E-Mail-Adresse wurde bestätigt und Ihr Konto ist jetzt vollständig aktiv. Willkommen auf der führenden Immobilienplattform der Schweiz!</p>
+
+<div class="success-box">
+  <p><strong>Ihr Konto ist einsatzbereit!</strong></p>
+</div>
+
+<p>Das können Sie jetzt tun:</p>
+
+<ul style="padding-left: 20px; line-height: 2;">
+  <li>🏠 Tausende Immobilien in der ganzen Schweiz durchsuchen</li>
+  <li>❤️ Ihre Lieblingsimmobilien speichern</li>
+  <li>🔔 Benachrichtigungen für neue Angebote einrichten</li>
+  <li>📧 Eigentümer und Makler direkt kontaktieren</li>
+  {{#if isOwnerOrAgent}}
+  <li>📝 Ihre Immobilien zur Miete oder zum Verkauf anbieten</li>
+  {{/if}}
+</ul>
+
+<div style="text-align: center; margin: 30px 0;">
+  <a href="{{dashboardUrl}}" class="btn-primary">Zu Ihrem Dashboard</a>
+</div>
+
+<p>Bei Fragen steht Ihnen unser Support-Team jederzeit zur Verfügung.</p>
+
+<p>Viel Erfolg bei der Suche!<br><strong>Das Immobilier.ch Team</strong></p>

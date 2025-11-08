@@ -1,0 +1,34 @@
+<h2>Aggiornamento annuncio richiesto</h2>
+
+<p>Ciao {{firstName}},</p>
+
+<p>Grazie per aver inviato il tuo annuncio immobiliare. Purtroppo, dopo la revisione del nostro team di moderazione, non siamo stati in grado di approvarlo al momento.</p>
+
+<div class="error-box">
+  <p><strong>❌ Il tuo annuncio richiede modifiche</strong></p>
+</div>
+
+<div class="property-card">
+  <h3>{{propertyTitle}}</h3>
+  <p class="address">📍 {{propertyAddress}}</p>
+</div>
+
+<p><strong>Motivo del rifiuto:</strong></p>
+<div class="warning-box">
+  <p>{{rejectionReason}}</p>
+</div>
+
+<p><strong>Cosa puoi fare?</strong></p>
+<ul style="padding-left: 20px; line-height: 2;">
+  <li>Esamina attentamente il motivo sopra indicato</li>
+  <li>Modifica il tuo annuncio per risolvere i problemi</li>
+  <li>Invia nuovamente la tua proprietà per la revisione</li>
+</ul>
+
+<div style="text-align: center; margin: 30px 0;">
+  <a href="{{editPropertyUrl}}" class="btn-primary">Modifica il tuo annuncio</a>
+</div>
+
+<p>Se ritieni che questa decisione sia stata presa per errore o hai domande, contatta il nostro team di supporto.</p>
+
+<p>Cordiali saluti,<br><strong>Il team di Immobilier.ch</strong></p>

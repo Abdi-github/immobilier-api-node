@@ -1,0 +1,35 @@
+<h2>🎉 Votre propriété est maintenant en ligne !</h2>
+
+<p>Bonjour {{firstName}},</p>
+
+<p>Excellente nouvelle ! Votre annonce immobilière est maintenant <strong>en ligne</strong> sur Immobilier.ch et est visible par des milliers d'acheteurs et de locataires potentiels.</p>
+
+<div class="success-box">
+  <p><strong>🚀 Votre propriété est maintenant publiée !</strong></p>
+</div>
+
+<div class="property-card">
+  <h3>{{propertyTitle}}</h3>
+  <p class="address">📍 {{propertyAddress}}</p>
+  <p style="margin-top: 10px; font-weight: 600; color: #1a73e8;">
+    {{formatCurrency propertyPrice "CHF"}} {{#if isRent}}/ mois{{/if}}
+  </p>
+</div>
+
+<p><strong>Conseils pour plus de visibilité :</strong></p>
+<ul style="padding-left: 20px; line-height: 2;">
+  <li>📸 Ajoutez des photos de haute qualité de votre propriété</li>
+  <li>📝 Rédigez une description détaillée et attrayante</li>
+  <li>💰 Gardez vos prix compétitifs</li>
+  <li>⏱️ Répondez rapidement aux demandes</li>
+</ul>
+
+<div style="text-align: center; margin: 30px 0;">
+  <a href="{{propertyUrl}}" class="btn-primary">Voir votre annonce en ligne</a>
+  <br><br>
+  <a href="{{dashboardUrl}}" class="btn-secondary">Gérer dans le tableau de bord</a>
+</div>
+
+<p>Nous vous informerons lorsque des acheteurs ou locataires potentiels montreront de l'intérêt pour votre propriété.</p>
+
+<p>Bonne chance avec votre annonce !<br><strong>L'équipe Immobilier.ch</strong></p>

@@ -1,0 +1,22 @@
+<h2>Verifica il tuo indirizzo email</h2>
+
+<p>Ciao {{firstName}},</p>
+
+<p>Grazie per aver creato un account su Immobilier.ch! Per completare la registrazione e accedere a tutte le funzionalità, verifica il tuo indirizzo email.</p>
+
+<div style="text-align: center; margin: 30px 0;">
+  <a href="{{verificationUrl}}" class="btn-primary">Verifica indirizzo email</a>
+</div>
+
+<div class="info-box">
+  <p><strong>Questo link scadrà tra {{expiresIn}}.</strong></p>
+</div>
+
+<p>Se non hai creato un account con noi, puoi ignorare questa email.</p>
+
+<p style="margin-top: 30px; font-size: 14px; color: #757575;">
+  Se il pulsante sopra non funziona, copia e incolla questo link nel tuo browser:<br>
+  <a href="{{verificationUrl}}" style="word-break: break-all;">{{verificationUrl}}</a>
+</p>
+
+<p>Cordiali saluti,<br><strong>Il team di Immobilier.ch</strong></p>

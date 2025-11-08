@@ -1,0 +1,29 @@
+<h2>Benvenuto su Immobilier.ch!</h2>
+
+<p>Ciao {{firstName}},</p>
+
+<p>Il tuo indirizzo email è stato verificato e il tuo account è ora completamente attivo. Benvenuto sulla principale piattaforma immobiliare della Svizzera!</p>
+
+<div class="success-box">
+  <p><strong>Il tuo account è pronto per l'uso!</strong></p>
+</div>
+
+<p>Ecco cosa puoi fare adesso:</p>
+
+<ul style="padding-left: 20px; line-height: 2;">
+  <li>🏠 Sfoglia migliaia di proprietà in tutta la Svizzera</li>
+  <li>❤️ Salva le tue proprietà preferite</li>
+  <li>🔔 Imposta avvisi per nuovi annunci</li>
+  <li>📧 Contatta direttamente proprietari e agenti</li>
+  {{#if isOwnerOrAgent}}
+  <li>📝 Pubblica le tue proprietà in affitto o in vendita</li>
+  {{/if}}
+</ul>
+
+<div style="text-align: center; margin: 30px 0;">
+  <a href="{{dashboardUrl}}" class="btn-primary">Vai alla tua Dashboard</a>
+</div>
+
+<p>Se hai domande, il nostro team di supporto è sempre pronto ad aiutarti.</p>
+
+<p>Buona ricerca!<br><strong>Il team di Immobilier.ch</strong></p>

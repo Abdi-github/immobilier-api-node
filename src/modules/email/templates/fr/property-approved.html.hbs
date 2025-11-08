@@ -1,0 +1,28 @@
+<h2>Bonne nouvelle ! Votre propriété a été approuvée</h2>
+
+<p>Bonjour {{firstName}},</p>
+
+<p>Nous avons le plaisir de vous informer que votre annonce immobilière a été examinée et <strong>approuvée</strong> par notre équipe de modération !</p>
+
+<div class="success-box">
+  <p><strong>✅ Votre propriété a été approuvée !</strong></p>
+</div>
+
+<div class="property-card">
+  <h3>{{propertyTitle}}</h3>
+  <p class="address">📍 {{propertyAddress}}</p>
+  <p style="margin-top: 10px; font-weight: 600; color: #1a73e8;">
+    {{formatCurrency propertyPrice "CHF"}} {{#if isRent}}/ mois{{/if}}
+  </p>
+</div>
+
+<p><strong>Que se passe-t-il ensuite ?</strong></p>
+<p>Votre propriété sera maintenant publiée sur notre plateforme et sera visible par des milliers d'acheteurs et de locataires potentiels à travers la Suisse.</p>
+
+<div style="text-align: center; margin: 30px 0;">
+  <a href="{{propertyUrl}}" class="btn-primary">Voir votre annonce</a>
+</div>
+
+<p>Vous pouvez gérer votre annonce depuis votre tableau de bord à tout moment.</p>
+
+<p>Cordialement,<br><strong>L'équipe Immobilier.ch</strong></p>

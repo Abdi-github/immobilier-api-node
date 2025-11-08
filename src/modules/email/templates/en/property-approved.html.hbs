@@ -1,0 +1,28 @@
+<h2>Great News! Your Property Has Been Approved</h2>
+
+<p>Hello {{firstName}},</p>
+
+<p>We're pleased to inform you that your property listing has been reviewed and <strong>approved</strong> by our moderation team!</p>
+
+<div class="success-box">
+  <p><strong>✅ Your property has been approved!</strong></p>
+</div>
+
+<div class="property-card">
+  <h3>{{propertyTitle}}</h3>
+  <p class="address">📍 {{propertyAddress}}</p>
+  <p style="margin-top: 10px; font-weight: 600; color: #1a73e8;">
+    {{formatCurrency propertyPrice "CHF"}} {{#if isRent}}/ month{{/if}}
+  </p>
+</div>
+
+<p><strong>What happens next?</strong></p>
+<p>Your property will now be published on our platform and will be visible to thousands of potential buyers and renters across Switzerland.</p>
+
+<div style="text-align: center; margin: 30px 0;">
+  <a href="{{propertyUrl}}" class="btn-primary">View Your Listing</a>
+</div>
+
+<p>You can manage your listing from your dashboard at any time.</p>
+
+<p>Best regards,<br><strong>The Immobilier.ch Team</strong></p>

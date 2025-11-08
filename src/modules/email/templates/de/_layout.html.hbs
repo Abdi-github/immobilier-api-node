@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{{subject}}</title>
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+  <style>
+    /* Reset styles */
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    
+    /* Base styles */
+    body {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f4f4f7;
+    }
+    
+    /* Container */
+    .email-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+    }
+    
+    /* Header */
+    .email-header {
+      background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
+      padding: 30px 40px;
+      text-align: center;
+    }
+    
+    .email-header h1 {
+      color: #ffffff;
+      margin: 0;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    
+    .email-header .tagline {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 14px;
+      margin-top: 5px;
+    }
+    
+    /* Content */
+    .email-content {
+      padding: 40px;
+      color: #333333;
+      line-height: 1.6;
+    }
+    
+    .email-content h2 {
+      color: #1a73e8;
+      font-size: 22px;
+      margin: 0 0 20px 0;
+      font-weight: 600;
+    }
+    
+    .email-content p {
+      margin: 0 0 16px 0;
+      font-size: 16px;
+      color: #555555;
+    }
+    
+    /* Button */
+    .btn-primary {
+      display: inline-block;
+      padding: 14px 32px;
+      background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
+      color: #ffffff !important;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 16px;
+      margin: 20px 0;
+      text-align: center;
+    }
+    
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #0d47a1 0%, #1a73e8 100%);
+    }
+    
+    .btn-secondary {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #f4f4f7;
+      color: #1a73e8 !important;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 14px;
+      border: 2px solid #1a73e8;
+    }
+    
+    /* Info box */
+    .info-box {
+      background-color: #e3f2fd;
+      border-left: 4px solid #1a73e8;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    
+    .info-box p {
+      margin: 0;
+      color: #1565c0;
+    }
+    
+    /* Warning box */
+    .warning-box {
+      background-color: #fff3e0;
+      border-left: 4px solid #ff9800;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    
+    .warning-box p {
+      margin: 0;
+      color: #e65100;
+    }
+    
+    /* Success box */
+    .success-box {
+      background-color: #e8f5e9;
+      border-left: 4px solid #4caf50;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    
+    .success-box p {
+      margin: 0;
+      color: #2e7d32;
+    }
+    
+    /* Error box */
+    .error-box {
+      background-color: #ffebee;
+      border-left: 4px solid #f44336;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    
+    .error-box p {
+      margin: 0;
+      color: #c62828;
+    }
+    
+    /* Property card */
+    .property-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      background-color: #fafafa;
+    }
+    
+    .property-card h3 {
+      margin: 0 0 10px 0;
+      color: #333333;
+      font-size: 18px;
+    }
+    
+    .property-card .address {
+      color: #757575;
+      font-size: 14px;
+      margin: 0;
+    }
+    
+    /* Footer */
+    .email-footer {
+      background-color: #f4f4f7;
+      padding: 30px 40px;
+      text-align: center;
+      border-top: 1px solid #e0e0e0;
+    }
+    
+    .email-footer p {
+      margin: 0 0 10px 0;
+      font-size: 13px;
+      color: #757575;
+    }
+    
+    .email-footer a {
+      color: #1a73e8;
+      text-decoration: none;
+    }
+    
+    .social-links {
+      margin: 20px 0;
+    }
+    
+    .social-links a {
+      display: inline-block;
+      margin: 0 10px;
+      color: #757575;
+      text-decoration: none;
+    }
+    
+    /* Responsive */
+    @media only screen and (max-width: 620px) {
+      .email-container {
+        width: 100% !important;
+      }
+      .email-header, .email-content, .email-footer {
+        padding: 20px !important;
+      }
+      .email-header h1 {
+        font-size: 24px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tr>
+      <td style="padding: 20px 0; background-color: #f4f4f7;">
+        <table class="email-container" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="margin: 0 auto;">
+          <!-- Header -->
+          <tr>
+            <td class="email-header">
+              <h1>Immobilier.ch</h1>
+              <p class="tagline">Swiss Real Estate Platform</p>
+            </td>
+          </tr>
+          
+          <!-- Content -->
+          <tr>
+            <td class="email-content">
+              {{{content}}}
+            </td>
+          </tr>
+          
+          <!-- Footer -->
+          <tr>
+            <td class="email-footer">
+              <p>© {{currentYear}} Immobilier.ch. All rights reserved.</p>
+              <p>
+                <a href="https://immobilier.ch">Website</a> |
+                <a href="https://immobilier.ch/privacy">Privacy Policy</a> |
+                <a href="https://immobilier.ch/terms">Terms of Service</a>
+              </p>
+              <p style="margin-top: 15px; font-size: 12px;">
+                This email was sent to you because you have an account with Immobilier.ch.<br>
+                If you have questions, contact us at <a href="mailto:{{supportEmail}}">{{supportEmail}}</a>
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

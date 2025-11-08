@@ -1,0 +1,38 @@
+{
+  "verification": {
+    "en": "Verify Your Email Address - Immobilier.ch",
+    "fr": "Vérifiez votre adresse e-mail - Immobilier.ch",
+    "de": "Bestätigen Sie Ihre E-Mail-Adresse - Immobilier.ch",
+    "it": "Verifica il tuo indirizzo email - Immobilier.ch"
+  },
+  "welcome": {
+    "en": "Welcome to Immobilier.ch!",
+    "fr": "Bienvenue sur Immobilier.ch !",
+    "de": "Willkommen bei Immobilier.ch!",
+    "it": "Benvenuto su Immobilier.ch!"
+  },
+  "password-reset": {
+    "en": "Reset Your Password - Immobilier.ch",
+    "fr": "Réinitialisez votre mot de passe - Immobilier.ch",
+    "de": "Passwort zurücksetzen - Immobilier.ch",
+    "it": "Reimposta la tua password - Immobilier.ch"
+  },
+  "property-approved": {
+    "en": "Your Property Has Been Approved - Immobilier.ch",
+    "fr": "Votre propriété a été approuvée - Immobilier.ch",
+    "de": "Ihre Immobilie wurde genehmigt - Immobilier.ch",
+    "it": "La tua proprietà è stata approvata - Immobilier.ch"
+  },
+  "property-rejected": {
+    "en": "Property Listing Update Required - Immobilier.ch",
+    "fr": "Mise à jour de l'annonce requise - Immobilier.ch",
+    "de": "Aktualisierung der Immobilienanzeige erforderlich - Immobilier.ch",
+    "it": "Aggiornamento annuncio richiesto - Immobilier.ch"
+  },
+  "property-published": {
+    "en": "🎉 Your Property is Now Live! - Immobilier.ch",
+    "fr": "🎉 Votre propriété est maintenant en ligne ! - Immobilier.ch",
+    "de": "🎉 Ihre Immobilie ist jetzt online! - Immobilier.ch",
+    "it": "🎉 La tua proprietà è ora online! - Immobilier.ch"
+  }
+}

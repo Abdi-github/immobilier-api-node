@@ -1,0 +1,29 @@
+<h2>Welcome to Immobilier.ch!</h2>
+
+<p>Hello {{firstName}},</p>
+
+<p>Your email has been verified and your account is now fully active. Welcome to Switzerland's premier real estate platform!</p>
+
+<div class="success-box">
+  <p><strong>Your account is ready to use!</strong></p>
+</div>
+
+<p>Here's what you can do now:</p>
+
+<ul style="padding-left: 20px; line-height: 2;">
+  <li>🏠 Browse thousands of properties across Switzerland</li>
+  <li>❤️ Save your favorite properties</li>
+  <li>🔔 Set up alerts for new listings</li>
+  <li>📧 Contact property owners and agents directly</li>
+  {{#if isOwnerOrAgent}}
+  <li>📝 List your properties for rent or sale</li>
+  {{/if}}
+</ul>
+
+<div style="text-align: center; margin: 30px 0;">
+  <a href="{{dashboardUrl}}" class="btn-primary">Go to Your Dashboard</a>
+</div>
+
+<p>If you have any questions, our support team is always ready to help.</p>
+
+<p>Happy house hunting!<br><strong>The Immobilier.ch Team</strong></p>
