@@ -1,0 +1,33 @@
+{
+  "required": "{{field}} est requis",
+  "invalid": "{{field}} est invalide",
+  "string": "{{field}} doit être une chaîne de caractères",
+  "number": "{{field}} doit être un nombre",
+  "boolean": "{{field}} doit être un booléen",
+  "array": "{{field}} doit être un tableau",
+  "object": "{{field}} doit être un objet",
+  "email": "Veuillez fournir une adresse e-mail valide",
+  "url": "Veuillez fournir une URL valide",
+  "phone": "Veuillez fournir un numéro de téléphone valide",
+  "minLength": "{{field}} doit contenir au moins {{min}} caractères",
+  "maxLength": "{{field}} ne doit pas dépasser {{max}} caractères",
+  "min": "{{field}} doit être au moins {{min}}",
+  "max": "{{field}} ne doit pas dépasser {{max}}",
+  "between": "{{field}} doit être entre {{min}} et {{max}}",
+  "positive": "{{field}} doit être un nombre positif",
+  "integer": "{{field}} doit être un entier",
+  "date": "{{field}} doit être une date valide",
+  "enum": "{{field}} doit être l'un des suivants: {{values}}",
+  "unique": "{{field}} existe déjà",
+  "objectId": "{{field}} doit être un ID valide",
+  "password": {
+    "minLength": "Le mot de passe doit contenir au moins 8 caractères",
+    "maxLength": "Le mot de passe ne doit pas dépasser 128 caractères",
+    "uppercase": "Le mot de passe doit contenir au moins une lettre majuscule",
+    "lowercase": "Le mot de passe doit contenir au moins une lettre minuscule",
+    "number": "Le mot de passe doit contenir au moins un chiffre",
+    "special": "Le mot de passe doit contenir au moins un caractère spécial",
+    "noSpaces": "Le mot de passe ne doit pas contenir d'espaces",
+    "mismatch": "Les mots de passe ne correspondent pas"
+  }
+}

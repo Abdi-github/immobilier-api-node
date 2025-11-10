@@ -1,0 +1,40 @@
+{
+  "welcome": "Benvenuti nell'API di Immobilier.ch",
+  "healthCheck": "L'API funziona correttamente",
+  "notFound": "Risorsa non trovata",
+  "serverError": "Errore interno del server",
+  "unauthorized": "Non sei autorizzato ad accedere a questa risorsa",
+  "forbidden": "Accesso vietato",
+  "badRequest": "Richiesta non valida",
+  "success": "Operazione riuscita",
+  "created": "Risorsa creata con successo",
+  "updated": "Risorsa aggiornata con successo",
+  "deleted": "Risorsa eliminata con successo",
+  "language": {
+    "en": "Inglese",
+    "fr": "Francese",
+    "de": "Tedesco",
+    "it": "Italiano"
+  },
+  "pagination": {
+    "page": "Pagina",
+    "limit": "Limite",
+    "total": "Totale",
+    "totalPages": "Pagine totali"
+  },
+  "location": {
+    "cantons_retrieved": "Cantoni recuperati con successo",
+    "canton_retrieved": "Cantone recuperato con successo",
+    "canton_created": "Cantone creato con successo",
+    "canton_updated": "Cantone aggiornato con successo",
+    "canton_deleted": "Cantone eliminato con successo",
+    "canton_not_found": "Cantone non trovato",
+    "canton_code_exists": "Un cantone con questo codice esiste già",
+    "cities_retrieved": "Città recuperate con successo",
+    "city_retrieved": "Città recuperata con successo",
+    "city_created": "Città creata con successo",
+    "city_updated": "Città aggiornata con successo",
+    "city_deleted": "Città eliminata con successo",
+    "city_not_found": "Città non trovata"
+  }
+}

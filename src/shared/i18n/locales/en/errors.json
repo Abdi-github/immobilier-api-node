@@ -1,0 +1,33 @@
+{
+  "validation": {
+    "required": "{{field}} is required",
+    "invalid": "{{field}} is invalid",
+    "minLength": "{{field}} must be at least {{min}} characters",
+    "maxLength": "{{field}} must not exceed {{max}} characters",
+    "email": "Please provide a valid email address",
+    "password": {
+      "minLength": "Password must be at least 8 characters",
+      "uppercase": "Password must contain at least one uppercase letter",
+      "lowercase": "Password must contain at least one lowercase letter",
+      "number": "Password must contain at least one number",
+      "special": "Password must contain at least one special character"
+    }
+  },
+  "auth": {
+    "invalidCredentials": "Invalid email or password",
+    "tokenExpired": "Your session has expired. Please login again",
+    "tokenInvalid": "Invalid authentication token",
+    "tokenMissing": "Authentication token is missing",
+    "unauthorized": "You are not authorized to perform this action",
+    "forbidden": "Access denied",
+    "accountLocked": "Your account has been locked. Please contact support",
+    "accountNotVerified": "Please verify your email before logging in",
+    "emailAlreadyExists": "An account with this email already exists",
+    "userNotFound": "User not found"
+  },
+  "notFound": "{{resource}} not found",
+  "alreadyExists": "{{resource}} already exists",
+  "serverError": "An unexpected error occurred. Please try again later",
+  "tooManyRequests": "Too many requests. Please try again later",
+  "badRequest": "Bad request. Please check your input"
+}

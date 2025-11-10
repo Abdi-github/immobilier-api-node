@@ -1,0 +1,40 @@
+{
+  "welcome": "Bienvenue sur l'API Immobilier.ch",
+  "healthCheck": "L'API fonctionne correctement",
+  "notFound": "Ressource non trouvée",
+  "serverError": "Erreur interne du serveur",
+  "unauthorized": "Vous n'êtes pas autorisé à accéder à cette ressource",
+  "forbidden": "Accès interdit",
+  "badRequest": "Requête invalide",
+  "success": "Opération réussie",
+  "created": "Ressource créée avec succès",
+  "updated": "Ressource mise à jour avec succès",
+  "deleted": "Ressource supprimée avec succès",
+  "language": {
+    "en": "Anglais",
+    "fr": "Français",
+    "de": "Allemand",
+    "it": "Italien"
+  },
+  "pagination": {
+    "page": "Page",
+    "limit": "Limite",
+    "total": "Total",
+    "totalPages": "Pages totales"
+  },
+  "location": {
+    "cantons_retrieved": "Cantons récupérés avec succès",
+    "canton_retrieved": "Canton récupéré avec succès",
+    "canton_created": "Canton créé avec succès",
+    "canton_updated": "Canton mis à jour avec succès",
+    "canton_deleted": "Canton supprimé avec succès",
+    "canton_not_found": "Canton non trouvé",
+    "canton_code_exists": "Un canton avec ce code existe déjà",
+    "cities_retrieved": "Villes récupérées avec succès",
+    "city_retrieved": "Ville récupérée avec succès",
+    "city_created": "Ville créée avec succès",
+    "city_updated": "Ville mise à jour avec succès",
+    "city_deleted": "Ville supprimée avec succès",
+    "city_not_found": "Ville non trouvée"
+  }
+}

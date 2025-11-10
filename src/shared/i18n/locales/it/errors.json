@@ -1,0 +1,33 @@
+{
+  "validation": {
+    "required": "{{field}} è richiesto",
+    "invalid": "{{field}} non è valido",
+    "minLength": "{{field}} deve contenere almeno {{min}} caratteri",
+    "maxLength": "{{field}} non deve superare {{max}} caratteri",
+    "email": "Fornisci un indirizzo email valido",
+    "password": {
+      "minLength": "La password deve contenere almeno 8 caratteri",
+      "uppercase": "La password deve contenere almeno una lettera maiuscola",
+      "lowercase": "La password deve contenere almeno una lettera minuscola",
+      "number": "La password deve contenere almeno un numero",
+      "special": "La password deve contenere almeno un carattere speciale"
+    }
+  },
+  "auth": {
+    "invalidCredentials": "Email o password non validi",
+    "tokenExpired": "La tua sessione è scaduta. Effettua nuovamente l'accesso",
+    "tokenInvalid": "Token di autenticazione non valido",
+    "tokenMissing": "Token di autenticazione mancante",
+    "unauthorized": "Non sei autorizzato a eseguire questa azione",
+    "forbidden": "Accesso negato",
+    "accountLocked": "Il tuo account è stato bloccato. Contatta il supporto",
+    "accountNotVerified": "Verifica la tua email prima di effettuare l'accesso",
+    "emailAlreadyExists": "Esiste già un account con questa email",
+    "userNotFound": "Utente non trovato"
+  },
+  "notFound": "{{resource}} non trovato",
+  "alreadyExists": "{{resource}} esiste già",
+  "serverError": "Si è verificato un errore imprevisto. Riprova più tardi",
+  "tooManyRequests": "Troppe richieste. Riprova più tardi",
+  "badRequest": "Richiesta non valida. Controlla i tuoi dati"
+}

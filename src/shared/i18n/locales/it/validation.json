@@ -1,0 +1,33 @@
+{
+  "required": "{{field}} è richiesto",
+  "invalid": "{{field}} non è valido",
+  "string": "{{field}} deve essere una stringa",
+  "number": "{{field}} deve essere un numero",
+  "boolean": "{{field}} deve essere un booleano",
+  "array": "{{field}} deve essere un array",
+  "object": "{{field}} deve essere un oggetto",
+  "email": "Fornisci un indirizzo email valido",
+  "url": "Fornisci un URL valido",
+  "phone": "Fornisci un numero di telefono valido",
+  "minLength": "{{field}} deve contenere almeno {{min}} caratteri",
+  "maxLength": "{{field}} non deve superare {{max}} caratteri",
+  "min": "{{field}} deve essere almeno {{min}}",
+  "max": "{{field}} non deve superare {{max}}",
+  "between": "{{field}} deve essere tra {{min}} e {{max}}",
+  "positive": "{{field}} deve essere un numero positivo",
+  "integer": "{{field}} deve essere un intero",
+  "date": "{{field}} deve essere una data valida",
+  "enum": "{{field}} deve essere uno dei seguenti: {{values}}",
+  "unique": "{{field}} esiste già",
+  "objectId": "{{field}} deve essere un ID valido",
+  "password": {
+    "minLength": "La password deve contenere almeno 8 caratteri",
+    "maxLength": "La password non deve superare 128 caratteri",
+    "uppercase": "La password deve contenere almeno una lettera maiuscola",
+    "lowercase": "La password deve contenere almeno una lettera minuscola",
+    "number": "La password deve contenere almeno un numero",
+    "special": "La password deve contenere almeno un carattere speciale",
+    "noSpaces": "La password non deve contenere spazi",
+    "mismatch": "Le password non corrispondono"
+  }
+}

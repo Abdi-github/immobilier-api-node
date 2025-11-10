@@ -1,0 +1,33 @@
+{
+  "required": "{{field}} is required",
+  "invalid": "{{field}} is invalid",
+  "string": "{{field}} must be a string",
+  "number": "{{field}} must be a number",
+  "boolean": "{{field}} must be a boolean",
+  "array": "{{field}} must be an array",
+  "object": "{{field}} must be an object",
+  "email": "Please provide a valid email address",
+  "url": "Please provide a valid URL",
+  "phone": "Please provide a valid phone number",
+  "minLength": "{{field}} must be at least {{min}} characters",
+  "maxLength": "{{field}} must not exceed {{max}} characters",
+  "min": "{{field}} must be at least {{min}}",
+  "max": "{{field}} must not exceed {{max}}",
+  "between": "{{field}} must be between {{min}} and {{max}}",
+  "positive": "{{field}} must be a positive number",
+  "integer": "{{field}} must be an integer",
+  "date": "{{field}} must be a valid date",
+  "enum": "{{field}} must be one of: {{values}}",
+  "unique": "{{field}} already exists",
+  "objectId": "{{field}} must be a valid ID",
+  "password": {
+    "minLength": "Password must be at least 8 characters",
+    "maxLength": "Password must not exceed 128 characters",
+    "uppercase": "Password must contain at least one uppercase letter",
+    "lowercase": "Password must contain at least one lowercase letter",
+    "number": "Password must contain at least one number",
+    "special": "Password must contain at least one special character",
+    "noSpaces": "Password must not contain spaces",
+    "mismatch": "Passwords do not match"
+  }
+}

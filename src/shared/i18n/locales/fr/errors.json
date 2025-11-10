@@ -1,0 +1,33 @@
+{
+  "validation": {
+    "required": "{{field}} est requis",
+    "invalid": "{{field}} est invalide",
+    "minLength": "{{field}} doit contenir au moins {{min}} caractères",
+    "maxLength": "{{field}} ne doit pas dépasser {{max}} caractères",
+    "email": "Veuillez fournir une adresse e-mail valide",
+    "password": {
+      "minLength": "Le mot de passe doit contenir au moins 8 caractères",
+      "uppercase": "Le mot de passe doit contenir au moins une lettre majuscule",
+      "lowercase": "Le mot de passe doit contenir au moins une lettre minuscule",
+      "number": "Le mot de passe doit contenir au moins un chiffre",
+      "special": "Le mot de passe doit contenir au moins un caractère spécial"
+    }
+  },
+  "auth": {
+    "invalidCredentials": "Email ou mot de passe invalide",
+    "tokenExpired": "Votre session a expiré. Veuillez vous reconnecter",
+    "tokenInvalid": "Token d'authentification invalide",
+    "tokenMissing": "Token d'authentification manquant",
+    "unauthorized": "Vous n'êtes pas autorisé à effectuer cette action",
+    "forbidden": "Accès refusé",
+    "accountLocked": "Votre compte a été verrouillé. Veuillez contacter le support",
+    "accountNotVerified": "Veuillez vérifier votre email avant de vous connecter",
+    "emailAlreadyExists": "Un compte avec cet email existe déjà",
+    "userNotFound": "Utilisateur non trouvé"
+  },
+  "notFound": "{{resource}} non trouvé",
+  "alreadyExists": "{{resource}} existe déjà",
+  "serverError": "Une erreur inattendue s'est produite. Veuillez réessayer plus tard",
+  "tooManyRequests": "Trop de requêtes. Veuillez réessayer plus tard",
+  "badRequest": "Requête invalide. Veuillez vérifier vos données"
+}
