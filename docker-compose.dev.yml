@@ -1,0 +1,169 @@
+# =============================================
+# DOCKER COMPOSE - DEVELOPMENT OVERRIDE
+# Immobilier API (Node.js/Express)
+# =============================================
+# Usage: docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+# =============================================
+
+services:
+  # =============================================
+  # API - Development Mode
+  # =============================================
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: immobilier_api_dev
+    restart: unless-stopped
+    ports:
+      - "4003:4003"
+    volumes:
+      - ./src:/app/src:cached
+      - ./data:/app/data:cached
+      - ./package.json:/app/package.json:cached
+      - ./tsconfig.json:/app/tsconfig.json:cached
+      - ./jest.config.js:/app/jest.config.js:cached
+      - node_modules:/app/node_modules
+      - api_logs:/app/logs
+    environment:
+      - NODE_ENV=development
+      - PORT=4003
+      - API_VERSION=v1
+      - API_PREFIX=/api
+      - MONGODB_URI=mongodb://mongodb:27017/immobilier_dev
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - JWT_SECRET=dev-super-secret-jwt-key-for-development-only-change-in-production
+      - JWT_ACCESS_EXPIRATION=7d
+      - JWT_REFRESH_EXPIRATION=30d
+      - LOG_LEVEL=debug
+      - DEFAULT_LANGUAGE=en
+      - SUPPORTED_LANGUAGES=en,fr,de,it
+      - BCRYPT_SALT_ROUNDS=12
+      - DEFAULT_PAGE_SIZE=20
+      - MAX_PAGE_SIZE=100
+      # Rate limiting (increased for E2E testing)
+      - RATE_LIMIT_MAX_REQUESTS_GUEST=10000
+      - RATE_LIMIT_MAX_REQUESTS_AUTH=10000
+      # CORS - Allow admin panel, frontend (React), frontend (Angular), etc.
+      - CORS_ORIGIN=http://localhost:5174,http://localhost:5173,http://localhost:4200,http://localhost:3000
+      - CORS_CREDENTIALS=true
+      # Translation Services
+      - LIBRETRANSLATE_URL=http://libretranslate:5000
+      - TRANSLATION_PROVIDER=libretranslate
+      # Cloudinary Configuration
+      - CLOUDINARY_CLOUD_NAME=dzyyygr1x
+      - CLOUDINARY_API_KEY=393749481964766
+      - CLOUDINARY_API_SECRET=lIQ4qNH1CRKz2P3dMSgXRxb2_CE
+      - CLOUDINARY_FOLDER=immobilier_node
+      # Email Configuration (Mailpit for development)
+      - MAIL_HOST=mailpit
+      - MAIL_PORT=1025
+      - MAIL_USER=
+      - MAIL_PASSWORD=
+      - MAIL_FROM=noreply@immobilier.ch
+      - MAIL_FROM_NAME=Immobilier.ch
+      - MAIL_SECURE=false
+      - EMAIL_QUEUE_CONCURRENCY=3
+      - EMAIL_QUEUE_MAX_RETRIES=3
+      # Frontend URL for email links
+      - FRONTEND_URL=http://localhost:5174
+      - SUPPORT_EMAIL=support@immobilier.ch
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - immobilier_network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:4003/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # =============================================
+  # MongoDB Express - Database UI
+  # =============================================
+  mongo-express:
+    image: mongo-express:1.0.2-20
+    container_name: immobilier_mongo_express
+    restart: unless-stopped
+    ports:
+      - "8084:8081"
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=adminpassword
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - immobilier_network
+
+  # =============================================
+  # Redis Commander - Redis UI
+  # =============================================
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: immobilier_redis_commander
+    restart: unless-stopped
+    ports:
+      - "8085:8081"
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+      - HTTP_USER=admin
+      - HTTP_PASSWORD=adminpassword
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - immobilier_network
+
+  # =============================================
+  # Mailpit - Email Testing
+  # =============================================
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: immobilier_mailpit
+    restart: unless-stopped
+    ports:
+      - "8026:8025"
+      - "1026:1025"
+    environment:
+      - MP_MAX_MESSAGES=5000
+      - MP_DATA_FILE=/data/mailpit.db
+      - MP_SMTP_AUTH_ACCEPT_ANY=1
+      - MP_SMTP_AUTH_ALLOW_INSECURE=1
+    volumes:
+      - mailpit_data:/data
+    networks:
+      - immobilier_network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8025/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+# =============================================
+# Networks
+# =============================================
+networks:
+  immobilier_network:
+    name: immobilier_network
+    driver: bridge
+
+# =============================================
+# Additional Volumes
+# =============================================
+volumes:
+  node_modules:
+    name: immobilier_node_modules_dev
+  api_logs:
+    name: immobilier_api_logs_dev
+  mailpit_data:
+    name: immobilier_mailpit_data_dev

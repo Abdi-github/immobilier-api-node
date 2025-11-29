@@ -1,0 +1,106 @@
+# =============================================
+# DOCKER COMPOSE - BASE CONFIGURATION
+# Immobilier API (Node.js/Express)
+# =============================================
+# Standalone configuration for the API.
+# Infrastructure services: MongoDB, Redis, LibreTranslate
+# =============================================
+
+services:
+  # =============================================
+  # MongoDB - Primary Database
+  # =============================================
+  mongodb:
+    image: mongo:7.0
+    container_name: immobilier_mongodb
+    restart: unless-stopped
+    ports:
+      - "27020:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - mongodb_config:/data/configdb
+    environment:
+      - MONGO_INITDB_DATABASE=immobilier_dev
+    networks:
+      - immobilier_network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # =============================================
+  # Redis - Cache & Sessions
+  # =============================================
+  redis:
+    image: redis:7-alpine
+    container_name: immobilier_redis
+    restart: unless-stopped
+    ports:
+      - "6381:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    networks:
+      - immobilier_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # =============================================
+  # LibreTranslate - Free Self-Hosted Translation
+  # =============================================
+  libretranslate:
+    image: libretranslate/libretranslate:v1.6.1
+    container_name: immobilier_libretranslate
+    restart: unless-stopped
+    user: root
+    ports:
+      - "5050:5000"
+    environment:
+      - LT_API_KEYS=false
+      - LT_LOAD_ONLY=en,fr,de,it
+      - LT_UPDATE_MODELS=false
+      - LT_SUGGESTIONS=false
+      - LT_DISABLE_WEB_UI=false
+    volumes:
+      - libretranslate_models:/home/libretranslate/.local/share/argos-translate/packages
+    networks:
+      - immobilier_network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:5000/languages"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+        reservations:
+          memory: 2G
+
+# =============================================
+# Networks
+# =============================================
+networks:
+  immobilier_network:
+    driver: bridge
+    name: immobilier_network
+
+# =============================================
+# Volumes
+# =============================================
+volumes:
+  mongodb_data:
+    name: immobilier_mongodb_data
+  mongodb_config:
+    name: immobilier_mongodb_config
+  redis_data:
+    name: immobilier_redis_data
+  libretranslate_models:
+    name: immobilier_libretranslate_models

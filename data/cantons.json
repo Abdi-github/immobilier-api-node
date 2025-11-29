@@ -1,0 +1,98 @@
+[
+  { 
+    "_id": "69557e49f1aa72616b011a04",
+    "id": "e02bbe4f",
+    "code": "VD",
+    "name": {
+      "fr": "Vaud",
+      "de": "Waadt",
+      "it": "Vaud",
+      "en": "Vaud"
+    },
+    "is_active": true
+  },
+  {
+    "_id": "69557e49f1aa72616b011a05",
+    "id": "11aedd0e",
+    "code": "FR",
+    "name": {
+      "fr": "Fribourg",
+      "de": "Freiburg",
+      "it": "Friburgo",
+      "en": "Fribourg"
+    },
+    "is_active": true
+  },
+  {
+    "_id": "69557e49f1aa72616b011a06",
+    "id": "f8037296",
+    "code": "GE",
+    "name": {
+      "fr": "Genève",
+      "de": "Genf",
+      "it": "Ginevra",
+      "en": "Geneva"
+    },
+    "is_active": true
+  },
+  {
+    "_id": "69557e49f1aa72616b011a07",
+    "id": "d3dcf429",
+    "code": "BE",
+    "name": {
+      "fr": "Berne",
+      "de": "Bern",
+      "it": "Berna",
+      "en": "Bern"
+    },
+    "is_active": true
+  },
+  {
+    "_id": "69557e49f1aa72616b011a08",
+    "id": "2c54e23f",
+    "code": "VS",
+    "name": {
+      "fr": "Valais",
+      "de": "Wallis",
+      "it": "Vallese",
+      "en": "Valais"
+    },
+    "is_active": true
+  },
+  {
+    "_id": "69557e49f1aa72616b011a09",
+    "id": "dc33066c",
+    "code": "NE",
+    "name": {
+      "fr": "Neuchâtel",
+      "de": "Neuenburg",
+      "it": "Neuchâtel",
+      "en": "Neuchâtel"
+    },
+    "is_active": true
+  },
+  {
+    "_id": "69557e49f1aa72616b011a0a",
+    "id": "1af89fed",
+    "code": "JU",
+    "name": {
+      "fr": "Jura",
+      "de": "Jura",
+      "it": "Giura",
+      "en": "Jura"
+    },
+    "is_active": true
+  },
+  {
+    "_id": "69557e49f1aa72616b011a10",
+    "id": "2f360b70",
+    "code": "ZH",
+    "name": {
+      "fr": "Zurich",
+      "de": "Zürich",
+      "it": "Zurigo",
+      "en": "Zurich"
+    },
+    "is_active": true
+  }
+]

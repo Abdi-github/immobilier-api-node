@@ -1,0 +1,1115 @@
+[
+  {
+    "_id": "695ef685f990bb64260715ff",
+    "name": "users:read",
+    "display_name": {
+      "en": "Read Users",
+      "fr": "Lire les utilisateurs",
+      "de": "Benutzer lesen",
+      "it": "Leggere utenti"
+    },
+    "description": {
+      "en": "View user information",
+      "fr": "Voir les informations des utilisateurs",
+      "de": "Benutzerinformationen anzeigen",
+      "it": "Visualizzare informazioni utente"
+    },
+    "resource": "users",
+    "action": "read",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071600",
+    "name": "users:create",
+    "display_name": {
+      "en": "Write Users",
+      "fr": "Modifier les utilisateurs",
+      "de": "Benutzer bearbeiten",
+      "it": "Modificare utenti"
+    },
+    "description": {
+      "en": "Create and update user information",
+      "fr": "Créer et modifier les informations des utilisateurs",
+      "de": "Benutzerinformationen erstellen und aktualisieren",
+      "it": "Creare e aggiornare informazioni utente"
+    },
+    "resource": "users",
+    "action": "create",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071601",
+    "name": "users:delete",
+    "display_name": {
+      "en": "Delete Users",
+      "fr": "Supprimer les utilisateurs",
+      "de": "Benutzer löschen",
+      "it": "Eliminare utenti"
+    },
+    "description": {
+      "en": "Delete user accounts",
+      "fr": "Supprimer les comptes utilisateurs",
+      "de": "Benutzerkonten löschen",
+      "it": "Eliminare account utente"
+    },
+    "resource": "users",
+    "action": "delete",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071602",
+    "name": "users:manage",
+    "display_name": {
+      "en": "Manage Users",
+      "fr": "Gérer les utilisateurs",
+      "de": "Benutzer verwalten",
+      "it": "Gestire utenti"
+    },
+    "description": {
+      "en": "Full user management including role assignments",
+      "fr": "Gestion complète des utilisateurs incluant l'attribution des rôles",
+      "de": "Vollständige Benutzerverwaltung einschließlich Rollenzuweisung",
+      "it": "Gestione completa utenti inclusa assegnazione ruoli"
+    },
+    "resource": "users",
+    "action": "manage",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071603",
+    "name": "properties:read",
+    "display_name": {
+      "en": "Read Properties",
+      "fr": "Lire les biens",
+      "de": "Immobilien lesen",
+      "it": "Leggere immobili"
+    },
+    "description": {
+      "en": "View property listings",
+      "fr": "Voir les annonces de biens",
+      "de": "Immobilienanzeigen anzeigen",
+      "it": "Visualizzare annunci immobili"
+    },
+    "resource": "properties",
+    "action": "read",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071604",
+    "name": "properties:create",
+    "display_name": {
+      "en": "Create Properties",
+      "fr": "Créer des biens",
+      "de": "Immobilien erstellen",
+      "it": "Creare immobili"
+    },
+    "description": {
+      "en": "Create new property listings",
+      "fr": "Créer de nouvelles annonces de biens",
+      "de": "Neue Immobilienanzeigen erstellen",
+      "it": "Creare nuovi annunci immobili"
+    },
+    "resource": "properties",
+    "action": "create",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "697a7f5f06c22fba59ce5f47",
+    "name": "properties:update",
+    "display_name": {
+      "en": "Update Properties",
+      "fr": "Modifier les biens",
+      "de": "Immobilien aktualisieren",
+      "it": "Aggiornare immobili"
+    },
+    "description": {
+      "en": "Update existing property listings",
+      "fr": "Modifier les annonces de biens existantes",
+      "de": "Bestehende Immobilienanzeigen aktualisieren",
+      "it": "Aggiornare annunci immobili esistenti"
+    },
+    "resource": "properties",
+    "action": "update",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071605",
+    "name": "properties:delete",
+    "display_name": {
+      "en": "Delete Properties",
+      "fr": "Supprimer les biens",
+      "de": "Immobilien löschen",
+      "it": "Eliminare immobili"
+    },
+    "description": {
+      "en": "Delete property listings",
+      "fr": "Supprimer les annonces de biens",
+      "de": "Immobilienanzeigen löschen",
+      "it": "Eliminare annunci immobili"
+    },
+    "resource": "properties",
+    "action": "delete",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071606",
+    "name": "properties:approve",
+    "display_name": {
+      "en": "Approve Properties",
+      "fr": "Approuver les biens",
+      "de": "Immobilien genehmigen",
+      "it": "Approvare immobili"
+    },
+    "description": {
+      "en": "Approve or reject property listings for publication",
+      "fr": "Approuver ou rejeter les annonces de biens pour publication",
+      "de": "Immobilienanzeigen zur Veröffentlichung genehmigen oder ablehnen",
+      "it": "Approvare o rifiutare annunci immobili per la pubblicazione"
+    },
+    "resource": "properties",
+    "action": "approve",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071607",
+    "name": "properties:publish",
+    "display_name": {
+      "en": "Publish Properties",
+      "fr": "Publier les biens",
+      "de": "Immobilien veröffentlichen",
+      "it": "Pubblicare immobili"
+    },
+    "description": {
+      "en": "Publish approved property listings",
+      "fr": "Publier les annonces de biens approuvées",
+      "de": "Genehmigte Immobilienanzeigen veröffentlichen",
+      "it": "Pubblicare annunci immobili approvati"
+    },
+    "resource": "properties",
+    "action": "publish",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071650",
+    "name": "properties:reject",
+    "display_name": {
+      "en": "Reject Properties",
+      "fr": "Rejeter les biens",
+      "de": "Immobilien ablehnen",
+      "it": "Rifiutare immobili"
+    },
+    "description": {
+      "en": "Reject property listings with reason",
+      "fr": "Rejeter les annonces de biens avec motif",
+      "de": "Immobilienanzeigen mit Begründung ablehnen",
+      "it": "Rifiutare annunci immobili con motivo"
+    },
+    "resource": "properties",
+    "action": "reject",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071651",
+    "name": "properties:archive",
+    "display_name": {
+      "en": "Archive Properties",
+      "fr": "Archiver les biens",
+      "de": "Immobilien archivieren",
+      "it": "Archiviare immobili"
+    },
+    "description": {
+      "en": "Archive property listings",
+      "fr": "Archiver les annonces de biens",
+      "de": "Immobilienanzeigen archivieren",
+      "it": "Archiviare annunci immobili"
+    },
+    "resource": "properties",
+    "action": "archive",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071652",
+    "name": "properties:manage",
+    "display_name": {
+      "en": "Manage Properties",
+      "fr": "Gérer les biens",
+      "de": "Immobilien verwalten",
+      "it": "Gestire immobili"
+    },
+    "description": {
+      "en": "Full property management including all status changes",
+      "fr": "Gestion complète des biens incluant tous les changements de statut",
+      "de": "Vollständige Immobilienverwaltung einschließlich aller Statusänderungen",
+      "it": "Gestione completa immobili incluse tutte le modifiche di stato"
+    },
+    "resource": "properties",
+    "action": "manage",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071608",
+    "name": "translations:read",
+    "display_name": {
+      "en": "Read Translations",
+      "fr": "Lire les traductions",
+      "de": "Übersetzungen lesen",
+      "it": "Leggere traduzioni"
+    },
+    "description": {
+      "en": "View property translations",
+      "fr": "Voir les traductions des biens",
+      "de": "Immobilienübersetzungen anzeigen",
+      "it": "Visualizzare traduzioni immobili"
+    },
+    "resource": "translations",
+    "action": "read",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071609",
+    "name": "translations:create",
+    "display_name": {
+      "en": "Write Translations",
+      "fr": "Modifier les traductions",
+      "de": "Übersetzungen bearbeiten",
+      "it": "Modificare traduzioni"
+    },
+    "description": {
+      "en": "Create and update property translations",
+      "fr": "Créer et modifier les traductions des biens",
+      "de": "Immobilienübersetzungen erstellen und aktualisieren",
+      "it": "Creare e aggiornare traduzioni immobili"
+    },
+    "resource": "translations",
+    "action": "create",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb642607160a",
+    "name": "translations:approve",
+    "display_name": {
+      "en": "Approve Translations",
+      "fr": "Approuver les traductions",
+      "de": "Übersetzungen genehmigen",
+      "it": "Approvare traduzioni"
+    },
+    "description": {
+      "en": "Approve or reject property translations",
+      "fr": "Approuver ou rejeter les traductions des biens",
+      "de": "Immobilienübersetzungen genehmigen oder ablehnen",
+      "it": "Approvare o rifiutare traduzioni immobili"
+    },
+    "resource": "translations",
+    "action": "approve",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb642607160b",
+    "name": "agencies:read",
+    "display_name": {
+      "en": "Read Agencies",
+      "fr": "Lire les agences",
+      "de": "Agenturen lesen",
+      "it": "Leggere agenzie"
+    },
+    "description": {
+      "en": "View agency information",
+      "fr": "Voir les informations des agences",
+      "de": "Agenturinformationen anzeigen",
+      "it": "Visualizzare informazioni agenzia"
+    },
+    "resource": "agencies",
+    "action": "read",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb642607160c",
+    "name": "agencies:create",
+    "display_name": {
+      "en": "Write Agencies",
+      "fr": "Modifier les agences",
+      "de": "Agenturen bearbeiten",
+      "it": "Modificare agenzie"
+    },
+    "description": {
+      "en": "Create and update agency information",
+      "fr": "Créer et modifier les informations des agences",
+      "de": "Agenturinformationen erstellen und aktualisieren",
+      "it": "Creare e aggiornare informazioni agenzia"
+    },
+    "resource": "agencies",
+    "action": "create",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb642607160d",
+    "name": "agencies:delete",
+    "display_name": {
+      "en": "Delete Agencies",
+      "fr": "Supprimer les agences",
+      "de": "Agenturen löschen",
+      "it": "Eliminare agenzie"
+    },
+    "description": {
+      "en": "Delete agency accounts",
+      "fr": "Supprimer les comptes d'agences",
+      "de": "Agenturkonten löschen",
+      "it": "Eliminare account agenzia"
+    },
+    "resource": "agencies",
+    "action": "delete",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb642607160e",
+    "name": "agencies:manage",
+    "display_name": {
+      "en": "Manage Agencies",
+      "fr": "Gérer les agences",
+      "de": "Agenturen verwalten",
+      "it": "Gestire agenzie"
+    },
+    "description": {
+      "en": "Full agency management capabilities",
+      "fr": "Capacités complètes de gestion des agences",
+      "de": "Vollständige Agenturverwaltungsfunktionen",
+      "it": "Funzionalità complete di gestione agenzia"
+    },
+    "resource": "agencies",
+    "action": "manage",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb642607160f",
+    "name": "categories:read",
+    "display_name": {
+      "en": "Read Categories",
+      "fr": "Lire les catégories",
+      "de": "Kategorien lesen",
+      "it": "Leggere categorie"
+    },
+    "description": {
+      "en": "View property categories",
+      "fr": "Voir les catégories de biens",
+      "de": "Immobilienkategorien anzeigen",
+      "it": "Visualizzare categorie immobili"
+    },
+    "resource": "categories",
+    "action": "read",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071610",
+    "name": "categories:create",
+    "display_name": {
+      "en": "Write Categories",
+      "fr": "Modifier les catégories",
+      "de": "Kategorien bearbeiten",
+      "it": "Modificare categorie"
+    },
+    "description": {
+      "en": "Create and update property categories",
+      "fr": "Créer et modifier les catégories de biens",
+      "de": "Immobilienkategorien erstellen und aktualisieren",
+      "it": "Creare e aggiornare categorie immobili"
+    },
+    "resource": "categories",
+    "action": "create",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071611",
+    "name": "categories:delete",
+    "display_name": {
+      "en": "Delete Categories",
+      "fr": "Supprimer les catégories",
+      "de": "Kategorien löschen",
+      "it": "Eliminare categorie"
+    },
+    "description": {
+      "en": "Delete property categories",
+      "fr": "Supprimer les catégories de biens",
+      "de": "Immobilienkategorien löschen",
+      "it": "Eliminare categorie immobili"
+    },
+    "resource": "categories",
+    "action": "delete",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071612",
+    "name": "amenities:read",
+    "display_name": {
+      "en": "Read Amenities",
+      "fr": "Lire les équipements",
+      "de": "Ausstattungen lesen",
+      "it": "Leggere servizi"
+    },
+    "description": {
+      "en": "View property amenities",
+      "fr": "Voir les équipements des biens",
+      "de": "Immobilienausstattungen anzeigen",
+      "it": "Visualizzare servizi immobili"
+    },
+    "resource": "amenities",
+    "action": "read",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071613",
+    "name": "amenities:create",
+    "display_name": {
+      "en": "Write Amenities",
+      "fr": "Modifier les équipements",
+      "de": "Ausstattungen bearbeiten",
+      "it": "Modificare servizi"
+    },
+    "description": {
+      "en": "Create and update property amenities",
+      "fr": "Créer et modifier les équipements des biens",
+      "de": "Immobilienausstattungen erstellen und aktualisieren",
+      "it": "Creare e aggiornare servizi immobili"
+    },
+    "resource": "amenities",
+    "action": "create",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071614",
+    "name": "amenities:delete",
+    "display_name": {
+      "en": "Delete Amenities",
+      "fr": "Supprimer les équipements",
+      "de": "Ausstattungen löschen",
+      "it": "Eliminare servizi"
+    },
+    "description": {
+      "en": "Delete property amenities",
+      "fr": "Supprimer les équipements des biens",
+      "de": "Immobilienausstattungen löschen",
+      "it": "Eliminare servizi immobili"
+    },
+    "resource": "amenities",
+    "action": "delete",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071615",
+    "name": "locations:read",
+    "display_name": {
+      "en": "Read Locations",
+      "fr": "Lire les localisations",
+      "de": "Standorte lesen",
+      "it": "Leggere localizzazioni"
+    },
+    "description": {
+      "en": "View cantons and cities",
+      "fr": "Voir les cantons et les villes",
+      "de": "Kantone und Städte anzeigen",
+      "it": "Visualizzare cantoni e città"
+    },
+    "resource": "locations",
+    "action": "read",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071616",
+    "name": "locations:create",
+    "display_name": {
+      "en": "Write Locations",
+      "fr": "Modifier les localisations",
+      "de": "Standorte bearbeiten",
+      "it": "Modificare localizzazioni"
+    },
+    "description": {
+      "en": "Create and update cantons and cities",
+      "fr": "Créer et modifier les cantons et les villes",
+      "de": "Kantone und Städte erstellen und aktualisieren",
+      "it": "Creare e aggiornare cantoni e città"
+    },
+    "resource": "locations",
+    "action": "create",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071617",
+    "name": "locations:delete",
+    "display_name": {
+      "en": "Delete Locations",
+      "fr": "Supprimer les localisations",
+      "de": "Standorte löschen",
+      "it": "Eliminare localizzazioni"
+    },
+    "description": {
+      "en": "Delete cantons and cities",
+      "fr": "Supprimer les cantons et les villes",
+      "de": "Kantone und Städte löschen",
+      "it": "Eliminare cantoni e città"
+    },
+    "resource": "locations",
+    "action": "delete",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071618",
+    "name": "admin:read",
+    "display_name": {
+      "en": "Read Admin",
+      "fr": "Lire l'administration",
+      "de": "Administration lesen",
+      "it": "Leggere amministrazione"
+    },
+    "description": {
+      "en": "View admin dashboard and reports",
+      "fr": "Voir le tableau de bord et les rapports d'administration",
+      "de": "Admin-Dashboard und Berichte anzeigen",
+      "it": "Visualizzare dashboard e report amministrazione"
+    },
+    "resource": "admin",
+    "action": "read",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071619",
+    "name": "admin:create",
+    "display_name": {
+      "en": "Write Admin",
+      "fr": "Modifier l'administration",
+      "de": "Administration bearbeiten",
+      "it": "Modificare amministrazione"
+    },
+    "description": {
+      "en": "Perform admin actions",
+      "fr": "Effectuer des actions d'administration",
+      "de": "Admin-Aktionen ausführen",
+      "it": "Eseguire azioni di amministrazione"
+    },
+    "resource": "admin",
+    "action": "create",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb642607161a",
+    "name": "admin:manage",
+    "display_name": {
+      "en": "Manage Admin",
+      "fr": "Gérer l'administration",
+      "de": "Administration verwalten",
+      "it": "Gestire amministrazione"
+    },
+    "description": {
+      "en": "Full admin management capabilities",
+      "fr": "Capacités complètes de gestion de l'administration",
+      "de": "Vollständige Admin-Verwaltungsfunktionen",
+      "it": "Funzionalità complete di gestione amministrazione"
+    },
+    "resource": "admin",
+    "action": "manage",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb642607161b",
+    "name": "favorites:read",
+    "display_name": {
+      "en": "Read Favorites",
+      "fr": "Lire les favoris",
+      "de": "Favoriten lesen",
+      "it": "Leggere preferiti"
+    },
+    "description": {
+      "en": "View saved favorites",
+      "fr": "Voir les favoris sauvegardés",
+      "de": "Gespeicherte Favoriten anzeigen",
+      "it": "Visualizzare preferiti salvati"
+    },
+    "resource": "favorites",
+    "action": "read",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb642607161c",
+    "name": "favorites:create",
+    "display_name": {
+      "en": "Write Favorites",
+      "fr": "Modifier les favoris",
+      "de": "Favoriten bearbeiten",
+      "it": "Modificare preferiti"
+    },
+    "description": {
+      "en": "Add and remove favorites",
+      "fr": "Ajouter et supprimer des favoris",
+      "de": "Favoriten hinzufügen und entfernen",
+      "it": "Aggiungere e rimuovere preferiti"
+    },
+    "resource": "favorites",
+    "action": "create",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb642607161d",
+    "name": "alerts:read",
+    "display_name": {
+      "en": "Read Alerts",
+      "fr": "Lire les alertes",
+      "de": "Benachrichtigungen lesen",
+      "it": "Leggere avvisi"
+    },
+    "description": {
+      "en": "View saved search alerts",
+      "fr": "Voir les alertes de recherche sauvegardées",
+      "de": "Gespeicherte Suchbenachrichtigungen anzeigen",
+      "it": "Visualizzare avvisi ricerca salvati"
+    },
+    "resource": "alerts",
+    "action": "read",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb642607161e",
+    "name": "alerts:create",
+    "display_name": {
+      "en": "Write Alerts",
+      "fr": "Modifier les alertes",
+      "de": "Benachrichtigungen bearbeiten",
+      "it": "Modificare avvisi"
+    },
+    "description": {
+      "en": "Create and update search alerts",
+      "fr": "Créer et modifier les alertes de recherche",
+      "de": "Suchbenachrichtigungen erstellen und aktualisieren",
+      "it": "Creare e aggiornare avvisi ricerca"
+    },
+    "resource": "alerts",
+    "action": "create",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb642607161f",
+    "name": "leads:read",
+    "display_name": {
+      "en": "Read Leads",
+      "fr": "Lire les prospects",
+      "de": "Leads lesen",
+      "it": "Leggere lead"
+    },
+    "description": {
+      "en": "View property inquiries and leads",
+      "fr": "Voir les demandes de renseignements et les prospects",
+      "de": "Immobilienanfragen und Leads anzeigen",
+      "it": "Visualizzare richieste e lead immobili"
+    },
+    "resource": "leads",
+    "action": "read",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071620",
+    "name": "leads:create",
+    "display_name": {
+      "en": "Write Leads",
+      "fr": "Modifier les prospects",
+      "de": "Leads bearbeiten",
+      "it": "Modificare lead"
+    },
+    "description": {
+      "en": "Create and respond to leads",
+      "fr": "Créer et répondre aux prospects",
+      "de": "Leads erstellen und beantworten",
+      "it": "Creare e rispondere ai lead"
+    },
+    "resource": "leads",
+    "action": "create",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071630",
+    "name": "leads:update",
+    "display_name": {
+      "en": "Update Leads",
+      "fr": "Modifier les prospects",
+      "de": "Leads aktualisieren",
+      "it": "Aggiornare lead"
+    },
+    "description": {
+      "en": "Update lead information and status",
+      "fr": "Modifier les informations et le statut des prospects",
+      "de": "Lead-Informationen und Status aktualisieren",
+      "it": "Aggiornare informazioni e stato lead"
+    },
+    "resource": "leads",
+    "action": "update",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071631",
+    "name": "leads:delete",
+    "display_name": {
+      "en": "Delete Leads",
+      "fr": "Supprimer les prospects",
+      "de": "Leads löschen",
+      "it": "Eliminare lead"
+    },
+    "description": {
+      "en": "Delete lead records",
+      "fr": "Supprimer les enregistrements de prospects",
+      "de": "Lead-Datensätze löschen",
+      "it": "Eliminare record lead"
+    },
+    "resource": "leads",
+    "action": "delete",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071621",
+    "name": "leads:manage",
+    "display_name": {
+      "en": "Manage Leads",
+      "fr": "Gérer les prospects",
+      "de": "Leads verwalten",
+      "it": "Gestire lead"
+    },
+    "description": {
+      "en": "Full lead management capabilities",
+      "fr": "Capacités complètes de gestion des prospects",
+      "de": "Vollständige Lead-Verwaltungsfunktionen",
+      "it": "Funzionalità complete di gestione lead"
+    },
+    "resource": "leads",
+    "action": "manage",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071622",
+    "name": "analytics:read",
+    "display_name": {
+      "en": "Read Analytics",
+      "fr": "Lire les analytiques",
+      "de": "Analytik lesen",
+      "it": "Leggere analisi"
+    },
+    "description": {
+      "en": "View analytics and statistics",
+      "fr": "Voir les analytiques et les statistiques",
+      "de": "Analytik und Statistiken anzeigen",
+      "it": "Visualizzare analisi e statistiche"
+    },
+    "resource": "analytics",
+    "action": "read",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071623",
+    "name": "analytics:manage",
+    "display_name": {
+      "en": "Manage Analytics",
+      "fr": "Gérer les analytiques",
+      "de": "Analytik verwalten",
+      "it": "Gestire analisi"
+    },
+    "description": {
+      "en": "Configure and manage analytics",
+      "fr": "Configurer et gérer les analytiques",
+      "de": "Analytik konfigurieren und verwalten",
+      "it": "Configurare e gestire analisi"
+    },
+    "resource": "analytics",
+    "action": "manage",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071632",
+    "name": "favorites:delete",
+    "display_name": {
+      "en": "Delete Favorites",
+      "fr": "Supprimer les favoris",
+      "de": "Favoriten löschen",
+      "it": "Eliminare preferiti"
+    },
+    "description": {
+      "en": "Remove properties from favorites",
+      "fr": "Retirer des propriétés des favoris",
+      "de": "Immobilien aus Favoriten entfernen",
+      "it": "Rimuovere proprietà dai preferiti"
+    },
+    "resource": "favorites",
+    "action": "delete",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071633",
+    "name": "alerts:update",
+    "display_name": {
+      "en": "Update Alerts",
+      "fr": "Modifier les alertes",
+      "de": "Benachrichtigungen aktualisieren",
+      "it": "Aggiornare avvisi"
+    },
+    "description": {
+      "en": "Update search alert settings",
+      "fr": "Modifier les paramètres d'alerte de recherche",
+      "de": "Suchbenachrichtigungseinstellungen aktualisieren",
+      "it": "Aggiornare impostazioni avvisi ricerca"
+    },
+    "resource": "alerts",
+    "action": "update",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071634",
+    "name": "alerts:delete",
+    "display_name": {
+      "en": "Delete Alerts",
+      "fr": "Supprimer les alertes",
+      "de": "Benachrichtigungen löschen",
+      "it": "Eliminare avvisi"
+    },
+    "description": {
+      "en": "Delete search alerts",
+      "fr": "Supprimer les alertes de recherche",
+      "de": "Suchbenachrichtigungen löschen",
+      "it": "Eliminare avvisi ricerca"
+    },
+    "resource": "alerts",
+    "action": "delete",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071660",
+    "name": "roles:read",
+    "display_name": {
+      "en": "Read Roles",
+      "fr": "Lire les rôles",
+      "de": "Rollen lesen",
+      "it": "Leggere ruoli"
+    },
+    "description": {
+      "en": "View role information",
+      "fr": "Voir les informations des rôles",
+      "de": "Rolleninformationen anzeigen",
+      "it": "Visualizzare informazioni ruoli"
+    },
+    "resource": "roles",
+    "action": "read",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071661",
+    "name": "roles:create",
+    "display_name": {
+      "en": "Create Roles",
+      "fr": "Créer des rôles",
+      "de": "Rollen erstellen",
+      "it": "Creare ruoli"
+    },
+    "description": {
+      "en": "Create new roles",
+      "fr": "Créer de nouveaux rôles",
+      "de": "Neue Rollen erstellen",
+      "it": "Creare nuovi ruoli"
+    },
+    "resource": "roles",
+    "action": "create",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071662",
+    "name": "roles:delete",
+    "display_name": {
+      "en": "Delete Roles",
+      "fr": "Supprimer des rôles",
+      "de": "Rollen löschen",
+      "it": "Eliminare ruoli"
+    },
+    "description": {
+      "en": "Delete existing roles",
+      "fr": "Supprimer des rôles existants",
+      "de": "Vorhandene Rollen löschen",
+      "it": "Eliminare ruoli esistenti"
+    },
+    "resource": "roles",
+    "action": "delete",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071663",
+    "name": "roles:manage",
+    "display_name": {
+      "en": "Manage Roles",
+      "fr": "Gérer les rôles",
+      "de": "Rollen verwalten",
+      "it": "Gestire ruoli"
+    },
+    "description": {
+      "en": "Full control over roles",
+      "fr": "Contrôle total sur les rôles",
+      "de": "Volle Kontrolle über Rollen",
+      "it": "Controllo totale sui ruoli"
+    },
+    "resource": "roles",
+    "action": "manage",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071664",
+    "name": "permissions:read",
+    "display_name": {
+      "en": "Read Permissions",
+      "fr": "Lire les permissions",
+      "de": "Berechtigungen lesen",
+      "it": "Leggere permessi"
+    },
+    "description": {
+      "en": "View permission information",
+      "fr": "Voir les informations des permissions",
+      "de": "Berechtigungsinformationen anzeigen",
+      "it": "Visualizzare informazioni permessi"
+    },
+    "resource": "permissions",
+    "action": "read",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071665",
+    "name": "permissions:manage",
+    "display_name": {
+      "en": "Manage Permissions",
+      "fr": "Gérer les permissions",
+      "de": "Berechtigungen verwalten",
+      "it": "Gestire permessi"
+    },
+    "description": {
+      "en": "Full control over permissions",
+      "fr": "Contrôle total sur les permissions",
+      "de": "Volle Kontrolle über Berechtigungen",
+      "it": "Controllo totale sui permessi"
+    },
+    "resource": "permissions",
+    "action": "manage",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb6426071666",
+    "name": "*",
+    "display_name": {
+      "en": "Full Access (Wildcard)",
+      "fr": "Accès complet (Wildcard)",
+      "de": "Vollzugriff (Wildcard)",
+      "it": "Accesso completo (Wildcard)"
+    },
+    "description": {
+      "en": "Grants all permissions - reserved for super administrators only",
+      "fr": "Accorde toutes les permissions - réservé aux super administrateurs uniquement",
+      "de": "Gewährt alle Berechtigungen - nur für Super-Administratoren reserviert",
+      "it": "Concede tutti i permessi - riservato solo ai super amministratori"
+    },
+    "resource": "*",
+    "action": "*",
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  }
+]

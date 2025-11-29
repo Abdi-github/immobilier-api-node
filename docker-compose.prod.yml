@@ -1,0 +1,114 @@
+# =============================================
+# DOCKER COMPOSE - PRODUCTION OVERRIDE
+# Immobilier API (Node.js/Express)
+# =============================================
+# Usage: docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+# =============================================
+
+services:
+  # =============================================
+  # API - Production Mode
+  # =============================================
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: immobilier_api_prod
+    restart: always
+    ports:
+      - "4003:4003"
+    volumes:
+      - api_logs_prod:/app/logs
+      - ./data:/app/data:ro
+    environment:
+      - NODE_ENV=production
+      - PORT=4003
+      - API_VERSION=v1
+      - API_PREFIX=/api
+      - MONGODB_URI=${MONGODB_URI:-mongodb://mongodb:27017/immobilier_prod}
+      - REDIS_HOST=${REDIS_HOST:-redis}
+      - REDIS_PORT=${REDIS_PORT:-6379}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_ACCESS_EXPIRATION=${JWT_ACCESS_EXPIRATION:-15m}
+      - JWT_REFRESH_EXPIRATION=${JWT_REFRESH_EXPIRATION:-7d}
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - DEFAULT_LANGUAGE=en
+      - SUPPORTED_LANGUAGES=en,fr,de,it
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+      - DEEPL_API_KEY=${DEEPL_API_KEY}
+      - BCRYPT_SALT_ROUNDS=12
+      - DEFAULT_PAGE_SIZE=20
+      - MAX_PAGE_SIZE=100
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - immobilier_network
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  # =============================================
+  # MongoDB - Production Configuration
+  # =============================================
+  mongodb:
+    command: mongod --auth --bind_ip_all
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME:-admin}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE=immobilier_prod
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # =============================================
+  # Redis - Production Configuration
+  # =============================================
+  redis:
+    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru --requirepass ${REDIS_PASSWORD}
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+# =============================================
+# Production Volumes
+# =============================================
+volumes:
+  api_logs_prod:
+    name: immobilier_api_logs_prod

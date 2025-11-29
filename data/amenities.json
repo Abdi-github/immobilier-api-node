@@ -1,0 +1,535 @@
+[
+  {
+    "_id": "65cfa300a1e8b4f3a92c0101",
+    "name": {
+      "fr": "Adapté aux enfants",
+      "de": "Kinderfreundlich",
+      "it": "Adatto ai bambini",
+      "en": "Child friendly"
+    },
+    "group": "general",
+    "icon": "child-friendly",
+    "sort_order": 1,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0102",
+    "name": {
+      "fr": "Cheminée",
+      "de": "Kamin",
+      "it": "Camino",
+      "en": "Fireplace"
+    },
+    "group": "general",
+    "icon": "fireplace",
+    "sort_order": 2,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0103",
+    "name": {
+      "fr": "Parking",
+      "de": "Parkplatz",
+      "it": "Parcheggio",
+      "en": "Parking"
+    },
+    "group": "parking",
+    "icon": "parking",
+    "sort_order": 1,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0104",
+    "name": {
+      "fr": "Garage",
+      "de": "Garage",
+      "it": "Garage",
+      "en": "Garage"
+    },
+    "group": "parking",
+    "icon": "garage",
+    "sort_order": 2,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0105",
+    "name": {
+      "fr": "Animaux admis",
+      "de": "Haustiere erlaubt",
+      "it": "Animali ammessi",
+      "en": "Pets allowed"
+    },
+    "group": "general",
+    "icon": "pets",
+    "sort_order": 3,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0106",
+    "name": {
+      "fr": "Balcon",
+      "de": "Balkon",
+      "it": "Balcone",
+      "en": "Balcony"
+    },
+    "group": "outdoor",
+    "icon": "balcony",
+    "sort_order": 1,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0107",
+    "name": {
+      "fr": "Grenier",
+      "de": "Dachboden",
+      "it": "Attico",
+      "en": "Attic"
+    },
+    "group": "general",
+    "icon": "attic",
+    "sort_order": 4,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0108",
+    "name": {
+      "fr": "Construit selon les standards minergie",
+      "de": "Gemäß Minergie-Standards gebaut",
+      "it": "Costruito secondo gli standard minergie",
+      "en": "Built according to Minergie standards"
+    },
+    "group": "energy",
+    "icon": "minergie",
+    "sort_order": 1,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0109",
+    "name": {
+      "fr": "Vue",
+      "de": "Blick",
+      "it": "Vista",
+      "en": "View"
+    },
+    "group": "outdoor",
+    "icon": "view",
+    "sort_order": 2,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0110",
+    "name": {
+      "fr": "Jardin",
+      "de": "Garten",
+      "it": "Giardino",
+      "en": "Garden"
+    },
+    "group": "outdoor",
+    "icon": "garden",
+    "sort_order": 3,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0111",
+    "name": {
+      "fr": "Terrasse",
+      "de": "Terrasse",
+      "it": "Terrazza",
+      "en": "Terrace"
+    },
+    "group": "outdoor",
+    "icon": "terrace",
+    "sort_order": 4,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0112",
+    "name": {
+      "fr": "Cuisine équipée",
+      "de": "Küche ausgestattet",
+      "it": "Cucina attrezzata",
+      "en": "Equipped kitchen"
+    },
+    "group": "kitchen",
+    "icon": "kitchen",
+    "sort_order": 1,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0113",
+    "name": {
+      "fr": "Cave",
+      "de": "Keller",
+      "it": "Cantina",
+      "en": "Cellar"
+    },
+    "group": "general",
+    "icon": "cellar",
+    "sort_order": 5,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0114",
+    "name": {
+      "fr": "Système d'alarme",
+      "de": "Alarmsystem",
+      "it": "Sistema d'allarme",
+      "en": "Alarm system"
+    },
+    "group": "security",
+    "icon": "alarm",
+    "sort_order": 1,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0115",
+    "name": {
+      "fr": "Borne de recharge véhicules électriques",
+      "de": "Ladestation für elektrische Fahrzeuge",
+      "it": "Stazione di ricarica per veicoli elettrici",
+      "en": "Electric vehicle charging station"
+    },
+    "group": "parking",
+    "icon": "ev-charging",
+    "sort_order": 3,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0116",
+    "name": {
+      "fr": "Domotique",
+      "de": "Domotik",
+      "it": "Domotica",
+      "en": "Smart home"
+    },
+    "group": "security",
+    "icon": "smart-home",
+    "sort_order": 2,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0117",
+    "name": {
+      "fr": "Pompe à chaleur",
+      "de": "Wärmepumpe",
+      "it": "Pompa di calore",
+      "en": "Heat pump"
+    },
+    "group": "energy",
+    "icon": "heat-pump",
+    "sort_order": 2,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0118",
+    "name": {
+      "fr": "Accessibilité handicapés",
+      "de": "Barrierefreiheit für Menschen mit Behinderungen",
+      "it": "Accessibilità per persone con disabilità",
+      "en": "Accessibility for people with disabilities"
+    },
+    "group": "accessibility",
+    "icon": "accessible",
+    "sort_order": 1,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0119",
+    "name": {
+      "fr": "Lave-linge/Sèche-linge",
+      "de": "Waschmaschine/Trockner",
+      "it": "Lavatrice/Asciugatrice",
+      "en": "Washing machine/Dryer"
+    },
+    "group": "bathroom",
+    "icon": "laundry",
+    "sort_order": 1,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0120",
+    "name": {
+      "fr": "Panneaux solaires",
+      "de": "Solarpanel",
+      "it": "Pannelli solari",
+      "en": "Solar panels"
+    },
+    "group": "energy",
+    "icon": "solar",
+    "sort_order": 3,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0121",
+    "name": {
+      "fr": "Ascenseur",
+      "de": "Aufzug",
+      "it": "Ascensore",
+      "en": "Elevator"
+    },
+    "group": "accessibility",
+    "icon": "elevator",
+    "sort_order": 2,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0122",
+    "name": {
+      "fr": "Meublé",
+      "de": "Möbliert",
+      "it": "Arredato",
+      "en": "Furnished"
+    },
+    "group": "general",
+    "icon": "furnished",
+    "sort_order": 6,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0123",
+    "name": {
+      "fr": "Climatisation",
+      "de": "Klimaanlage",
+      "it": "Climatizzazione",
+      "en": "Air conditioning"
+    },
+    "group": "general",
+    "icon": "ac",
+    "sort_order": 7,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0124",
+    "name": {
+      "fr": "Piscine",
+      "de": "Schwimmbad",
+      "it": "Piscina",
+      "en": "Swimming pool"
+    },
+    "group": "outdoor",
+    "icon": "pool",
+    "sort_order": 5,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0125",
+    "name": {
+      "fr": "Salle de sport",
+      "de": "Fitnessraum",
+      "it": "Palestra",
+      "en": "Gym"
+    },
+    "group": "general",
+    "icon": "gym",
+    "sort_order": 8,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0126",
+    "name": {
+      "fr": "Sauna",
+      "de": "Sauna",
+      "it": "Sauna",
+      "en": "Sauna"
+    },
+    "group": "bathroom",
+    "icon": "sauna",
+    "sort_order": 2,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0127",
+    "name": {
+      "fr": "Terrain de sport",
+      "de": "Sportplatz",
+      "it": "Campo sportivo",
+      "en": "Sports field"
+    },
+    "group": "outdoor",
+    "icon": "sports-field",
+    "sort_order": 6,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0128",
+    "name": {
+      "fr": "Espace barbecue",
+      "de": "Grillplatz",
+      "it": "Area barbecue",
+      "en": "Barbecue area"
+    },
+    "group": "outdoor",
+    "icon": "bbq",
+    "sort_order": 7,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0129",
+    "name": {
+      "fr": "Neuf",
+      "de": "Neubau",
+      "it": "Costruzione nuova",
+      "en": "New construction"
+    },
+    "group": "other",
+    "icon": "new",
+    "sort_order": 1,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0130",
+    "name": {
+      "fr": "Rénové",
+      "de": "Renoviert",
+      "it": "Ristrutturato",
+      "en": "Renovated"
+    },
+    "group": "other",
+    "icon": "renovated",
+    "sort_order": 2,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0131",
+    "name": {
+      "fr": "Certifié minergie",
+      "de": "Minergie-zertifiziert",
+      "it": "Certificato minergie",
+      "en": "Minergie certified"
+    },
+    "group": "energy",
+    "icon": "minergie-cert",
+    "sort_order": 4,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0132",
+    "name": {
+      "fr": "Approvisionnement en gaz",
+      "de": "Gasversorgung",
+      "it": "Fornitura di gas",
+      "en": "Gas supply"
+    },
+    "group": "energy",
+    "icon": "gas",
+    "sort_order": 5,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0133",
+    "name": {
+      "fr": "Adoucisseur d'eau",
+      "de": "Wasserenthärter",
+      "it": "Addolcitore d'acqua",
+      "en": "Water softener"
+    },
+    "group": "bathroom",
+    "icon": "water-softener",
+    "sort_order": 3,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0134",
+    "name": {
+      "fr": "Fenêtres triple-vitrage",
+      "de": "Dreifachverglasung",
+      "it": "Finestre con triplo vetro",
+      "en": "Triple-glazed windows"
+    },
+    "group": "energy",
+    "icon": "triple-glazing",
+    "sort_order": 6,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0135",
+    "name": {
+      "fr": "Cuisine équipée Miele",
+      "de": "Miele Einbauküche",
+      "it": "Cucina attrezzata Miele",
+      "en": "Miele equipped kitchen"
+    },
+    "group": "kitchen",
+    "icon": "miele-kitchen",
+    "sort_order": 2,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0136",
+    "name": {
+      "fr": "Approvisionnement eaux-usées",
+      "de": "Abwasserentsorgung",
+      "it": "Fornitura di acque reflue",
+      "en": "Wastewater supply"
+    },
+    "group": "other",
+    "icon": "wastewater",
+    "sort_order": 3,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0137",
+    "name": {
+      "fr": "Approvisionnement en courant",
+      "de": "Stromversorgung",
+      "it": "Fornitura di energia elettrica",
+      "en": "Electricity supply"
+    },
+    "group": "other",
+    "icon": "electricity",
+    "sort_order": 4,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0138",
+    "name": {
+      "fr": "Approvisionnement en eau",
+      "de": "Wasserversorgung",
+      "it": "Fornitura di acqua",
+      "en": "Water supply"
+    },
+    "group": "other",
+    "icon": "water",
+    "sort_order": 5,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0139",
+    "name": {
+      "fr": "Vidéosurveillance",
+      "de": "Videoüberwachung",
+      "it": "Videosorveglianza",
+      "en": "Video surveillance"
+    },
+    "group": "security",
+    "icon": "cctv",
+    "sort_order": 3,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0140",
+    "name": {
+      "fr": "Interphone",
+      "de": "Gegensprechanlage",
+      "it": "Citofono",
+      "en": "Intercom"
+    },
+    "group": "security",
+    "icon": "intercom",
+    "sort_order": 4,
+    "is_active": true
+  },
+  {
+    "_id": "65cfa300a1e8b4f3a92c0141",
+    "name": {
+      "fr": "Inactif - Test",
+      "de": "Inaktiv - Test",
+      "it": "Inattivo - Test",
+      "en": "Inactive - Test"
+    },
+    "group": "other",
+    "icon": "test",
+    "sort_order": 99,
+    "is_active": false
+  }
+]

@@ -1,0 +1,122 @@
+[
+  {
+    "_id": "695ef685f990bb64260715f9",
+    "name": "super_admin",
+    "display_name": {
+      "en": "Super Administrator",
+      "fr": "Super Administrateur",
+      "de": "Super-Administrator",
+      "it": "Super Amministratore"
+    },
+    "description": {
+      "en": "Full system access with all permissions",
+      "fr": "Accès complet au système avec toutes les permissions",
+      "de": "Vollständiger Systemzugriff mit allen Berechtigungen",
+      "it": "Accesso completo al sistema con tutte le autorizzazioni"
+    },
+    "is_system": true,
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb64260715fa",
+    "name": "platform_admin",
+    "display_name": {
+      "en": "Platform Administrator",
+      "fr": "Administrateur de Plateforme",
+      "de": "Plattform-Administrator",
+      "it": "Amministratore Piattaforma"
+    },
+    "description": {
+      "en": "Platform-wide moderation and management capabilities",
+      "fr": "Capacités de modération et de gestion à l'échelle de la plateforme",
+      "de": "Plattformweite Moderations- und Verwaltungsfunktionen",
+      "it": "Funzionalità di moderazione e gestione a livello di piattaforma"
+    },
+    "is_system": true,
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb64260715fb",
+    "name": "agency_admin",
+    "display_name": {
+      "en": "Agency Administrator",
+      "fr": "Administrateur d'Agence",
+      "de": "Agentur-Administrator",
+      "it": "Amministratore Agenzia"
+    },
+    "description": {
+      "en": "Full management capabilities within their agency",
+      "fr": "Capacités de gestion complètes au sein de leur agence",
+      "de": "Vollständige Verwaltungsfunktionen innerhalb ihrer Agentur",
+      "it": "Funzionalità di gestione complete all'interno della propria agenzia"
+    },
+    "is_system": true,
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb64260715fc",
+    "name": "agent",
+    "display_name": {
+      "en": "Real Estate Agent",
+      "fr": "Agent Immobilier",
+      "de": "Immobilienmakler",
+      "it": "Agente Immobiliare"
+    },
+    "description": {
+      "en": "Agency employee with property management capabilities",
+      "fr": "Employé d'agence avec capacités de gestion des biens",
+      "de": "Agenturmitarbeiter mit Immobilienverwaltungsfunktionen",
+      "it": "Dipendente agenzia con funzionalità di gestione immobili"
+    },
+    "is_system": true,
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb64260715fd",
+    "name": "owner",
+    "display_name": {
+      "en": "Property Owner",
+      "fr": "Propriétaire",
+      "de": "Eigentümer",
+      "it": "Proprietario"
+    },
+    "description": {
+      "en": "Private property owner who can list their own properties",
+      "fr": "Propriétaire privé pouvant publier ses propres biens",
+      "de": "Privater Eigentümer, der seine eigenen Immobilien einstellen kann",
+      "it": "Proprietario privato che può pubblicare i propri immobili"
+    },
+    "is_system": true,
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "_id": "695ef685f990bb64260715fe",
+    "name": "end_user",
+    "display_name": {
+      "en": "End User",
+      "fr": "Utilisateur",
+      "de": "Endbenutzer",
+      "it": "Utente Finale"
+    },
+    "description": {
+      "en": "Standard user who can browse, search, and save favorites",
+      "fr": "Utilisateur standard pouvant parcourir, rechercher et sauvegarder des favoris",
+      "de": "Standardbenutzer, der durchsuchen, suchen und Favoriten speichern kann",
+      "it": "Utente standard che può navigare, cercare e salvare i preferiti"
+    },
+    "is_system": true,
+    "is_active": true,
+    "created_at": "2024-01-01T00:00:00.000Z",
+    "updated_at": "2024-01-01T00:00:00.000Z"
+  }
+]

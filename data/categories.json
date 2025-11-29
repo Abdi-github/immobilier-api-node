@@ -1,0 +1,142 @@
+[
+  {
+    "_id": "69557fa4f1aa72616b012ab7",
+    "section": "residential",
+    "slug": "apartment",
+    "name": {
+      "en": "Apartment",
+      "fr": "Appartement",
+      "de": "Wohnung",
+      "it": "Appartamento"
+    },
+    "icon": "apartment",
+    "sort_order": 1,
+    "is_active": true
+  },
+  {
+    "_id": "69557fa4f1aa72616b012ab8",
+    "section": "residential",
+    "slug": "house",
+    "name": {
+      "en": "House",
+      "fr": "Maison",
+      "de": "Haus",
+      "it": "Casa"
+    },
+    "icon": "house",
+    "sort_order": 2,
+    "is_active": true
+  },
+  {
+    "_id": "69557fa4f1aa72616b012ab9",
+    "section": "residential",
+    "slug": "furnished-accommodation",
+    "name": {
+      "en": "Furnished Accommodation",
+      "fr": "Logement meublé",
+      "de": "Möbliertes Wohnobjekt",
+      "it": "Alloggio arredato"
+    },
+    "icon": "furnished",
+    "sort_order": 3,
+    "is_active": true
+  },
+  {
+    "_id": "69557fa4f1aa72616b012aba",
+    "section": "residential",
+    "slug": "parking",
+    "name": {
+      "en": "Parking",
+      "fr": "Parking",
+      "de": "Parkplatz",
+      "it": "Parcheggio"
+    },
+    "icon": "parking",
+    "sort_order": 4,
+    "is_active": true
+  },
+  {
+    "_id": "69557fa4f1aa72616b012abb",
+    "section": "residential",
+    "slug": "plot",
+    "name": {
+      "en": "Plot",
+      "fr": "Terrain",
+      "de": "Grundstück",
+      "it": "Terreno"
+    },
+    "icon": "plot",
+    "sort_order": 5,
+    "is_active": true
+  },
+  {
+    "_id": "69557fa4f1aa72616b012abc",
+    "section": "commercial",
+    "slug": "office",
+    "name": {
+      "en": "Office",
+      "fr": "Bureau",
+      "de": "Büro",
+      "it": "Ufficio"
+    },
+    "icon": "office",
+    "sort_order": 10,
+    "is_active": true
+  },
+  {
+    "_id": "69557fa4f1aa72616b012abd",
+    "section": "commercial",
+    "slug": "commercial",
+    "name": {
+      "en": "Commercial",
+      "fr": "Commercial",
+      "de": "Gewerbe",
+      "it": "Commerciale"
+    },
+    "icon": "commercial",
+    "sort_order": 11,
+    "is_active": true
+  },
+  {
+    "_id": "69557fa4f1aa72616b012abe",
+    "section": "commercial",
+    "slug": "industrial",
+    "name": {
+      "en": "Industrial",
+      "fr": "Industriel",
+      "de": "Industrie",
+      "it": "Industriale"
+    },
+    "icon": "industrial",
+    "sort_order": 12,
+    "is_active": true
+  },
+  {
+    "_id": "69557fa4f1aa72616b012abf",
+    "section": "commercial",
+    "slug": "hotel",
+    "name": {
+      "en": "Hotel",
+      "fr": "Hôtellerie",
+      "de": "Hotel",
+      "it": "Hotel"
+    },
+    "icon": "hotel",
+    "sort_order": 13,
+    "is_active": true
+  },
+  {
+    "_id": "69557fa4f1aa72616b012ac0",
+    "section": "commercial",
+    "slug": "commercial-land",
+    "name": {
+      "en": "Commercial Land",
+      "fr": "Terrain commercial",
+      "de": "Gewerbegrundstück",
+      "it": "Terreno commerciale"
+    },
+    "icon": "commercial-land",
+    "sort_order": 14,
+    "is_active": true
+  }
+]
