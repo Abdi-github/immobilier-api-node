@@ -50,6 +50,13 @@ services:
         condition: service_healthy
     networks:
       - immobilier_network
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.immobilier-api.rule=Host(`immobilier-api.swiftapp.ch`)"
+      - "traefik.http.routers.immobilier-api.entrypoints=websecure"
+      - "traefik.http.routers.immobilier-api.tls.certresolver=letsencrypt"
+      - "traefik.http.services.immobilier-api.loadbalancer.server.port=4003"
     deploy:
       resources:
         limits:
@@ -112,3 +119,8 @@ services:
 volumes:
   api_logs_prod:
     name: immobilier_api_logs_prod
+
+networks:
+  immobilier_network:
+  traefik:
+    external: true
