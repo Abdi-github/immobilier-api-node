@@ -149,4 +149,3 @@ networks:
     external: true
   traefik:
     external: true
-    external: true
