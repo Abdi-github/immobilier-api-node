@@ -18,9 +18,6 @@ services:
     restart: always
     ports:
       - "4003:4003"
-    volumes:
-      - api_logs_prod:/app/logs
-      - ./data:/app/data:ro
     environment:
       - NODE_ENV=production
       - PORT=4003
@@ -43,6 +40,8 @@ services:
       - BCRYPT_SALT_ROUNDS=12
       - DEFAULT_PAGE_SIZE=20
       - MAX_PAGE_SIZE=100
+    env_file:
+      - .env.production
     depends_on:
       mongodb:
         condition: service_healthy
@@ -60,11 +59,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '2'
-          memory: 2G
-        reservations:
-          cpus: '0.5'
+          cpus: '1'
           memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
     logging:
       driver: json-file
       options:
@@ -75,19 +74,32 @@ services:
   # MongoDB - Production Configuration
   # =============================================
   mongodb:
+    image: mongo:7.0
+    container_name: immobilier_mongodb_prod
+    restart: always
     command: mongod --auth --bind_ip_all
+    volumes:
+      - mongodb_data:/data/db
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME:-admin}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
       - MONGO_INITDB_DATABASE=immobilier_prod
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - immobilier_network
     deploy:
       resources:
         limits:
-          cpus: '2'
-          memory: 4G
+          cpus: '1'
+          memory: 512M
         reservations:
-          cpus: '0.5'
-          memory: 1G
+          cpus: '0.25'
+          memory: 256M
     logging:
       driver: json-file
       options:
@@ -98,15 +110,27 @@ services:
   # Redis - Production Configuration
   # =============================================
   redis:
+    image: redis:7-alpine
+    container_name: immobilier_redis_prod
+    restart: always
     command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-changeme}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - immobilier_network
     deploy:
       resources:
         limits:
-          cpus: '1'
-          memory: 1G
-        reservations:
-          cpus: '0.25'
+          cpus: '0.5'
           memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
     logging:
       driver: json-file
       options:
@@ -117,10 +141,12 @@ services:
 # Production Volumes
 # =============================================
 volumes:
-  api_logs_prod:
-    name: immobilier_api_logs_prod
+  mongodb_data:
+  redis_data:
 
 networks:
   immobilier_network:
+    external: true
   traefik:
+    external: true
     external: true
