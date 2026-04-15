@@ -15,7 +15,7 @@ services:
       dockerfile: Dockerfile
       target: production
     container_name: immobilier_api_prod
-    restart: always
+    restart: unless-stopped
     ports:
       - "4003:4003"
     environment:
@@ -52,10 +52,14 @@ services:
       - traefik
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.allownonrunning=true"
       - "traefik.http.routers.immobilier-api.rule=Host(`immobilier-api.swiftapp.ch`)"
       - "traefik.http.routers.immobilier-api.entrypoints=websecure"
       - "traefik.http.routers.immobilier-api.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.immobilier-api.middlewares=sablier-immobilier@file"
       - "traefik.http.services.immobilier-api.loadbalancer.server.port=4003"
+      - "sablier.enable=true"
+      - "sablier.group=immobilier"
     deploy:
       resources:
         limits:
@@ -76,7 +80,10 @@ services:
   mongodb:
     image: mongo:7.0
     container_name: immobilier_mongodb_prod
-    restart: always
+    restart: unless-stopped
+    labels:
+      - "sablier.enable=true"
+      - "sablier.group=immobilier"
     command: mongod --auth --bind_ip_all
     volumes:
       - mongodb_data:/data/db
@@ -112,7 +119,10 @@ services:
   redis:
     image: redis:7-alpine
     container_name: immobilier_redis_prod
-    restart: always
+    restart: unless-stopped
+    labels:
+      - "sablier.enable=true"
+      - "sablier.group=immobilier"
     command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru --requirepass ${REDIS_PASSWORD}
     volumes:
       - redis_data:/data
