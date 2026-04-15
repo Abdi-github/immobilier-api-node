@@ -1,0 +1,43 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            REPO="${{ github.event.repository.name }}"
+            APP_DIR="/opt/apps/$REPO"
+
+            echo "=== Deploying $REPO ==="
+            cd "$APP_DIR"
+            git pull origin main
+
+            # Detect compose file
+            if [ -f compose.prod.yaml ]; then
+              CF="compose.prod.yaml"
+            elif [ -f docker-compose.prod.yml ]; then
+              CF="docker-compose.prod.yml"
+            else
+              CF="docker-compose.yml"
+            fi
+
+            echo "Using compose file: $CF"
+
+            # Only rebuild if containers are currently running
+            if docker compose -f "$CF" ps --status running -q 2>/dev/null | grep -q .; then
+              echo "Containers running — rebuilding..."
+              docker compose -f "$CF" up -d --build
+              echo "✓ Rebuild complete"
+            else
+              echo "Containers not running — code updated, will rebuild on next launch"
+            fi
