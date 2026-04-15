@@ -16,8 +16,8 @@ services:
       target: production
     container_name: immobilier_api_prod
     restart: unless-stopped
-    ports:
-      - "4003:4003"
+    expose:
+      - "4003"
     environment:
       - NODE_ENV=production
       - PORT=4003
