@@ -5,8 +5,10 @@ import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import hpp from 'hpp';
+import swaggerUi from 'swagger-ui-express';
 
 import config from './config/index.js';
+import { swaggerSpec } from './config/swagger.js';
 import { logger, morganStream } from './shared/logger/index.js';
 import { errorHandler, notFoundHandler } from './shared/errors/index.js';
 import { languageMiddleware, guestRateLimiter } from './shared/middlewares/index.js';
@@ -74,6 +76,28 @@ export const createApp = (): Application => {
   app.use(`${config.apiPrefix}/${config.apiVersion}/admin`, adminRoutes);
   app.use(`${config.apiPrefix}/${config.apiVersion}/agency`, agencyRoutes);
   app.use(`${config.apiPrefix}/${config.apiVersion}/agent`, agentRoutes);
+
+  // Root route → redirect to docs
+  const apiBase = `${config.apiPrefix}/${config.apiVersion}`;
+  app.get('/', (_req: Request, res: Response) => {
+    res.redirect(`${apiBase}/docs`);
+  });
+  app.get(apiBase, (_req: Request, res: Response) => {
+    sendSuccessResponse(res, 200, 'Immobilier.ch API is running', {
+      version: config.apiVersion,
+      documentation: `${apiBase}/docs`,
+    });
+  });
+
+  // Swagger API docs
+  app.use(
+    `${apiBase}/docs`,
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpec, {
+      customCss: '.swagger-ui .topbar { display: none }',
+      customSiteTitle: 'Immobilier.ch API Documentation',
+    })
+  );
 
   // 404 handler
   app.use(notFoundHandler);

@@ -15,7 +15,7 @@ services:
       dockerfile: Dockerfile
       target: production
     container_name: immobilier_api_prod
-    restart: unless-stopped
+    restart: no
     expose:
       - "4003"
     environment:
@@ -80,7 +80,7 @@ services:
   mongodb:
     image: mongo:7.0
     container_name: immobilier_mongodb_prod
-    restart: unless-stopped
+    restart: no
     labels:
       - "sablier.enable=true"
       - "sablier.group=immobilier"
@@ -119,7 +119,7 @@ services:
   redis:
     image: redis:7-alpine
     container_name: immobilier_redis_prod
-    restart: unless-stopped
+    restart: no
     labels:
       - "sablier.enable=true"
       - "sablier.group=immobilier"
