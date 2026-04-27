@@ -55,6 +55,8 @@ export class LocationService {
       _id: { toString: () => string };
       code: string;
       name: IMultilingualText;
+      latitude?: number;
+      longitude?: number;
       is_active: boolean;
       created_at: Date;
       updated_at: Date;
@@ -65,6 +67,8 @@ export class LocationService {
       id: canton._id.toString(),
       code: canton.code,
       name: this.getLocalizedName(canton.name, lang),
+      latitude: canton.latitude,
+      longitude: canton.longitude,
       is_active: canton.is_active,
       created_at: canton.created_at,
       updated_at: canton.updated_at,
@@ -83,6 +87,8 @@ export class LocationService {
             _id: { toString: () => string };
             code: string;
             name: IMultilingualText;
+            latitude?: number;
+            longitude?: number;
             is_active: boolean;
             created_at: Date;
             updated_at: Date;
@@ -90,6 +96,8 @@ export class LocationService {
       name: string | IMultilingualText;
       postal_code: string;
       image_url?: string;
+      latitude?: number;
+      longitude?: number;
       is_active: boolean;
       created_at: Date;
       updated_at: Date;
@@ -106,6 +114,8 @@ export class LocationService {
       name: this.getLocalizedName(city.name, lang),
       postal_code: city.postal_code,
       image_url: city.image_url,
+      latitude: city.latitude,
+      longitude: city.longitude,
       is_active: city.is_active,
       created_at: city.created_at,
       updated_at: city.updated_at,
@@ -118,6 +128,8 @@ export class LocationService {
           _id: { toString: () => string };
           code: string;
           name: IMultilingualText;
+          latitude?: number;
+          longitude?: number;
           is_active: boolean;
           created_at: Date;
           updated_at: Date;

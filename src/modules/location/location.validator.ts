@@ -119,6 +119,14 @@ export const cantonValidators = {
       .withMessage('Italian name must be a string')
       .isLength({ min: 1, max: 100 })
       .withMessage('Italian name must be between 1 and 100 characters'),
+    body('latitude')
+      .optional()
+      .isFloat({ min: -90, max: 90 })
+      .withMessage('Latitude must be between -90 and 90'),
+    body('longitude')
+      .optional()
+      .isFloat({ min: -180, max: 180 })
+      .withMessage('Longitude must be between -180 and 180'),
     body('is_active').optional().isBoolean().withMessage('is_active must be a boolean'),
   ],
 
@@ -158,6 +166,14 @@ export const cantonValidators = {
       .withMessage('Italian name must be a string')
       .isLength({ min: 1, max: 100 })
       .withMessage('Italian name must be between 1 and 100 characters'),
+    body('latitude')
+      .optional()
+      .isFloat({ min: -90, max: 90 })
+      .withMessage('Latitude must be between -90 and 90'),
+    body('longitude')
+      .optional()
+      .isFloat({ min: -180, max: 180 })
+      .withMessage('Longitude must be between -180 and 180'),
     body('is_active').optional().isBoolean().withMessage('is_active must be a boolean'),
   ],
 };
@@ -251,6 +267,14 @@ export const cityValidators = {
       .withMessage('Postal code must be a string')
       .isLength({ min: 4, max: 4 })
       .withMessage('Postal code must be 4 characters'),
+    body('latitude')
+      .optional()
+      .isFloat({ min: -90, max: 90 })
+      .withMessage('Latitude must be between -90 and 90'),
+    body('longitude')
+      .optional()
+      .isFloat({ min: -180, max: 180 })
+      .withMessage('Longitude must be between -180 and 180'),
     body('is_active').optional().isBoolean().withMessage('is_active must be a boolean'),
   ],
 
@@ -266,6 +290,14 @@ export const cityValidators = {
       .withMessage('Postal code must be a string')
       .isLength({ min: 4, max: 4 })
       .withMessage('Postal code must be 4 characters'),
+    body('latitude')
+      .optional()
+      .isFloat({ min: -90, max: 90 })
+      .withMessage('Latitude must be between -90 and 90'),
+    body('longitude')
+      .optional()
+      .isFloat({ min: -180, max: 180 })
+      .withMessage('Longitude must be between -180 and 180'),
     body('is_active').optional().isBoolean().withMessage('is_active must be a boolean'),
   ],
 };

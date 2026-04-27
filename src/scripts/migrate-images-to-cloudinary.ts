@@ -127,7 +127,7 @@ async function downloadImage(
         },
       });
 
-      return Buffer.from(response.data);
+      return Buffer.from(response.data as ArrayBuffer);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
 

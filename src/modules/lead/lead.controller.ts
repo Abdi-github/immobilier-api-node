@@ -87,10 +87,10 @@ export class LeadController {
       property_id: req.query.property_id as string,
       agency_id: req.query.agency_id as string,
       assigned_to: req.query.assigned_to as string,
-      status: req.query.status as string,
-      priority: req.query.priority as string,
-      inquiry_type: req.query.inquiry_type as string,
-      source: req.query.source as string,
+      status: req.query.status as LeadQueryDto['status'],
+      priority: req.query.priority as LeadQueryDto['priority'],
+      inquiry_type: req.query.inquiry_type as LeadQueryDto['inquiry_type'],
+      source: req.query.source as LeadQueryDto['source'],
       date_from: req.query.date_from as string,
       date_to: req.query.date_to as string,
     };
@@ -118,17 +118,17 @@ export class LeadController {
       sort: req.query.sort as string,
       property_id: req.query.property_id as string,
       assigned_to: req.query.assigned_to as string,
-      status: req.query.status as string,
-      priority: req.query.priority as string,
-      inquiry_type: req.query.inquiry_type as string,
-      source: req.query.source as string,
+      status: req.query.status as LeadQueryDto['status'],
+      priority: req.query.priority as LeadQueryDto['priority'],
+      inquiry_type: req.query.inquiry_type as LeadQueryDto['inquiry_type'],
+      source: req.query.source as LeadQueryDto['source'],
       date_from: req.query.date_from as string,
       date_to: req.query.date_to as string,
     };
 
     const result = await leadService.getByAgency(agencyId, query);
 
-    sendPaginatedResponse(
+    return sendPaginatedResponse(
       res,
       200,
       'Agency leads retrieved successfully',
@@ -149,9 +149,9 @@ export class LeadController {
       page: parseInt(req.query.page as string) || 1,
       limit: parseInt(req.query.limit as string) || 20,
       sort: req.query.sort as string,
-      status: req.query.status as string,
-      priority: req.query.priority as string,
-      inquiry_type: req.query.inquiry_type as string,
+      status: req.query.status as LeadQueryDto['status'],
+      priority: req.query.priority as LeadQueryDto['priority'],
+      inquiry_type: req.query.inquiry_type as LeadQueryDto['inquiry_type'],
       date_from: req.query.date_from as string,
       date_to: req.query.date_to as string,
     };
@@ -333,7 +333,7 @@ export class LeadController {
 
     const stats = await leadService.getStatistics(agencyId, dateFrom, dateTo);
 
-    sendSuccessResponse(res, 200, 'Agency lead statistics retrieved successfully', stats);
+    return sendSuccessResponse(res, 200, 'Agency lead statistics retrieved successfully', stats);
   });
 
   /**

@@ -220,9 +220,9 @@ export class LeadService {
         page,
         limit,
         total,
-        total_pages: Math.ceil(total / limit),
-        has_next: page < Math.ceil(total / limit),
-        has_prev: page > 1,
+        totalPages: Math.ceil(total / limit),
+        hasNextPage: page < Math.ceil(total / limit),
+        hasPrevPage: page > 1,
       },
     };
   }
@@ -249,9 +249,9 @@ export class LeadService {
         page,
         limit,
         total,
-        total_pages: Math.ceil(total / limit),
-        has_next: page < Math.ceil(total / limit),
-        has_prev: page > 1,
+        totalPages: Math.ceil(total / limit),
+        hasNextPage: page < Math.ceil(total / limit),
+        hasPrevPage: page > 1,
       },
     };
   }
@@ -278,9 +278,9 @@ export class LeadService {
         page,
         limit,
         total,
-        total_pages: Math.ceil(total / limit),
-        has_next: page < Math.ceil(total / limit),
-        has_prev: page > 1,
+        totalPages: Math.ceil(total / limit),
+        hasNextPage: page < Math.ceil(total / limit),
+        hasPrevPage: page > 1,
       },
     };
   }
@@ -301,9 +301,9 @@ export class LeadService {
         page,
         limit,
         total,
-        total_pages: Math.ceil(total / limit),
-        has_next: page < Math.ceil(total / limit),
-        has_prev: page > 1,
+        totalPages: Math.ceil(total / limit),
+        hasNextPage: page < Math.ceil(total / limit),
+        hasPrevPage: page > 1,
       },
     };
   }
@@ -324,9 +324,9 @@ export class LeadService {
         page,
         limit,
         total,
-        total_pages: Math.ceil(total / limit),
-        has_next: page < Math.ceil(total / limit),
-        has_prev: page > 1,
+        totalPages: Math.ceil(total / limit),
+        hasNextPage: page < Math.ceil(total / limit),
+        hasPrevPage: page > 1,
       },
     };
   }

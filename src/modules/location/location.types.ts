@@ -34,6 +34,8 @@ export interface CityQueryDto {
 export interface CantonCreateDto {
   code: string;
   name: IMultilingualText;
+  latitude?: number;
+  longitude?: number;
   is_active?: boolean;
 }
 
@@ -43,6 +45,8 @@ export interface CantonCreateDto {
 export interface CantonUpdateDto {
   code?: string;
   name?: IMultilingualText;
+  latitude?: number;
+  longitude?: number;
   is_active?: boolean;
 }
 
@@ -54,6 +58,8 @@ export interface CityCreateDto {
   name: string | IMultilingualText;
   postal_code: string;
   image_url?: string;
+  latitude?: number;
+  longitude?: number;
   is_active?: boolean;
 }
 
@@ -65,6 +71,8 @@ export interface CityUpdateDto {
   name?: string | IMultilingualText;
   postal_code?: string;
   image_url?: string;
+  latitude?: number;
+  longitude?: number;
   is_active?: boolean;
 }
 
@@ -75,6 +83,8 @@ export interface CantonResponseDto {
   id: string;
   code: string;
   name: string | IMultilingualText;
+  latitude?: number;
+  longitude?: number;
   is_active: boolean;
   created_at: Date;
   updated_at: Date;
@@ -90,6 +100,8 @@ export interface CityResponseDto {
   name: string | IMultilingualText;
   postal_code: string;
   image_url?: string;
+  latitude?: number;
+  longitude?: number;
   is_active: boolean;
   created_at: Date;
   updated_at: Date;
@@ -149,6 +161,8 @@ export interface CityWithCanton {
         _id: mongoose.Types.ObjectId;
         code: string;
         name: IMultilingualText;
+          latitude?: number;
+          longitude?: number;
         is_active: boolean;
         created_at: Date;
         updated_at: Date;
@@ -156,6 +170,8 @@ export interface CityWithCanton {
   name: string | IMultilingualText;
   postal_code: string;
   image_url?: string;
+  latitude?: number;
+  longitude?: number;
   is_active: boolean;
   created_at: Date;
   updated_at: Date;

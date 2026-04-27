@@ -120,9 +120,9 @@ export class AuthService {
       user_type,
       preferred_language,
       agency_name,
-      agency_phone,
-      agency_email,
-      agency_address,
+      agency_phone: _agency_phone,
+      agency_email: _agency_email,
+      agency_address: _agency_address,
     } = data;
 
     // Check if email already exists

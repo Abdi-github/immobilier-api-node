@@ -21,6 +21,18 @@ import agentRoutes from './api/v1/agent/index.js';
 export const createApp = (): Application => {
   const app = express();
 
+  if (config.isDevelopment) {
+    app.use((req, res, next) => {
+      const host = req.headers.host;
+
+      if (host?.startsWith('0.0.0.0:')) {
+        return res.redirect(302, `${req.protocol}://localhost:${config.port}${req.originalUrl}`);
+      }
+
+      return next();
+    });
+  }
+
   // Trust proxy (for rate limiting behind reverse proxy)
   app.set('trust proxy', 1);
 

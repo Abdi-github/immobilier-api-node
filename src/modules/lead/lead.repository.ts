@@ -10,7 +10,7 @@ import {
   LEAD_STATUS,
   LEAD_PRIORITY,
 } from './lead.types.js';
-import { logger } from '../../shared/logger/index.js';
+
 
 /**
  * Lead Repository
@@ -226,7 +226,7 @@ export class LeadRepository {
   /**
    * Update lead status
    */
-  async updateStatus(id: string, status: LeadStatus, userId?: string): Promise<ILead | null> {
+  async updateStatus(id: string, status: LeadStatus, _userId?: string): Promise<ILead | null> {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return null;
     }
@@ -378,7 +378,7 @@ export class LeadRepository {
     const total = result.total[0]?.count || 0;
 
     // Fill in all statuses with 0 count if not present
-    const byStatusMap = new Map(
+    const byStatusMap = new Map<string, number>(
       result.byStatus.map((s: { _id: string; count: number }) => [s._id, s.count])
     );
     const byStatus = LEAD_STATUS.map((status) => ({
@@ -387,7 +387,7 @@ export class LeadRepository {
     }));
 
     // Fill in all priorities with 0 count if not present
-    const byPriorityMap = new Map(
+    const byPriorityMap = new Map<string, number>(
       result.byPriority.map((p: { _id: string; count: number }) => [p._id, p.count])
     );
     const byPriority = LEAD_PRIORITY.map((priority) => ({

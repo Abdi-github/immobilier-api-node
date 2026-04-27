@@ -28,6 +28,7 @@ import {
   propertyTranslationRepository,
 } from '../property-translation/index.js';
 import { User } from '../user/user.model.js';
+import { propertyLocationService } from '../../shared/services/index.js';
 import {
   sendPropertyApproved,
   sendPropertyRejected,
@@ -63,6 +64,66 @@ export class PropertyService {
       return field as PropertySortField;
     }
     return 'created_at';
+  }
+
+  private async resolveLocationForCreate(data: PropertyCreateDto): Promise<PropertyCreateDto> {
+    const resolvedLocation = await propertyLocationService.resolve({
+      latitude: data.latitude,
+      longitude: data.longitude,
+      cityId: data.city_id,
+      cantonId: data.canton_id,
+    });
+
+    return {
+      ...data,
+      latitude: resolvedLocation.latitude,
+      longitude: resolvedLocation.longitude,
+      location_precision: resolvedLocation.location_precision,
+      geocoding_source: resolvedLocation.geocoding_source,
+      geocoded_at: resolvedLocation.geocoded_at,
+    };
+  }
+
+  private async resolveLocationForUpdate(
+    existing: PropertyWithPopulated,
+    data: PropertyUpdateDto
+  ): Promise<PropertyUpdateDto> {
+    const explicitCoordinatesProvided =
+      typeof data.latitude === 'number' && typeof data.longitude === 'number';
+    const locationIdsChanged = data.city_id !== undefined || data.canton_id !== undefined;
+    const existingHasCoordinates =
+      typeof existing.latitude === 'number' && typeof existing.longitude === 'number';
+    const locationTextChanged = data.address !== undefined || data.postal_code !== undefined;
+
+    if (!explicitCoordinatesProvided && !locationIdsChanged && !locationTextChanged) {
+      return data;
+    }
+
+    if (!explicitCoordinatesProvided && !locationIdsChanged && existingHasCoordinates) {
+      return data;
+    }
+
+    const resolvedLocation = await propertyLocationService.resolve({
+      latitude: data.latitude,
+      longitude: data.longitude,
+      cityId:
+        data.city_id ??
+        (typeof existing.city_id === 'string' ? existing.city_id : existing.city_id?._id?.toString()),
+      cantonId:
+        data.canton_id ??
+        (typeof existing.canton_id === 'string'
+          ? existing.canton_id
+          : existing.canton_id?._id?.toString()),
+    });
+
+    return {
+      ...data,
+      latitude: resolvedLocation.latitude,
+      longitude: resolvedLocation.longitude,
+      location_precision: resolvedLocation.location_precision,
+      geocoding_source: resolvedLocation.geocoding_source,
+      geocoded_at: resolvedLocation.geocoded_at,
+    };
   }
 
   /**
@@ -193,6 +254,11 @@ export class PropertyService {
       surface: property.surface,
       address: property.address,
       postal_code: property.postal_code,
+      latitude: property.latitude,
+      longitude: property.longitude,
+      location_precision: property.location_precision,
+      geocoding_source: property.geocoding_source,
+      geocoded_at: property.geocoded_at,
       proximity: property.proximity,
       status: property.status,
       published_at: property.published_at,
@@ -771,6 +837,8 @@ export class PropertyService {
       data.status = 'DRAFT';
     }
 
+    data = await this.resolveLocationForCreate(data);
+
     const property = await this.repository.create(data);
 
     // Fetch with populated data
@@ -808,6 +876,8 @@ export class PropertyService {
       'city_id',
       'canton_id',
       'postal_code',
+      'latitude',
+      'longitude',
       'transaction_type',
       'amenities',
     ] as const;
@@ -819,6 +889,8 @@ export class PropertyService {
       (data as Record<string, unknown>).status = 'PENDING_APPROVAL';
       logger.info(`Property ${id} status reverted to PENDING_APPROVAL after substantive edit`);
     }
+
+    data = await this.resolveLocationForUpdate(existing, data);
 
     const updated = await this.repository.update(id, data);
     if (!updated) {

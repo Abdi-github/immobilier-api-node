@@ -17,6 +17,8 @@ const VALID_STATUSES = [
   'PUBLISHED',
   'ARCHIVED',
 ];
+const VALID_LOCATION_PRECISIONS = ['exact', 'postal_code', 'city', 'canton', 'unknown'];
+const VALID_GEOCODING_SOURCES = ['manual', 'provider', 'city_centroid', 'canton_centroid'];
 
 /**
  * MongoDB ObjectId validation helper
@@ -333,6 +335,33 @@ export const createPropertyValidators: ValidationChain[] = [
     .isLength({ min: 4, max: 10 })
     .withMessage('Postal code must be between 4 and 10 characters'),
 
+  body('latitude')
+    .optional()
+    .isFloat({ min: -90, max: 90 })
+    .withMessage('Latitude must be between -90 and 90'),
+
+  body('longitude')
+    .optional()
+    .isFloat({ min: -180, max: 180 })
+    .withMessage('Longitude must be between -180 and 180'),
+
+  body('location_precision')
+    .optional()
+    .isIn(VALID_LOCATION_PRECISIONS)
+    .withMessage(
+      `Location precision must be one of: ${VALID_LOCATION_PRECISIONS.join(', ')}`
+    ),
+
+  body('geocoding_source')
+    .optional()
+    .isIn(VALID_GEOCODING_SOURCES)
+    .withMessage(`Geocoding source must be one of: ${VALID_GEOCODING_SOURCES.join(', ')}`),
+
+  body('geocoded_at')
+    .optional()
+    .isISO8601()
+    .withMessage('Geocoded at must be a valid ISO 8601 date'),
+
   body('proximity').optional().isObject().withMessage('Proximity must be an object'),
 
   body('amenities').optional().isArray().withMessage('Amenities must be an array'),
@@ -427,6 +456,33 @@ export const updatePropertyValidators: ValidationChain[] = [
     .trim()
     .isLength({ min: 4, max: 10 })
     .withMessage('Postal code must be between 4 and 10 characters'),
+
+  body('latitude')
+    .optional()
+    .isFloat({ min: -90, max: 90 })
+    .withMessage('Latitude must be between -90 and 90'),
+
+  body('longitude')
+    .optional()
+    .isFloat({ min: -180, max: 180 })
+    .withMessage('Longitude must be between -180 and 180'),
+
+  body('location_precision')
+    .optional()
+    .isIn(VALID_LOCATION_PRECISIONS)
+    .withMessage(
+      `Location precision must be one of: ${VALID_LOCATION_PRECISIONS.join(', ')}`
+    ),
+
+  body('geocoding_source')
+    .optional()
+    .isIn(VALID_GEOCODING_SOURCES)
+    .withMessage(`Geocoding source must be one of: ${VALID_GEOCODING_SOURCES.join(', ')}`),
+
+  body('geocoded_at')
+    .optional()
+    .isISO8601()
+    .withMessage('Geocoded at must be a valid ISO 8601 date'),
 
   body('proximity').optional().isObject().withMessage('Proximity must be an object'),
 

@@ -17,6 +17,14 @@ export type PropertyStatus =
  */
 export type TransactionType = 'rent' | 'buy';
 
+export type PropertyLocationPrecision = 'exact' | 'postal_code' | 'city' | 'canton' | 'unknown';
+
+export type PropertyGeocodingSource =
+  | 'manual'
+  | 'provider'
+  | 'city_centroid'
+  | 'canton_centroid';
+
 /**
  * Property document interface
  */
@@ -44,6 +52,11 @@ export interface IProperty extends Document {
   city_id: mongoose.Types.ObjectId;
   canton_id: mongoose.Types.ObjectId;
   postal_code?: string;
+  latitude?: number;
+  longitude?: number;
+  location_precision?: PropertyLocationPrecision;
+  geocoding_source?: PropertyGeocodingSource;
+  geocoded_at?: Date;
 
   proximity?: Record<string, string>;
 
@@ -152,6 +165,34 @@ const propertySchema = new Schema<IProperty>(
     postal_code: {
       type: String,
       trim: true,
+    },
+    latitude: {
+      type: Number,
+      min: [-90, 'Latitude must be between -90 and 90'],
+      max: [90, 'Latitude must be between -90 and 90'],
+    },
+    longitude: {
+      type: Number,
+      min: [-180, 'Longitude must be between -180 and 180'],
+      max: [180, 'Longitude must be between -180 and 180'],
+    },
+    location_precision: {
+      type: String,
+      enum: {
+        values: ['exact', 'postal_code', 'city', 'canton', 'unknown'],
+        message: 'Location precision must be one of: exact, postal_code, city, canton, unknown',
+      },
+    },
+    geocoding_source: {
+      type: String,
+      enum: {
+        values: ['manual', 'provider', 'city_centroid', 'canton_centroid'],
+        message:
+          'Geocoding source must be one of: manual, provider, city_centroid, canton_centroid',
+      },
+    },
+    geocoded_at: {
+      type: Date,
     },
     proximity: {
       type: Map,

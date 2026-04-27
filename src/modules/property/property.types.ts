@@ -1,6 +1,11 @@
 import { SupportedLanguage, IMultilingualText } from '../location/index.js';
 import { PaginationMeta } from '../../shared/utils/response.helper.js';
-import { PropertyStatus, TransactionType } from './property.model.js';
+import {
+  PropertyStatus,
+  TransactionType,
+  PropertyLocationPrecision,
+  PropertyGeocodingSource,
+} from './property.model.js';
 
 export type { SupportedLanguage, IMultilingualText, PaginationMeta };
 
@@ -69,6 +74,11 @@ export interface PropertyCreateDto {
   city_id: string;
   canton_id: string;
   postal_code?: string;
+  latitude?: number;
+  longitude?: number;
+  location_precision?: PropertyLocationPrecision;
+  geocoding_source?: PropertyGeocodingSource;
+  geocoded_at?: Date;
   proximity?: Record<string, string>;
   amenities?: string[];
   status?: PropertyStatus;
@@ -94,6 +104,11 @@ export interface PropertyUpdateDto {
   city_id?: string;
   canton_id?: string;
   postal_code?: string;
+  latitude?: number;
+  longitude?: number;
+  location_precision?: PropertyLocationPrecision;
+  geocoding_source?: PropertyGeocodingSource;
+  geocoded_at?: Date;
   proximity?: Record<string, string>;
   amenities?: string[];
   status?: PropertyStatus;
@@ -115,6 +130,11 @@ export interface PropertyResponseDto {
   surface?: number;
   address: string;
   postal_code?: string;
+  latitude?: number;
+  longitude?: number;
+  location_precision?: PropertyLocationPrecision;
+  geocoding_source?: PropertyGeocodingSource;
+  geocoded_at?: Date;
   proximity?: Record<string, string>;
   status: PropertyStatus;
   published_at?: Date;
@@ -259,6 +279,11 @@ export interface PropertyWithPopulated {
     code: string;
   };
   postal_code?: string;
+  latitude?: number;
+  longitude?: number;
+  location_precision?: PropertyLocationPrecision;
+  geocoding_source?: PropertyGeocodingSource;
+  geocoded_at?: Date;
   proximity?: Record<string, string>;
   amenities: Array<{
     _id: string;

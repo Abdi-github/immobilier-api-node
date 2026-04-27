@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { LeadController } from './lead.controller.js';
 import { validate } from '../../shared/middlewares/validation.middleware.js';
-import { authenticate, optionalAuth } from '../auth/auth.middleware.js';
+import { authenticate } from '../auth/auth.middleware.js';
 import {
   createPublicLeadValidator,
   createAuthenticatedLeadValidator,

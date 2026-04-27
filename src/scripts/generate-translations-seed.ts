@@ -103,7 +103,8 @@ const TRANSLATION_TEMPLATES = {
 };
 
 // Category name translations (fallbacks when not in data)
-const CATEGORY_TRANSLATIONS: Record<string, Record<string, string>> = {
+// @ts-expect-error Kept for future seed script usage
+const _CATEGORY_TRANSLATIONS: Record<string, Record<string, Record<string, string>>> = {
   residential: {
     house: { en: 'House', fr: 'Maison', de: 'Haus', it: 'Casa' },
     apartment: { en: 'Apartment', fr: 'Appartement', de: 'Wohnung', it: 'Appartamento' },

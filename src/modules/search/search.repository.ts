@@ -3,18 +3,15 @@ import crypto from 'crypto';
 
 import { Property } from '../property/property.model.js';
 import { PropertyTranslation } from '../property-translation/property-translation.model.js';
-import { PropertyImage } from '../property/property-image.model.js';
 import { Canton } from '../location/canton.model.js';
 import { City } from '../location/city.model.js';
 import { getRedisClient } from '../../config/redis.js';
-import { config } from '../../config/index.js';
 import { logger } from '../../shared/logger/index.js';
 import {
   SearchFilterOptions,
   SearchPaginationOptions,
   SearchCursorPaginationOptions,
   PropertyAggregationResult,
-  PropertySearchResultDto,
   LocationSearchResultDto,
   SupportedLanguage,
 } from './search.types.js';

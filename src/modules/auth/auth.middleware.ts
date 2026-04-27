@@ -376,7 +376,7 @@ export const requirePropertyOwnership = (propertyIdParam: string = 'id') => {
       }
 
       // Attach property for downstream use (avoids refetching)
-      (req as Record<string, unknown>).propertyOwnershipVerified = true;
+      (req as unknown as Record<string, unknown>).propertyOwnershipVerified = true;
     };
 
     handleOwnership()

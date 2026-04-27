@@ -10,7 +10,6 @@
  */
 
 import { logger } from '../logger/index.js';
-import config from '../../config/index.js';
 
 // Types
 export type SupportedLanguage = 'en' | 'fr' | 'de' | 'it';

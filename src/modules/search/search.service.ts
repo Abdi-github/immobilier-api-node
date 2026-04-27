@@ -1,5 +1,5 @@
 import { searchRepository } from './search.repository.js';
-import { NotFoundError, BadRequestError } from '../../shared/errors/AppError.js';
+import { BadRequestError } from '../../shared/errors/AppError.js';
 import { logger } from '../../shared/logger/index.js';
 import {
   PropertySearchQueryDto,
@@ -260,8 +260,8 @@ export class SearchService {
         page: pagination.page,
         limit: pagination.limit,
         totalPages,
-        hasNext: pagination.page < totalPages,
-        hasPrev: pagination.page > 1,
+        hasNextPage: pagination.page < totalPages,
+        hasPrevPage: pagination.page > 1,
       },
       filters_applied: this.buildFiltersApplied(query),
     };
@@ -300,7 +300,7 @@ export class SearchService {
    */
   async searchLocations(query: LocationSearchQueryDto): Promise<LocationSearchResponseDto> {
     if (!query.q || query.q.trim().length === 0) {
-      throw new BadRequestError('Search query is required');
+      throw BadRequestError('Search query is required');
     }
 
     const lang = query.lang || 'en';
@@ -326,7 +326,7 @@ export class SearchService {
    */
   async unifiedSearch(query: UnifiedSearchQueryDto): Promise<UnifiedSearchResponseDto> {
     if (!query.q || query.q.trim().length === 0) {
-      throw new BadRequestError('Search query is required');
+      throw BadRequestError('Search query is required');
     }
 
     const lang = query.lang || 'en';

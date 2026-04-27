@@ -102,6 +102,8 @@ export class LocationRepository {
     const canton = new Canton({
       code: data.code.toUpperCase(),
       name: data.name,
+      latitude: data.latitude,
+      longitude: data.longitude,
       is_active: data.is_active ?? true,
     });
     await canton.save();
@@ -119,6 +121,12 @@ export class LocationRepository {
     }
     if (data.name !== undefined) {
       updateData.name = data.name;
+    }
+    if (data.latitude !== undefined) {
+      updateData.latitude = data.latitude;
+    }
+    if (data.longitude !== undefined) {
+      updateData.longitude = data.longitude;
     }
     if (data.is_active !== undefined) {
       updateData.is_active = data.is_active;
@@ -279,6 +287,8 @@ export class LocationRepository {
       name: data.name,
       postal_code: data.postal_code,
       image_url: data.image_url,
+      latitude: data.latitude,
+      longitude: data.longitude,
       is_active: data.is_active ?? true,
     });
     await city.save();
@@ -302,6 +312,12 @@ export class LocationRepository {
     }
     if (data.image_url !== undefined) {
       updateData.image_url = data.image_url;
+    }
+    if (data.latitude !== undefined) {
+      updateData.latitude = data.latitude;
+    }
+    if (data.longitude !== undefined) {
+      updateData.longitude = data.longitude;
     }
     if (data.is_active !== undefined) {
       updateData.is_active = data.is_active;

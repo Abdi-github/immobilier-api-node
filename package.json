@@ -6,7 +6,7 @@
   "main": "dist/server.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development tsx watch src/server.ts",
-    "build": "tsc || true",
+    "build": "npm run typecheck && tsc",
     "start": "cross-env NODE_ENV=production node dist/server.js",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",
@@ -21,6 +21,8 @@
     "migrate:images:dry-run": "tsx src/scripts/migrate-images-to-cloudinary.ts --dry-run",
     "assign:placeholders": "tsx src/scripts/assign-placeholder-images.ts",
     "assign:placeholders:dry-run": "tsx src/scripts/assign-placeholder-images.ts --dry-run",
+    "backfill:coordinates": "tsx src/scripts/backfill-property-coordinates.ts",
+    "backfill:coordinates:dry-run": "tsx src/scripts/backfill-property-coordinates.ts --dry-run",
     "docker:dev": "docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d",
     "docker:dev:down": "docker compose -f docker-compose.yml -f docker-compose.dev.yml down -v",
     "docker:dev:logs": "docker compose -f docker-compose.yml -f docker-compose.dev.yml logs -f",
