@@ -14,6 +14,10 @@ const DEFAULT_CORS_ORIGINS = [
   'http://localhost:5174',
   'http://localhost:4200',
   'http://localhost:4203',
+  'https://immobilier-react.swiftapp.ch',
+  'https://immobilier-angular.swiftapp.ch',
+  'https://immobilier-vue.swiftapp.ch',
+  'https://immobilier-admin.swiftapp.ch',
 ];
 
 const resolveCorsOrigins = (): string[] => {
