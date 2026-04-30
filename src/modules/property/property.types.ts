@@ -21,8 +21,8 @@ export interface PropertyQueryDto {
   lang?: SupportedLanguage;
 
   // Location filters
-  canton_id?: string;
-  city_id?: string;
+  canton_id?: string; // Supports comma-separated IDs for multi-select
+  city_id?: string; // Supports comma-separated IDs for multi-select
   postal_code?: string;
 
   // Property filters

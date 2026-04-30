@@ -7,6 +7,45 @@ dotenv.config({ path: path.resolve(process.cwd(), '.env') });
 // Supported languages type
 export type SupportedLanguage = 'en' | 'fr' | 'de' | 'it';
 
+const DEFAULT_CORS_ORIGINS = [
+  'http://localhost:3000',
+  'http://localhost:4003',
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'http://localhost:4200',
+  'http://localhost:4203',
+];
+
+const resolveCorsOrigins = (): string[] => {
+  const configuredOrigins = process.env.CORS_ORIGIN?.split(',') || DEFAULT_CORS_ORIGINS;
+  const trimmedOrigins = configuredOrigins.map((origin) => origin.trim()).filter(Boolean);
+
+  if ((process.env.NODE_ENV || 'development') !== 'development') {
+    return Array.from(new Set(trimmedOrigins));
+  }
+
+  const expandedOrigins = new Set<string>();
+
+  for (const origin of trimmedOrigins) {
+    expandedOrigins.add(origin);
+
+    try {
+      const url = new URL(origin);
+      if (!['localhost', '127.0.0.1', '0.0.0.0'].includes(url.hostname)) {
+        continue;
+      }
+
+      for (const hostname of ['localhost', '127.0.0.1', '0.0.0.0']) {
+        expandedOrigins.add(`${url.protocol}//${hostname}${url.port ? `:${url.port}` : ''}`);
+      }
+    } catch {
+      expandedOrigins.add(origin);
+    }
+  }
+
+  return Array.from(expandedOrigins);
+};
+
 // Configuration object
 export const config = {
   // Application
@@ -48,7 +87,7 @@ export const config = {
 
   // CORS
   cors: {
-    origin: process.env.CORS_ORIGIN?.split(',') || ['http://localhost:3000'],
+    origin: resolveCorsOrigins(),
     credentials: process.env.CORS_CREDENTIALS === 'true',
   },
 

@@ -39,10 +39,20 @@ export class PropertyRepository {
 
     // Location filters
     if (filters.canton_id) {
-      query.canton_id = new mongoose.Types.ObjectId(filters.canton_id);
+      const cantonIds = filters.canton_id.split(',').map((id) => id.trim());
+      if (cantonIds.length === 1) {
+        query.canton_id = new mongoose.Types.ObjectId(cantonIds[0]);
+      } else {
+        query.canton_id = { $in: cantonIds.map((id) => new mongoose.Types.ObjectId(id)) };
+      }
     }
     if (filters.city_id) {
-      query.city_id = new mongoose.Types.ObjectId(filters.city_id);
+      const cityIds = filters.city_id.split(',').map((id) => id.trim());
+      if (cityIds.length === 1) {
+        query.city_id = new mongoose.Types.ObjectId(cityIds[0]);
+      } else {
+        query.city_id = { $in: cityIds.map((id) => new mongoose.Types.ObjectId(id)) };
+      }
     }
     if (filters.postal_code) {
       query.postal_code = filters.postal_code;

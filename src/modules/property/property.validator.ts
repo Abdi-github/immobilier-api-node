@@ -61,13 +61,19 @@ export const propertyQueryValidators: ValidationChain[] = [
   // Location filters
   query('canton_id')
     .optional()
-    .custom(isValidObjectId)
-    .withMessage('Canton ID must be a valid ObjectId'),
+    .custom((value) => {
+      const ids = value.split(',').map((id: string) => id.trim());
+      return ids.every((id: string) => isValidObjectId(id));
+    })
+    .withMessage('Canton ID(s) must be valid ObjectId(s) (comma-separated for multiple)'),
 
   query('city_id')
     .optional()
-    .custom(isValidObjectId)
-    .withMessage('City ID must be a valid ObjectId'),
+    .custom((value) => {
+      const ids = value.split(',').map((id: string) => id.trim());
+      return ids.every((id: string) => isValidObjectId(id));
+    })
+    .withMessage('City ID(s) must be valid ObjectId(s) (comma-separated for multiple)'),
 
   query('postal_code')
     .optional()
