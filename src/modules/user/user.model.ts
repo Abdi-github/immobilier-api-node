@@ -190,6 +190,33 @@ const userSchema = new Schema<IUser>(
   }
 );
 
+userSchema.virtual('password')
+  .get(function (this: IUser) {
+    return this.password_hash;
+  })
+  .set(function (this: IUser, value: string) {
+    this.password_hash = value;
+  });
+
+userSchema.virtual('is_email_verified')
+  .get(function (this: IUser) {
+    return this.email_verified;
+  })
+  .set(function (this: IUser, value: boolean) {
+    this.email_verified = value;
+    if (value && !this.email_verified_at) {
+      this.email_verified_at = new Date();
+    }
+  });
+
+userSchema.virtual('is_active')
+  .get(function (this: IUser) {
+    return this.status === 'active';
+  })
+  .set(function (this: IUser, value: boolean) {
+    this.status = value ? 'active' : 'inactive';
+  });
+
 // Indexes
 userSchema.index({ email: 1 });
 userSchema.index({ user_type: 1, status: 1 });
