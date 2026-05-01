@@ -7,14 +7,20 @@
 import fs from 'fs';
 import path from 'path';
 import Handlebars from 'handlebars';
-import { fileURLToPath } from 'url';
 
 import { logger } from '../../shared/logger/index.js';
 import { SupportedLanguage } from '../auth/auth.types.js';
 import { EmailType } from './email.types.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const getTemplateRootDir = (): string => {
+  const candidateDirs = [
+    path.resolve(process.cwd(), 'src/modules/email/templates'),
+    path.resolve(process.cwd(), 'dist/modules/email/templates'),
+  ];
+
+  const existingDir = candidateDirs.find((candidateDir) => fs.existsSync(candidateDir));
+  return existingDir ?? candidateDirs[0];
+};
 
 /**
  * Email template structure
@@ -190,7 +196,7 @@ const getTemplatePath = (
   language: SupportedLanguage,
   format: 'html' | 'text'
 ): string => {
-  const templateDir = path.join(__dirname, 'templates', language);
+  const templateDir = path.join(getTemplateRootDir(), language);
   const fileName = emailTypeToFileName[type] || type;
   return path.join(templateDir, `${fileName}.${format}.hbs`);
 };
@@ -251,8 +257,9 @@ const loadLayout = (language: SupportedLanguage): HandlebarsTemplateDelegate | n
     return templateCache.get(cacheKey)!;
   }
 
-  const layoutPath = path.join(__dirname, 'templates', language, '_layout.html.hbs');
-  const fallbackPath = path.join(__dirname, 'templates', 'en', '_layout.html.hbs');
+  const templateRootDir = getTemplateRootDir();
+  const layoutPath = path.join(templateRootDir, language, '_layout.html.hbs');
+  const fallbackPath = path.join(templateRootDir, 'en', '_layout.html.hbs');
 
   try {
     const layoutFile = fs.existsSync(layoutPath) ? layoutPath : fallbackPath;

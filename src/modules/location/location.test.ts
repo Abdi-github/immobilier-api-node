@@ -11,8 +11,8 @@ import { Permission } from '../admin/permission.model.js';
 import { Role } from '../admin/role.model.js';
 import { UserRole } from '../admin/user-role.model.js';
 import { User } from '../user/user.model.js';
-import { Canton, ICanton } from './canton.model.js';
-import { City, ICity } from './city.model.js';
+import { Canton } from './canton.model.js';
+import { City } from './city.model.js';
 
 // Test data
 const testCantons = [
@@ -44,10 +44,8 @@ const adminUser = {
 
 let app: Application;
 let adminToken: string;
-let adminRoleId: string;
 let vdCantonId: string;
 let geCantonId: string;
-let beCantonId: string;
 let lausanneCityId: string;
 
 describe('Location Module', () => {
@@ -104,8 +102,6 @@ describe('Location Module', () => {
       permissions: permissions.map((p) => p._id),
       is_active: true,
     });
-    adminRoleId = adminRole._id.toString();
-
     // Create admin user
     const hashedPassword = await bcrypt.hash(adminUser.password, 12);
     const admin = await User.create({
@@ -128,19 +124,22 @@ describe('Location Module', () => {
       {
         sub: admin._id.toString(),
         email: admin.email,
-        user_type: admin.user_type,
+        userType: admin.user_type,
         roles: ['platform_admin'],
         permissions: permissions.map((p) => p.code),
       },
       config.jwt.secret,
-      { expiresIn: '1h' }
+      {
+        expiresIn: '1h',
+        issuer: config.jwt.issuer,
+        audience: config.jwt.audience,
+      }
     );
 
     // Create test cantons
     const createdCantons = await Canton.insertMany(testCantons);
     vdCantonId = createdCantons[0]._id.toString();
     geCantonId = createdCantons[1]._id.toString();
-    beCantonId = createdCantons[2]._id.toString();
 
     // Create test cities
     const testCities = [
@@ -796,12 +795,16 @@ describe('Location Module', () => {
         {
           sub: user._id.toString(),
           email: user.email,
-          user_type: user.user_type,
+          userType: user.user_type,
           roles: ['no_perm'],
           permissions: [],
         },
         config.jwt.secret,
-        { expiresIn: '1h' }
+        {
+          expiresIn: '1h',
+          issuer: config.jwt.issuer,
+          audience: config.jwt.audience,
+        }
       );
     });
 
