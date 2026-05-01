@@ -1345,17 +1345,17 @@ describe('Property Module', () => {
       });
     });
 
-    describe('Agent with limited permissions', () => {
-      it('should allow agent to read properties', async () => {
+    describe('Agent with property permissions but no admin access', () => {
+      it('should deny agent access to admin property list', async () => {
         const response = await request(app)
           .get('/api/v1/admin/properties')
           .set('Authorization', `Bearer ${agentToken}`)
-          .expect(200);
+          .expect(403);
 
-        expect(response.body.success).toBe(true);
+        expect(response.body.success).toBe(false);
       });
 
-      it('should allow agent to create properties', async () => {
+      it('should deny agent access to admin property creation', async () => {
         const newProperty = {
           external_id: 'AGENT-CREATE-001',
           source_language: 'fr',
@@ -1371,19 +1371,19 @@ describe('Property Module', () => {
           .post('/api/v1/admin/properties')
           .set('Authorization', `Bearer ${agentToken}`)
           .send(newProperty)
-          .expect(201);
+          .expect(403);
 
-        expect(response.body.success).toBe(true);
+        expect(response.body.success).toBe(false);
       });
 
-      it('should allow agent to update properties', async () => {
+      it('should deny agent access to admin property updates', async () => {
         const response = await request(app)
           .put(`/api/v1/admin/properties/${draftPropertyId}`)
           .set('Authorization', `Bearer ${agentToken}`)
           .send({ price: 2500 })
-          .expect(200);
+          .expect(403);
 
-        expect(response.body.success).toBe(true);
+        expect(response.body.success).toBe(false);
       });
 
       it('should deny agent to delete properties', async () => {
@@ -1516,7 +1516,7 @@ describe('Property Module', () => {
   // ==================== VALIDATION TESTS ====================
   describe('Property Validation Tests', () => {
     describe('Create property validation', () => {
-      it('should require external_id', async () => {
+      it('should auto-generate external_id when omitted', async () => {
         const response = await request(app)
           .post('/api/v1/admin/properties')
           .set('Authorization', `Bearer ${adminToken}`)
@@ -1529,9 +1529,10 @@ describe('Property Module', () => {
             city_id: zurichCityId,
             canton_id: zurichCantonId,
           })
-          .expect(400);
+          .expect(201);
 
-        expect(response.body.success).toBe(false);
+        expect(response.body.success).toBe(true);
+        expect(response.body.data.external_id).toBeDefined();
       });
 
       it('should require valid transaction_type', async () => {
@@ -1673,11 +1674,29 @@ describe('Property Module', () => {
     });
 
     it('should handle sorting with multiple properties of same value', async () => {
+      await Property.create({
+        external_id: 'PROP-SAME-PRICE',
+        source_language: 'en',
+        category_id: apartmentCategoryId,
+        agency_id: testAgencies[0]._id,
+        transaction_type: 'rent',
+        price: 2500,
+        currency: 'CHF',
+        address: 'Tie Price Street',
+        city_id: testCities[0]._id,
+        canton_id: testCantons[0]._id,
+        postal_code: '8003',
+        status: 'PUBLISHED',
+        published_at: new Date('2024-02-01'),
+      });
+
       const response = await request(app)
-        .get('/api/v1/public/properties?sort=transaction_type&order=asc')
+        .get('/api/v1/public/properties?sort=price&order=asc')
         .expect(200);
 
       expect(response.body.success).toBe(true);
+      const prices = response.body.data.map((property: { price: number }) => property.price);
+      expect(prices).toEqual([...prices].sort((left, right) => left - right));
     });
   });
 });
