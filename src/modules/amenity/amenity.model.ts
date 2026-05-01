@@ -30,6 +30,22 @@ export interface IAmenity extends Document {
   updated_at: Date;
 }
 
+type LegacyAmenityInput = Partial<IAmenity> & {
+  code?: string;
+};
+
+const AMENITY_GROUPS: AmenityGroup[] = [
+  'general',
+  'kitchen',
+  'bathroom',
+  'outdoor',
+  'security',
+  'parking',
+  'accessibility',
+  'energy',
+  'other',
+];
+
 /**
  * Amenity Schema
  */
@@ -82,6 +98,26 @@ const amenitySchema = new Schema<IAmenity>(
     collection: 'amenities',
   }
 );
+
+amenitySchema.virtual('code')
+  .get(function (this: IAmenity) {
+    return this.group;
+  })
+  .set(function (this: IAmenity, value: string) {
+    this.group = AMENITY_GROUPS.includes(value as AmenityGroup) ? (value as AmenityGroup) : 'other';
+  });
+
+amenitySchema.pre('insertMany', function (next, docs: LegacyAmenityInput[]) {
+  docs.forEach((doc) => {
+    if (!doc.group) {
+      const legacyCode = typeof doc.code === 'string' ? doc.code : '';
+      doc.group = AMENITY_GROUPS.includes(legacyCode as AmenityGroup)
+        ? (legacyCode as AmenityGroup)
+        : 'other';
+    }
+  });
+  next();
+});
 
 // Indexes
 amenitySchema.index({ group: 1, is_active: 1 });

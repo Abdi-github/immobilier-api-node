@@ -17,6 +17,10 @@ export interface ICity extends Document {
   updated_at: Date;
 }
 
+type LegacyCityInput = Partial<ICity> & {
+  postal_codes?: string[];
+};
+
 /**
  * City Schema
  */
@@ -66,6 +70,25 @@ const citySchema = new Schema<ICity>(
     collection: 'cities',
   }
 );
+
+citySchema.virtual('postal_codes')
+  .get(function (this: ICity) {
+    return this.postal_code ? [this.postal_code] : [];
+  })
+  .set(function (this: ICity, value: string[]) {
+    if (Array.isArray(value) && value.length > 0) {
+      this.postal_code = value[0];
+    }
+  });
+
+citySchema.pre('insertMany', function (next, docs: LegacyCityInput[]) {
+  docs.forEach((doc) => {
+    if (!doc.postal_code && Array.isArray(doc.postal_codes) && doc.postal_codes.length > 0) {
+      doc.postal_code = doc.postal_codes[0];
+    }
+  });
+  next();
+});
 
 // Indexes
 citySchema.index({ canton_id: 1, postal_code: 1 });
