@@ -87,8 +87,11 @@ jobs:
 
             echo "Using compose file: $CF"
 
-            if [ -f .env.prod ]; then
-              docker compose -f "$CF" --env-file .env.prod up -d --build
+            if [ -f .env.production ]; then
+              docker compose -f "$CF" --env-file .env.production up -d --build
+            elif [ -f .env.prod ]; then
+              cp .env.prod .env.production
+              docker compose -f "$CF" --env-file .env.production up -d --build
             else
               docker compose -f "$CF" up -d --build
             fi

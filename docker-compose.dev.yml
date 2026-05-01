@@ -53,10 +53,10 @@ services:
       - LIBRETRANSLATE_URL=http://libretranslate:5000
       - TRANSLATION_PROVIDER=libretranslate
       # Cloudinary Configuration
-      - CLOUDINARY_CLOUD_NAME=dzyyygr1x
-      - CLOUDINARY_API_KEY=393749481964766
-      - CLOUDINARY_API_SECRET=lIQ4qNH1CRKz2P3dMSgXRxb2_CE
-      - CLOUDINARY_FOLDER=immobilier_node
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+      - CLOUDINARY_FOLDER=${CLOUDINARY_FOLDER}
       # Email Configuration (Mailpit for development)
       - MAIL_HOST=mailpit
       - MAIL_PORT=1025
